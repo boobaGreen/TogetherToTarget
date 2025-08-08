@@ -15,7 +15,7 @@ export default function DashboardScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dashboard</Text>
-      <Text style={styles.welcome}>Benvenuto, {user?.email}!</Text>
+      <Text style={styles.welcome}>Benvenuto, {user?.email}! 👋</Text>
 
       <View style={styles.content}>
         <Text style={styles.subtitle}>🎯 TogetherToTarget</Text>
@@ -25,14 +25,26 @@ export default function DashboardScreen() {
 
         <View style={styles.featureList}>
           <Text style={styles.feature}>✅ Autenticazione completata</Text>
+          <Text style={styles.feature}>✅ Google OAuth integrato</Text>
+          <Text style={styles.feature}>✅ Password reset disponibile</Text>
           <Text style={styles.feature}>🔜 Creazione gruppi</Text>
           <Text style={styles.feature}>🔜 Matching utenti</Text>
           <Text style={styles.feature}>🔜 Sistema motivazionale</Text>
         </View>
+
+        <View style={styles.statsContainer}>
+          <Text style={styles.statsTitle}>📊 Status Sprint RN</Text>
+          <Text style={styles.statsText}>✅ Setup React Native + Expo</Text>
+          <Text style={styles.statsText}>✅ Autenticazione Supabase</Text>
+          <Text style={styles.statsText}>✅ Google OAuth</Text>
+          <Text style={styles.statsText}>✅ Password Reset</Text>
+          <Text style={styles.statsText}>✅ Navigation completa</Text>
+          <Text style={styles.statsText}>✅ UI/UX mobile-first</Text>
+        </View>
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleSignOut}>
-        <Text style={styles.logoutText}>Logout</Text>
+        <Text style={styles.logoutText}>🚪 Logout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -81,6 +93,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
     paddingLeft: 20,
+  },
+  statsContainer: {
+    marginTop: 30,
+    padding: 15,
+    backgroundColor: "#f8f9fa",
+    borderRadius: 8,
+  },
+  statsTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#333",
+  },
+  statsText: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: "#555",
   },
   logoutButton: {
     backgroundColor: "#FF3B30",

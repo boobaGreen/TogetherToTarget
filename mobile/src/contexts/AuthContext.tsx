@@ -6,6 +6,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
+  signInWithGoogle: () => Promise<{ error: any }>;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: any }>;
@@ -18,16 +19,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    authService.getSession().then(({ session }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    const initializeAuth = async () => {
+      try {
+        // Get initial session
+        const { session } = await authService.getSession();
+        console.log(
+          "Initial session check:",
+          session?.user?.email || "No session"
+        );
+        setUser(session?.user ?? null);
+        setLoading(false);
+      } catch (error) {
+        console.error("Auth initialization error:", error);
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
 
     // Listen for auth changes
     const {
       data: { subscription },
     } = authService.onAuthStateChange((event, session) => {
+      console.log(
+        "Auth state changed:",
+        event,
+        session?.user?.email || "No user"
+      );
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -37,6 +55,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     const { error } = await authService.signIn(email, password);
+    return { error };
+  };
+
+  const signInWithGoogle = async () => {
+    const { error } = await authService.signInWithGoogle();
     return { error };
   };
 
@@ -58,6 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     loading,
     signIn,
+    signInWithGoogle,
     signUp,
     signOut,
     resetPassword,

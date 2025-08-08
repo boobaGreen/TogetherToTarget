@@ -3,15 +3,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useAuth } from "./contexts/AuthContext";
 
-// Screens
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import DashboardScreen from "./screens/DashboardScreen";
+import ForgotPasswordScreen from "./screens/ForgotPasswordScreen";
 
 // Types
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
+  ForgotPassword: undefined;
   Dashboard: undefined;
 };
 
@@ -22,6 +23,7 @@ function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
     </Stack.Navigator>
   );
 }
@@ -42,7 +44,6 @@ export default function Navigation() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    // Potresti aggiungere una schermata di loading qui
     return null;
   }
 
