@@ -11,6 +11,7 @@ import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { HomePage } from "./pages/HomePage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { OnboardingPage } from "./pages/OnboardingPage";
+import OnboardingSuccessPage from "./pages/OnboardingSuccessPage";
 
 // Import degli stili
 import "./index.css";
@@ -69,6 +70,16 @@ export const App: React.FC = () => {
                 <MainLayout>
                   <OnboardingPage />
                 </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Onboarding Success - solo per utenti autenticati */}
+          <Route
+            path="/onboarding-success"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={false}>
+                <OnboardingSuccessPage />
               </ProtectedRoute>
             }
           />

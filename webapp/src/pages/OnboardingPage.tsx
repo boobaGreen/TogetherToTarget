@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import CategorySelector from "../components/onboarding/CategorySelector";
 import GoalInput from "../components/onboarding/GoalInput";
 import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
 import { CategoriesService } from "../services/categories";
+import { UserProfilesService } from "../services/userProfiles";
 import type { Category } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
 import type { ExperienceLevelData } from "../types/experience";
@@ -12,6 +14,7 @@ import type { AvailabilityData } from "../types/availability";
 
 export const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
@@ -22,9 +25,11 @@ export const OnboardingPage: React.FC = () => {
   const [experienceData, setExperienceData] =
     useState<ExperienceLevelData | null>(null);
   const [isExperienceValid, setIsExperienceValid] = useState(false);
-  const [availabilityData, setAvailabilityData] = useState<AvailabilityData | null>(null);
+  const [availabilityData, setAvailabilityData] =
+    useState<AvailabilityData | null>(null);
   const [isAvailabilityValid, setIsAvailabilityValid] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -46,8 +51,57 @@ export const OnboardingPage: React.FC = () => {
     setSelectedCategory(category);
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    // Se siamo al passo 4 (indice 3) e tutti i dati sono validi, completa l'onboarding
+    if (
+      currentStep === 3 &&
+      selectedCategory &&
+      goalData &&
+      experienceData &&
+      availabilityData &&
+      user
+    ) {
+      await completeOnboarding();
+      return;
+    }
+
     setCurrentStep((prev) => prev + 1);
+  };
+
+  const completeOnboarding = async () => {
+    if (
+      !user ||
+      !selectedCategory ||
+      !goalData ||
+      !experienceData ||
+      !availabilityData
+    ) {
+      console.error("Dati mancanti per completare l'onboarding");
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+
+      // Salva il profilo nel database
+      await UserProfilesService.createOrUpdateProfile(user.id, {
+        categoryId: selectedCategory.id,
+        goalData,
+        experienceData,
+        availabilityData,
+      });
+
+      console.log("✅ Profilo salvato con successo!");
+
+      // Reindirizza alla pagina di successo
+      navigate("/onboarding-success");
+    } catch (error) {
+      console.error("❌ Errore nel salvataggio del profilo:", error);
+      // TODO: Mostrare un messaggio di errore all'utente
+      alert("Errore nel salvataggio del profilo. Riprova.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const prevStep = () => {
@@ -598,27 +652,43 @@ export const OnboardingPage: React.FC = () => {
           padding: "20px",
         }}
       >
-        <div style={{
-          maxWidth: "1000px",
-          margin: "0 auto",
-          padding: "2rem 0"
-        }}>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+        <div
+          style={{
+            maxWidth: "1000px",
+            margin: "0 auto",
+            padding: "2rem 0",
+          }}
+        >
           {/* Progress indicator */}
-          <div style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "2rem"
-          }}>
-            <div style={{
+          <div
+            style={{
               display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              background: "white",
-              padding: "0.75rem 1.5rem",
-              borderRadius: "50px",
-              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
-            }}>
-              <span style={{ color: "#667eea", fontWeight: "600" }}>Passo 4 di 4</span>
+              justifyContent: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <span style={{ color: "#667eea", fontWeight: "600" }}>
+                Passo 4 di 4
+              </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Disponibilità</span>
             </div>
@@ -630,7 +700,7 @@ export const OnboardingPage: React.FC = () => {
                 id: selectedCategory.id,
                 name_it: selectedCategory.name_it,
                 emoji: selectedCategory.emoji,
-                color: selectedCategory.color
+                color: selectedCategory.color,
               }}
               goalDescription={goalData.description}
               experienceLevel={experienceData.level}
@@ -641,13 +711,15 @@ export const OnboardingPage: React.FC = () => {
           )}
 
           {/* Navigation buttons */}
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            maxWidth: "900px",
-            margin: "2rem auto 0",
-            padding: "0 2rem"
-          }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              maxWidth: "900px",
+              margin: "2rem auto 0",
+              padding: "0 2rem",
+            }}
+          >
             <button
               onClick={prevStep}
               style={{
@@ -658,7 +730,7 @@ export const OnboardingPage: React.FC = () => {
                 borderRadius: "8px",
                 fontSize: "1rem",
                 cursor: "pointer",
-                transition: "all 0.2s ease"
+                transition: "all 0.2s ease",
               }}
             >
               ← Indietro
@@ -666,22 +738,43 @@ export const OnboardingPage: React.FC = () => {
 
             <button
               onClick={nextStep}
-              disabled={!isAvailabilityValid}
+              disabled={!isAvailabilityValid || isSaving}
               style={{
-                background: isAvailabilityValid 
-                  ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" 
-                  : "#e2e8f0",
-                color: isAvailabilityValid ? "white" : "#94a3b8",
+                background:
+                  isAvailabilityValid && !isSaving
+                    ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                    : "#e2e8f0",
+                color: isAvailabilityValid && !isSaving ? "white" : "#94a3b8",
                 border: "none",
                 padding: "12px 32px",
                 borderRadius: "8px",
                 fontSize: "1.1rem",
                 fontWeight: "600",
-                cursor: isAvailabilityValid ? "pointer" : "not-allowed",
-                transition: "all 0.2s ease"
+                cursor:
+                  isAvailabilityValid && !isSaving ? "pointer" : "not-allowed",
+                transition: "all 0.2s ease",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
               }}
             >
-              🚀 Completa Onboarding
+              {isSaving ? (
+                <>
+                  <div
+                    style={{
+                      width: "16px",
+                      height: "16px",
+                      border: "2px solid #94a3b8",
+                      borderTop: "2px solid #ffffff",
+                      borderRadius: "50%",
+                      animation: "spin 1s linear infinite",
+                    }}
+                  ></div>
+                  Salvataggio...
+                </>
+              ) : (
+                <>🚀 Completa Onboarding</>
+              )}
             </button>
           </div>
         </div>
@@ -738,7 +831,8 @@ export const OnboardingPage: React.FC = () => {
                 <strong>Orario:</strong> {availabilityData.availabilityHours}
               </p>
               <p>
-                <strong>Giorni:</strong> {availabilityData.preferredDays.join(', ')}
+                <strong>Giorni:</strong>{" "}
+                {availabilityData.preferredDays.join(", ")}
               </p>
               <p>
                 <strong>Frequenza:</strong> {availabilityData.meetingFrequency}

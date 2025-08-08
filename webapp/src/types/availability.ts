@@ -1,5 +1,9 @@
-export type AvailabilityHours = 'morning' | 'afternoon' | 'evening' | 'flexible';
-export type MeetingFrequency = 'weekly' | 'biweekly';
+export type AvailabilityHours =
+  | "morning"
+  | "afternoon"
+  | "evening"
+  | "flexible";
+export type MeetingFrequency = "weekly" | "biweekly";
 
 export interface AvailabilityData {
   availabilityHours: AvailabilityHours;
