@@ -52,7 +52,7 @@ export class DatabaseTest {
       }
 
       // Test 4: Verifica struttura user_profiles
-      const { data: schema, error: schemaError } = await supabase
+      const { error: schemaError } = await supabase
         .from("user_profiles")
         .select("*")
         .limit(0);

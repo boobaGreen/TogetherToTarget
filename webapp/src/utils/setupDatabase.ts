@@ -154,6 +154,7 @@ export { setupDatabase };
 
 // Se eseguito direttamente
 if (typeof window !== "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).setupDatabase = setupDatabase;
   console.log(
     "💡 Esegui setupDatabase() nella console per verificare il database"
