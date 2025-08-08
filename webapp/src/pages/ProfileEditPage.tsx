@@ -144,6 +144,7 @@ export const ProfileEditPage: React.FC = () => {
         <div style={{ display: "grid", gap: "25px" }}>
           {/* Basic Info */}
           <div
+            className="profile-form-section"
             style={{
               background: "white",
               padding: "30px",
@@ -236,6 +237,7 @@ export const ProfileEditPage: React.FC = () => {
 
           {/* Interests */}
           <div
+            className="profile-form-section"
             style={{
               background: "white",
               padding: "30px",
@@ -314,6 +316,7 @@ export const ProfileEditPage: React.FC = () => {
 
           {/* Goals */}
           <div
+            className="profile-form-section"
             style={{
               background: "white",
               padding: "30px",
@@ -375,6 +378,7 @@ export const ProfileEditPage: React.FC = () => {
 
           {/* Preferences */}
           <div
+            className="profile-form-section"
             style={{
               background: "white",
               padding: "30px",
@@ -481,6 +485,7 @@ export const ProfileEditPage: React.FC = () => {
 
           {/* Action Buttons */}
           <div
+            className="profile-form-buttons"
             style={{
               display: "flex",
               gap: "20px",
@@ -489,6 +494,7 @@ export const ProfileEditPage: React.FC = () => {
             }}
           >
             <button
+              className="profile-form-button"
               onClick={handleSave}
               style={{
                 background: "linear-gradient(135deg, #48bb78 0%, #38a169 100%)",
@@ -521,6 +527,7 @@ export const ProfileEditPage: React.FC = () => {
             </button>
 
             <button
+              className="profile-form-button"
               onClick={handleBack}
               style={{
                 background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",

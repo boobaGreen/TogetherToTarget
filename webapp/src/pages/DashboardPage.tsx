@@ -242,6 +242,7 @@ export const DashboardPage: React.FC = () => {
 
         {/* Main Content Grid */}
         <div
+          className="dashboard-main-grid"
           style={{
             display: "grid",
             gap: "20px",
@@ -251,6 +252,7 @@ export const DashboardPage: React.FC = () => {
         >
           {/* Goals Section */}
           <div
+            className="dashboard-goals-section"
             style={{
               background: "white",
               padding: "30px",
@@ -364,6 +366,7 @@ export const DashboardPage: React.FC = () => {
 
           {/* Activity Feed */}
           <div
+            className="dashboard-activity-section"
             style={{
               background: "white",
               padding: "30px",
