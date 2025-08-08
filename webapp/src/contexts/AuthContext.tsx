@@ -155,6 +155,58 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Reset password
+  const resetPassword = async (email: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      clearMessage();
+
+      const result = await AuthService.resetPassword(email);
+
+      if (result.error) {
+        setError(result.error);
+        return { error: result.error };
+      }
+
+      setMessage(
+        "Ti abbiamo inviato un'email con le istruzioni per reimpostare la password."
+      );
+      return { error: null };
+    } catch {
+      const errorMsg = "Errore durante l'invio dell'email di reset";
+      setError(errorMsg);
+      return { error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update password
+  const updatePassword = async (newPassword: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      clearMessage();
+
+      const result = await AuthService.updatePassword(newPassword);
+
+      if (result.error) {
+        setError(result.error);
+        return { error: result.error };
+      }
+
+      setMessage("Password aggiornata con successo!");
+      return { error: null };
+    } catch {
+      const errorMsg = "Errore durante l'aggiornamento della password";
+      setError(errorMsg);
+      return { error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Effect per inizializzare e ascoltare i cambiamenti di auth
   useEffect(() => {
     // Inizializzazione
@@ -213,6 +265,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loginWithGoogle,
     signup,
     logout,
+    resetPassword,
+    updatePassword,
     clearError,
     clearMessage,
   };

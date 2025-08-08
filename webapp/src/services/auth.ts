@@ -156,6 +156,42 @@ export class AuthService {
     }
   }
 
+  // Reset password - richiesta email di reset
+  static async resetPassword(email: string): Promise<{ error: string | null }> {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+
+      if (error) {
+        return { error: error.message };
+      }
+
+      return { error: null };
+    } catch {
+      return { error: "Errore durante l'invio dell'email di reset" };
+    }
+  }
+
+  // Update password - imposta nuova password
+  static async updatePassword(
+    newPassword: string
+  ): Promise<{ error: string | null }> {
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        return { error: error.message };
+      }
+
+      return { error: null };
+    } catch {
+      return { error: "Errore durante l'aggiornamento della password" };
+    }
+  }
+
   // Ottieni utente corrente
   static async getCurrentUser(): Promise<{
     user: DBUser | null;

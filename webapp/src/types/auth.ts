@@ -42,6 +42,8 @@ export interface AuthContextType {
     credentials: SignupCredentials
   ) => Promise<{ error: string | null; needsEmailConfirmation?: boolean }>;
   logout: () => Promise<{ error: string | null }>;
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
+  updatePassword: (newPassword: string) => Promise<{ error: string | null }>;
   clearError: () => void;
   clearMessage: () => void;
 }

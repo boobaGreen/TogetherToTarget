@@ -6,6 +6,8 @@ import { MainLayout } from "./components/MainLayout";
 import { LoginForm } from "./components/auth/LoginForm";
 import { SignupForm } from "./components/auth/SignupForm";
 import { EmailConfirmationPage } from "./pages/EmailConfirmationPage";
+import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { HomePage } from "./pages/HomePage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { OnboardingPage } from "./pages/OnboardingPage";
@@ -53,6 +55,11 @@ export const App: React.FC = () => {
             path="/email-confirmation"
             element={<EmailConfirmationPage />}
           />
+
+          {/* Password reset routes - accessibili senza autenticazione */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Onboarding - solo per utenti autenticati che non hanno completato l'onboarding */}
           <Route

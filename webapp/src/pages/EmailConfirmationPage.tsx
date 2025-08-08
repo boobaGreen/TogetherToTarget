@@ -4,7 +4,9 @@ import { supabase } from "../services/supabase";
 
 export const EmailConfirmationPage: React.FC = () => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading"
+  );
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -16,13 +18,18 @@ export const EmailConfirmationPage: React.FC = () => {
         console.log("🔄 Pagina di conferma email caricata");
 
         // Controlla se abbiamo già una sessione (conferma già avvenuta)
-        const { data: { session } } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
         if (session?.user) {
-          console.log("✅ Sessione già attiva, conferma completata:", session.user.id);
+          console.log(
+            "✅ Sessione già attiva, conferma completata:",
+            session.user.id
+          );
           setStatus("success");
           setMessage("Email confermata con successo! Benvenuto!");
-          
+
           timeoutId = setTimeout(() => {
             navigate("/dashboard");
           }, 2000);
@@ -33,14 +40,19 @@ export const EmailConfirmationPage: React.FC = () => {
         console.log("⏳ Aspettando conferma email...");
 
         // Listener per cambiamenti di stato auth
-        const { data: { subscription: authSubscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        const {
+          data: { subscription: authSubscription },
+        } = supabase.auth.onAuthStateChange((event, session) => {
           console.log("🔔 Auth state change nella conferma:", event);
-          
+
           if (event === "SIGNED_IN" && session?.user) {
-            console.log("✅ Email confermata via auth state change:", session.user.id);
+            console.log(
+              "✅ Email confermata via auth state change:",
+              session.user.id
+            );
             setStatus("success");
             setMessage("Email confermata con successo! Benvenuto!");
-            
+
             timeoutId = setTimeout(() => {
               navigate("/dashboard");
             }, 2000);
@@ -52,9 +64,10 @@ export const EmailConfirmationPage: React.FC = () => {
         // Timeout di sicurezza - se dopo 10 secondi non succede nulla, mostra errore
         setTimeout(() => {
           setStatus("error");
-          setMessage("Conferma email non rilevata. Se il problema persiste, prova a fare login manualmente.");
+          setMessage(
+            "Conferma email non rilevata. Se il problema persiste, prova a fare login manualmente."
+          );
         }, 10000);
-
       } catch (error) {
         console.error("Errore durante la conferma:", error);
         setStatus("error");

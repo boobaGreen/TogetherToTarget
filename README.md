@@ -54,18 +54,22 @@ npm run dev
 ### ✅ Features Implementate (MVP)
 
 #### Autenticazione Completa
+
 - ✅ Registrazione con email/password + conferma email
 - ✅ Login con Google OAuth
 - ✅ Gestione sessioni e stati di autenticazione
 - ✅ Sistema di conferma email funzionante
+- ✅ Reset password con email di verifica
 - ✅ UI responsive e user-friendly
 
 #### Sistema di Routing
+
 - ✅ Protezione delle route con autenticazione
 - ✅ Redirect automatici basati su stato utente
 - ✅ Gestione onboarding per nuovi utenti
 
 #### UI/UX
+
 - ✅ Design moderno e responsive
 - ✅ Componenti riutilizzabili
 - ✅ Feedback visivi (loading, errori, successi)
@@ -99,6 +103,7 @@ npm run dev
 ## 🛠️ Stato Tecnico Attuale
 
 ### Completato
+
 - ✅ Setup progetto React + TypeScript + Vite
 - ✅ Integrazione Supabase completa
 - ✅ Sistema di autenticazione robusto
@@ -107,6 +112,7 @@ npm run dev
 - ✅ Sistema di routing protetto
 
 ### Prossimi Passi
+
 - 🔧 Password dimenticata (reset password)
 - 🔧 Completamento onboarding
 - 🔧 Database schema per gruppi e matching
