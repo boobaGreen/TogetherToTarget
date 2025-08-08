@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import CategorySelector from "../components/onboarding/CategorySelector";
+import GoalInput from "../components/onboarding/GoalInput";
+import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import { CategoriesService } from "../services/categories";
 import type { Category } from "../types/categories";
+import type { GoalInputData } from "../types/goal";
+import type { ExperienceLevelData } from "../types/experience";
 
 export const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
@@ -11,6 +15,11 @@ export const OnboardingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
+  const [goalData, setGoalData] = useState<GoalInputData | null>(null);
+  const [isGoalValid, setIsGoalValid] = useState(false);
+  const [experienceData, setExperienceData] =
+    useState<ExperienceLevelData | null>(null);
+  const [isExperienceValid, setIsExperienceValid] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -351,6 +360,229 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
+  // Step 2: Inserimento obiettivo
+  if (currentStep === 2) {
+    return (
+      <div
+        style={{
+          fontFamily: "Inter, sans-serif",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1000px",
+            margin: "0 auto",
+            padding: "2rem 0",
+          }}
+        >
+          {/* Progress indicator */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <span style={{ color: "#667eea", fontWeight: "600" }}>
+                Passo 2 di 4
+              </span>
+              <span style={{ color: "#94a3b8" }}>•</span>
+              <span style={{ color: "#64748b" }}>
+                Descrivi il tuo obiettivo
+              </span>
+            </div>
+          </div>
+
+          {selectedCategory && (
+            <GoalInput
+              selectedCategory={{
+                id: selectedCategory.id,
+                name_it: selectedCategory.name_it,
+                name_en: selectedCategory.name_en,
+                emoji: selectedCategory.emoji,
+                color: selectedCategory.color,
+              }}
+              initialData={goalData || undefined}
+              onGoalChange={setGoalData}
+              onValidation={setIsGoalValid}
+            />
+          )}
+
+          {/* Navigation buttons */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              maxWidth: "800px",
+              margin: "2rem auto 0",
+              padding: "0 2rem",
+            }}
+          >
+            <button
+              onClick={prevStep}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #cbd5e1",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              ← Indietro
+            </button>
+
+            <button
+              onClick={nextStep}
+              disabled={!isGoalValid}
+              style={{
+                background: isGoalValid
+                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  : "#e2e8f0",
+                color: isGoalValid ? "white" : "#94a3b8",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: isGoalValid ? "pointer" : "not-allowed",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Continua →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 3: Livello di esperienza
+  if (currentStep === 3) {
+    return (
+      <div
+        style={{
+          fontFamily: "Inter, sans-serif",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1000px",
+            margin: "0 auto",
+            padding: "2rem 0",
+          }}
+        >
+          {/* Progress indicator */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <span style={{ color: "#667eea", fontWeight: "600" }}>
+                Passo 3 di 4
+              </span>
+              <span style={{ color: "#94a3b8" }}>•</span>
+              <span style={{ color: "#64748b" }}>Livello di esperienza</span>
+            </div>
+          </div>
+
+          {selectedCategory && goalData && (
+            <ExperienceLevelSelector
+              selectedCategory={{
+                id: selectedCategory.id,
+                name_it: selectedCategory.name_it,
+                name_en: selectedCategory.name_en,
+                emoji: selectedCategory.emoji,
+                color: selectedCategory.color,
+              }}
+              goalDescription={goalData.description}
+              initialData={experienceData || undefined}
+              onExperienceChange={setExperienceData}
+              onValidation={setIsExperienceValid}
+            />
+          )}
+
+          {/* Navigation buttons */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              maxWidth: "900px",
+              margin: "2rem auto 0",
+              padding: "0 2rem",
+            }}
+          >
+            <button
+              onClick={prevStep}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #cbd5e1",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              ← Indietro
+            </button>
+
+            <button
+              onClick={nextStep}
+              disabled={!isExperienceValid}
+              style={{
+                background: isExperienceValid
+                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  : "#e2e8f0",
+                color: isExperienceValid ? "white" : "#94a3b8",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: isExperienceValid ? "pointer" : "not-allowed",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Continua →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Placeholder per altri step
   return (
     <div
@@ -378,6 +610,21 @@ export const OnboardingPage: React.FC = () => {
         <p>
           Categoria selezionata: <strong>{selectedCategory?.name_it}</strong>
         </p>
+        {goalData && (
+          <p>
+            Obiettivo: <strong>{goalData.description}</strong>
+          </p>
+        )}
+        {experienceData && (
+          <div>
+            <p>
+              Livello: <strong>{experienceData.level}</strong>
+            </p>
+            <p>
+              Motivazione: <strong>{experienceData.motivation}</strong>
+            </p>
+          </div>
+        )}
 
         <div
           style={{
