@@ -7,6 +7,8 @@ import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
 import { CategoriesService } from "../services/categories";
 import { UserProfilesService } from "../services/userProfiles";
+import { DatabaseTest } from "../services/databaseTest";
+import { setupDatabase } from "../utils/setupDatabase";
 import type { Category } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
 import type { ExperienceLevelData } from "../types/experience";
@@ -33,7 +35,11 @@ export const OnboardingPage: React.FC = () => {
 
   useEffect(() => {
     loadCategories();
-  }, []);
+    // Test del database al caricamento (solo in sviluppo)
+    if (user && process.env.NODE_ENV === 'development') {
+      DatabaseTest.testConnection();
+    }
+  }, [user]);
 
   const loadCategories = async () => {
     try {
@@ -52,9 +58,9 @@ export const OnboardingPage: React.FC = () => {
   };
 
   const nextStep = async () => {
-    // Se siamo al passo 4 (indice 3) e tutti i dati sono validi, completa l'onboarding
+    // Se siamo al passo 4 (AvailabilitySettings, indice 4) e tutti i dati sono validi, completa l'onboarding
     if (
-      currentStep === 3 &&
+      currentStep === 4 &&
       selectedCategory &&
       goalData &&
       experienceData &&
@@ -76,29 +82,44 @@ export const OnboardingPage: React.FC = () => {
       !experienceData ||
       !availabilityData
     ) {
-      console.error("Dati mancanti per completare l'onboarding");
+      console.error("❌ Dati mancanti per completare l'onboarding");
+      console.log('Debug stato:', { 
+        user: !!user, 
+        selectedCategory: !!selectedCategory, 
+        goalData: !!goalData, 
+        experienceData: !!experienceData, 
+        availabilityData: !!availabilityData 
+      });
       return;
     }
 
     try {
       setIsSaving(true);
+      console.log('🚀 Avvio salvataggio profilo...');
 
       // Salva il profilo nel database
-      await UserProfilesService.createOrUpdateProfile(user.id, {
+      const savedProfile = await UserProfilesService.createOrUpdateProfile(user.id, {
         categoryId: selectedCategory.id,
         goalData,
         experienceData,
         availabilityData,
       });
 
-      console.log("✅ Profilo salvato con successo!");
+      console.log("✅ Profilo salvato con successo:", savedProfile);
 
       // Reindirizza alla pagina di successo
+      console.log('📄 Redirect a /onboarding-success');
       navigate("/onboarding-success");
     } catch (error) {
       console.error("❌ Errore nel salvataggio del profilo:", error);
-      // TODO: Mostrare un messaggio di errore all'utente
-      alert("Errore nel salvataggio del profilo. Riprova.");
+      
+      // Messaggio di errore più dettagliato
+      let errorMessage = 'Errore nel salvataggio del profilo.';
+      if (error instanceof Error) {
+        errorMessage += ` Dettagli: ${error.message}`;
+      }
+      
+      alert(errorMessage + ' Controlla la console per maggiori dettagli.');
     } finally {
       setIsSaving(false);
     }
@@ -274,6 +295,26 @@ export const OnboardingPage: React.FC = () => {
               chat di gruppo.
             </p>
           </div>
+
+          {/* Debug button solo in development */}
+          {process.env.NODE_ENV === 'development' && (
+            <button
+              onClick={() => setupDatabase()}
+              style={{
+                background: "#f56565",
+                color: "white",
+                border: "none",
+                padding: "10px 20px",
+                borderRadius: "6px",
+                fontSize: "0.9rem",
+                cursor: "pointer",
+                marginBottom: "15px",
+                width: "100%"
+              }}
+            >
+              🔧 [DEBUG] Verifica Database
+            </button>
+          )}
 
           <button
             onClick={nextStep}

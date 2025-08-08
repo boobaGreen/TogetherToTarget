@@ -49,6 +49,9 @@ export class UserProfilesService {
     profileData: CreateUserProfileData
   ): Promise<UserProfile> {
     try {
+      console.log("🚀 Inizio salvataggio profilo per utente:", userId);
+      console.log("📋 Dati da salvare:", profileData);
+
       const { categoryId, goalData, experienceData, availabilityData } =
         profileData;
 
@@ -73,7 +76,12 @@ export class UserProfilesService {
         updated_at: new Date().toISOString(),
       };
 
+      console.log("💾 Dati preparati per DB:", dbData);
+
+      console.log("💾 Dati preparati per DB:", dbData);
+
       // Usa upsert per creare o aggiornare
+      console.log("📤 Esecuzione upsert su user_profiles...");
       const { data, error } = await supabase
         .from("user_profiles")
         .upsert(dbData, {
@@ -84,10 +92,11 @@ export class UserProfilesService {
         .single();
 
       if (error) {
-        console.error("Errore nel salvataggio del profilo:", error);
+        console.error("❌ Errore Supabase:", error);
         throw new Error(`Impossibile salvare il profilo: ${error.message}`);
       }
 
+      console.log("✅ Profilo salvato con successo:", data);
       return data;
     } catch (error) {
       console.error("Errore nel servizio profilo:", error);
