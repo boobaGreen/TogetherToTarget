@@ -81,3 +81,39 @@ button:hover {
   background-color: #f7fafc;
   border-color: #cbd5e0;
 }
+
+/* Loading styles */
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+}
+
+.loading-spinner {
+  text-align: center;
+}
+
+.loading-spinner span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+.loading-spinner p {
+  color: #718096 !important;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

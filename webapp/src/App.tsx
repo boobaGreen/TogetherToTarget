@@ -1,102 +1,89 @@
-import { SupabaseTest } from "./components/SupabaseTest";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { MainLayout } from "./components/MainLayout";
+import { LoginForm } from "./components/auth/LoginForm";
+import { SignupForm } from "./components/auth/SignupForm";
+import { EmailConfirmationPage } from "./pages/EmailConfirmationPage";
+import { HomePage } from "./pages/HomePage";
+import { DashboardPage } from "./pages/DashboardPage";
+import { OnboardingPage } from "./pages/OnboardingPage";
 
-function App() {
+// Import degli stili
+import "./index.css";
+import "./styles/auth.css";
+
+export const App: React.FC = () => {
   return (
-    <div
-      style={{
-        fontFamily: "Inter, sans-serif",
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)",
-        color: "#1a202c",
-      }}
-    >
-      <div
-        style={{ padding: "40px 20px", maxWidth: "800px", margin: "0 auto" }}
-      >
-        <header style={{ textAlign: "center", marginBottom: "40px" }}>
-          <h1
-            style={{
-              fontSize: "3rem",
-              marginBottom: "1rem",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "15px"
-            }}
-          >
-            <span style={{ fontSize: "3.5rem" }}>🎯</span>
-            <span style={{
-              background: "linear-gradient(135deg, #4299e1 0%, #667eea 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              color: "#1a202c"
-            }}>
-              TogetherToTarget
-            </span>
-          </h1>
-          <p
-            style={{
-              fontSize: "1.2rem",
-              color: "#4a5568",
-              marginBottom: "2rem",
-              fontWeight: "500",
-            }}
-          >
-            Welcome to TTT - Your motivational group app!
-          </p>
-        </header>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          {/* Pagina principale per utenti non autenticati */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
 
-        <div
-          style={{
-            background: "white",
-            padding: "30px",
-            borderRadius: "12px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.07)",
-            marginBottom: "20px",
-            border: "1px solid #e2e8f0",
-          }}
-        >
-          <h2
-            style={{
-              marginBottom: "20px",
-              color: "#1a202c",
-              fontSize: "1.5rem",
-              fontWeight: "600",
-            }}
-          >
-            🔧 Setup Status:
-          </h2>
-          <div style={{ display: "grid", gap: "10px" }}>
-            <p style={{ color: "#2d3748", margin: "5px 0" }}>
-              ✅ React + TypeScript
-            </p>
-            <p style={{ color: "#2d3748", margin: "5px 0" }}>✅ Vite bundler</p>
-            <p style={{ color: "#2d3748", margin: "5px 0" }}>
-              ✅ Supabase client
-            </p>
-            <p style={{ color: "#2d3748", margin: "5px 0" }}>✅ React Router</p>
-            <p style={{ color: "#2d3748", margin: "5px 0" }}>✅ React Query</p>
-            <p style={{ color: "#4299e1", margin: "5px 0", fontWeight: "600" }}>
-              📡 Supabase connection test:
-            </p>
-          </div>
-        </div>
+          {/* Auth routes - solo per utenti non autenticati */}
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <LoginForm />
+              </ProtectedRoute>
+            }
+          />
 
-        <div
-          style={{
-            background: "white",
-            borderRadius: "12px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.07)",
-            border: "1px solid #e2e8f0",
-          }}
-        >
-          <SupabaseTest />
-        </div>
-      </div>
-    </div>
+          <Route
+            path="/signup"
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <SignupForm />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Email confirmation route - accessibile senza autenticazione */}
+          <Route
+            path="/email-confirmation"
+            element={<EmailConfirmationPage />}
+          />
+
+          {/* Onboarding - solo per utenti autenticati che non hanno completato l'onboarding */}
+          <Route
+            path="/onboarding"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={false}>
+                <MainLayout>
+                  <OnboardingPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Dashboard - solo per utenti autenticati che hanno completato l'onboarding */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={true}>
+                <MainLayout>
+                  <DashboardPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Route catch-all - redirect alla home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
