@@ -22,7 +22,16 @@ TogheterToTarget/
 │   │   └── types/                     # TypeScript types
 │   ├── package.json
 │   └── ...
-├── mobile/                             # Future: React Native app
+├── mobile/                             # React Native + Expo app (TypeScript)
+│   ├── src/
+│   │   ├── components/                 # Componenti riutilizzabili
+│   │   ├── contexts/                   # AuthContext per gestione stato
+│   │   ├── screens/                    # Schermate (Login, SignUp, Dashboard)
+│   │   ├── services/                   # Supabase integration
+│   │   ├── types/                      # TypeScript types
+│   │   └── Navigation.tsx              # Stack Navigator
+│   ├── package.json
+│   └── README.md
 └── backend/                            # Future: API custom (se necessario)
 ```
 
@@ -34,6 +43,15 @@ TogheterToTarget/
 cd webapp
 npm install
 npm run dev
+```
+
+### Mobile App (React Native + Expo)
+
+```bash
+cd mobile
+npm install
+npm start       # Per development con QR code
+npm run web     # Per test su browser
 ```
 
 ### Supabase Configuration
@@ -51,16 +69,24 @@ npm run dev
 
 **TogetherToTarget** è un'app motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
 
-### ✅ Features Implementate (MVP)
+### ✅ Features Implementate
 
-#### Autenticazione Completa
-
+#### Web App (React)
 - ✅ Registrazione con email/password + conferma email
 - ✅ Login con Google OAuth
-- ✅ Gestione sessioni e stati di autenticazione
-- ✅ Sistema di conferma email funzionante
 - ✅ Reset password con email di verifica
+- ✅ Gestione sessioni e stati di autenticazione
+- ✅ Sistema di routing protetto
 - ✅ UI responsive e user-friendly
+
+#### Mobile App (React Native + Expo)
+- ✅ Setup React Native con TypeScript
+- ✅ Autenticazione Supabase (email/password)
+- ✅ Navigation stack (Auth/App)
+- ✅ Gestione sessioni con AsyncStorage
+- ✅ UI nativa iOS/Android style
+- 🔄 Google OAuth integration (in corso)
+- 🔄 Password reset (in corso)
 
 #### Sistema di Routing
 
@@ -86,37 +112,50 @@ npm run dev
 
 ### Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: CSS custom con design system
+- **Frontend Web**: React 18 + TypeScript + Vite
+- **Frontend Mobile**: React Native + Expo + TypeScript
+- **Styling**: CSS custom (web) + React Native StyleSheet (mobile)
 - **Backend**: Supabase (Database + Auth + Realtime)
 - **Authentication**: Supabase Auth + Google OAuth
-- **Deployment**: Vercel (frontend)
+- **Navigation**: React Router (web) + React Navigation (mobile)
+- **Storage**: AsyncStorage (mobile) + localStorage (web)
+- **Deployment**: Vercel (web) + EAS/App Stores (mobile)
 
 ## 📱 Roadmap
 
-1. **✅ Sistema di Autenticazione** (completato)
-2. **🔄 Sistema Onboarding** (in sviluppo)
-3. **📋 Matching e Gruppi** (pianificato)
-4. **💬 Chat e Comunicazione** (pianificato)
-5. **📱 React Native Mobile** (futuro)
+1. **✅ Sistema di Autenticazione Web** (completato)
+2. **🔄 Sistema di Autenticazione Mobile** (in completamento)
+3. **📋 Sistema Onboarding** (pianificato)
+4. **� Matching e Gruppi** (pianificato)
+5. **💬 Chat e Comunicazione** (pianificato)
+6. **� Deploy Production** (futuro)
 
 ## 🛠️ Stato Tecnico Attuale
 
 ### Completato
 
-- ✅ Setup progetto React + TypeScript + Vite
-- ✅ Integrazione Supabase completa
-- ✅ Sistema di autenticazione robusto
+- ✅ Setup progetto React + TypeScript + Vite (web)
+- ✅ Setup React Native + Expo + TypeScript (mobile)
+- ✅ Integrazione Supabase completa (web + mobile)
+- ✅ Sistema di autenticazione robusto (web)
+- ✅ Autenticazione base mobile (email/password)
 - ✅ Gestione stati e contesti React
-- ✅ Componenti UI base
-- ✅ Sistema di routing protetto
+- ✅ Sistema di routing protetto (web + mobile)
+- ✅ Componenti UI base (web + mobile)
+
+### In Corso
+
+- 🔄 Google OAuth su mobile
+- � Password reset su mobile
+- 🔄 UI/UX alignment web-mobile
+- 🔄 Design system unificato
 
 ### Prossimi Passi
 
-- 🔧 Password dimenticata (reset password)
 - 🔧 Completamento onboarding
 - 🔧 Database schema per gruppi e matching
 - 🔧 Sistema di categorie e obiettivi
+- 🔧 Deploy e testing
 
 ---
 
