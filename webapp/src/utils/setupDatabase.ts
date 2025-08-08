@@ -1,4 +1,4 @@
-import { supabase } from '../services/supabase';
+import { supabase } from "../services/supabase";
 
 /**
  * Script per verificare e creare le tabelle del database
@@ -6,39 +6,48 @@ import { supabase } from '../services/supabase';
  */
 
 async function setupDatabase() {
-  console.log('🚀 Inizio setup database...');
+  console.log("🚀 Inizio setup database...");
 
   try {
     // 1. Verifica connessione
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError) {
-      console.error('❌ Errore autenticazione:', authError);
+      console.error("❌ Errore autenticazione:", authError);
       return;
     }
-    console.log('✅ Connesso come:', user?.email || 'utente anonimo');
+    console.log("✅ Connesso come:", user?.email || "utente anonimo");
 
     // 2. Verifica tabella categories
     const { data: categories, error: catError } = await supabase
-      .from('categories')
-      .select('id, name_it, name_en')
+      .from("categories")
+      .select("id, name_it, name_en")
       .limit(5);
 
     if (catError) {
-      console.error('❌ Tabella categories non accessibile:', catError);
+      console.error("❌ Tabella categories non accessibile:", catError);
       return;
     }
-    console.log('✅ Tabella categories OK -', categories.length, 'categorie trovate');
+    console.log(
+      "✅ Tabella categories OK -",
+      categories.length,
+      "categorie trovate"
+    );
 
     // 3. Verifica tabella user_profiles
     const { data: profiles, error: profileError } = await supabase
-      .from('user_profiles')
-      .select('id')
+      .from("user_profiles")
+      .select("id")
       .limit(1);
 
     if (profileError) {
-      console.error('❌ Tabella user_profiles non esiste:', profileError);
-      console.log('💡 AZIONE NECESSARIA: Eseguire lo script SQL create_groups_system.sql nel dashboard Supabase');
-      
+      console.error("❌ Tabella user_profiles non esiste:", profileError);
+      console.log(
+        "💡 AZIONE NECESSARIA: Eseguire lo script SQL create_groups_system.sql nel dashboard Supabase"
+      );
+
       // Mostra il comando SQL da eseguire
       console.log(`
 📋 ISTRUZIONI PER CREARE LE TABELLE:
@@ -57,12 +66,17 @@ cd webapp && supabase db push (se hai Supabase CLI installato)
       return;
     }
 
-    console.log('✅ Tabella user_profiles OK -', profiles.length, 'profili trovati');
+    console.log(
+      "✅ Tabella user_profiles OK -",
+      profiles.length,
+      "profili trovati"
+    );
 
     // 4. Test completo schema user_profiles
     const { error: schemaError } = await supabase
-      .from('user_profiles')
-      .select(`
+      .from("user_profiles")
+      .select(
+        `
         id,
         category_id,
         goal_description,
@@ -75,57 +89,63 @@ cd webapp && supabase db push (se hai Supabase CLI installato)
         is_available_for_matching,
         created_at,
         updated_at
-      `)
+      `
+      )
       .limit(0);
 
     if (schemaError) {
-      console.error('❌ Schema user_profiles incompleto:', schemaError);
-      console.log('💡 Potrebbe essere necessario aggiornare lo schema della tabella');
+      console.error("❌ Schema user_profiles incompleto:", schemaError);
+      console.log(
+        "💡 Potrebbe essere necessario aggiornare lo schema della tabella"
+      );
       return;
     }
 
-    console.log('✅ Schema user_profiles completo');
+    console.log("✅ Schema user_profiles completo");
 
     // 5. Verifica che l'utente corrente possa inserire dati
     if (user) {
-      console.log('🧪 Test permessi scrittura...');
-      
+      console.log("🧪 Test permessi scrittura...");
+
       const testData = {
         id: user.id,
         category_id: 1,
-        goal_description: 'TEST - rimuovere',
-        experience_level: 'beginner' as const,
-        preferred_meeting_times: ['test'],
-        timezone: 'Europe/Rome',
-        availability_hours: 'flexible',
+        goal_description: "TEST - rimuovere",
+        experience_level: "beginner" as const,
+        preferred_meeting_times: ["test"],
+        timezone: "Europe/Rome",
+        availability_hours: "flexible",
         matching_preferences: {},
-        is_available_for_matching: false // Per identificare come test
+        is_available_for_matching: false, // Per identificare come test
       };
 
       const { error: insertError } = await supabase
-        .from('user_profiles')
-        .upsert(testData, { onConflict: 'id' });
+        .from("user_profiles")
+        .upsert(testData, { onConflict: "id" });
 
       if (insertError) {
-        console.error('❌ Errore permessi scrittura:', insertError);
-        console.log('💡 Verifica le Row Level Security policies nella tabella user_profiles');
+        console.error("❌ Errore permessi scrittura:", insertError);
+        console.log(
+          "💡 Verifica le Row Level Security policies nella tabella user_profiles"
+        );
         return;
       }
 
       // Cleanup
       await supabase
-        .from('user_profiles')
+        .from("user_profiles")
         .delete()
-        .eq('id', user.id)
-        .eq('goal_description', 'TEST - rimuovere');
+        .eq("id", user.id)
+        .eq("goal_description", "TEST - rimuovere");
 
-      console.log('✅ Permessi scrittura OK');
+      console.log("✅ Permessi scrittura OK");
     }
 
-    console.log('🎉 DATABASE PRONTO! Tutte le verifiche completate con successo.');
-
+    console.log(
+      "🎉 DATABASE PRONTO! Tutte le verifiche completate con successo."
+    );
   } catch (error) {
-    console.error('❌ Errore generale setup database:', error);
+    console.error("❌ Errore generale setup database:", error);
   }
 }
 
@@ -133,7 +153,9 @@ cd webapp && supabase db push (se hai Supabase CLI installato)
 export { setupDatabase };
 
 // Se eseguito direttamente
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   (window as any).setupDatabase = setupDatabase;
-  console.log('💡 Esegui setupDatabase() nella console per verificare il database');
+  console.log(
+    "💡 Esegui setupDatabase() nella console per verificare il database"
+  );
 }

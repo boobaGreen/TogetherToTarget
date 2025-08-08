@@ -36,7 +36,7 @@ export const OnboardingPage: React.FC = () => {
   useEffect(() => {
     loadCategories();
     // Test del database al caricamento (solo in sviluppo)
-    if (user && process.env.NODE_ENV === 'development') {
+    if (user && process.env.NODE_ENV === "development") {
       DatabaseTest.testConnection();
     }
   }, [user]);
@@ -83,43 +83,46 @@ export const OnboardingPage: React.FC = () => {
       !availabilityData
     ) {
       console.error("❌ Dati mancanti per completare l'onboarding");
-      console.log('Debug stato:', { 
-        user: !!user, 
-        selectedCategory: !!selectedCategory, 
-        goalData: !!goalData, 
-        experienceData: !!experienceData, 
-        availabilityData: !!availabilityData 
+      console.log("Debug stato:", {
+        user: !!user,
+        selectedCategory: !!selectedCategory,
+        goalData: !!goalData,
+        experienceData: !!experienceData,
+        availabilityData: !!availabilityData,
       });
       return;
     }
 
     try {
       setIsSaving(true);
-      console.log('🚀 Avvio salvataggio profilo...');
+      console.log("🚀 Avvio salvataggio profilo...");
 
       // Salva il profilo nel database
-      const savedProfile = await UserProfilesService.createOrUpdateProfile(user.id, {
-        categoryId: selectedCategory.id,
-        goalData,
-        experienceData,
-        availabilityData,
-      });
+      const savedProfile = await UserProfilesService.createOrUpdateProfile(
+        user.id,
+        {
+          categoryId: selectedCategory.id,
+          goalData,
+          experienceData,
+          availabilityData,
+        }
+      );
 
       console.log("✅ Profilo salvato con successo:", savedProfile);
 
       // Reindirizza alla pagina di successo
-      console.log('📄 Redirect a /onboarding-success');
+      console.log("📄 Redirect a /onboarding-success");
       navigate("/onboarding-success");
     } catch (error) {
       console.error("❌ Errore nel salvataggio del profilo:", error);
-      
+
       // Messaggio di errore più dettagliato
-      let errorMessage = 'Errore nel salvataggio del profilo.';
+      let errorMessage = "Errore nel salvataggio del profilo.";
       if (error instanceof Error) {
         errorMessage += ` Dettagli: ${error.message}`;
       }
-      
-      alert(errorMessage + ' Controlla la console per maggiori dettagli.');
+
+      alert(errorMessage + " Controlla la console per maggiori dettagli.");
     } finally {
       setIsSaving(false);
     }
@@ -297,7 +300,7 @@ export const OnboardingPage: React.FC = () => {
           </div>
 
           {/* Debug button solo in development */}
-          {process.env.NODE_ENV === 'development' && (
+          {process.env.NODE_ENV === "development" && (
             <button
               onClick={() => setupDatabase()}
               style={{
@@ -309,7 +312,7 @@ export const OnboardingPage: React.FC = () => {
                 fontSize: "0.9rem",
                 cursor: "pointer",
                 marginBottom: "15px",
-                width: "100%"
+                width: "100%",
               }}
             >
               🔧 [DEBUG] Verifica Database
