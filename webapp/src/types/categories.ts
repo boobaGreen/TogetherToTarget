@@ -11,9 +11,41 @@ export interface Category {
   created_at: string;
 }
 
+export interface Subcategory {
+  id: string;
+  category_id: string;
+  name_it: string;
+  name_en: string;
+  description_it: string;
+  description_en: string;
+  emoji: string;
+  difficulty_level: number;
+  estimated_duration_days: number;
+  group_size_optimal: number;
+  psychological_benefits: string[];
+  validation_source: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  // Dati della categoria padre (da view)
+  category_name_it?: string;
+  category_name_en?: string;
+  category_emoji?: string;
+  category_color?: string;
+}
+
 export interface CategorySelectorProps {
   categories: Category[];
   selectedCategoryId?: number;
   onCategorySelect: (category: Category) => void;
+  loading?: boolean;
+}
+
+export interface SubcategorySelectorProps {
+  selectedCategory: Category;
+  subcategories: Subcategory[];
+  selectedSubcategoryId?: string;
+  onSubcategorySelect: (subcategory: Subcategory) => void;
   loading?: boolean;
 }
