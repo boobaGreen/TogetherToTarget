@@ -3,10 +3,12 @@ import { useAuth } from "../hooks/useAuth";
 import CategorySelector from "../components/onboarding/CategorySelector";
 import GoalInput from "../components/onboarding/GoalInput";
 import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
+import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
 import { CategoriesService } from "../services/categories";
 import type { Category } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
 import type { ExperienceLevelData } from "../types/experience";
+import type { AvailabilityData } from "../types/availability";
 
 export const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
@@ -20,6 +22,8 @@ export const OnboardingPage: React.FC = () => {
   const [experienceData, setExperienceData] =
     useState<ExperienceLevelData | null>(null);
   const [isExperienceValid, setIsExperienceValid] = useState(false);
+  const [availabilityData, setAvailabilityData] = useState<AvailabilityData | null>(null);
+  const [isAvailabilityValid, setIsAvailabilityValid] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -583,6 +587,108 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
+  // Step 4: Disponibilità e preferenze
+  if (currentStep === 4) {
+    return (
+      <div
+        style={{
+          fontFamily: "Inter, sans-serif",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          padding: "20px",
+        }}
+      >
+        <div style={{
+          maxWidth: "1000px",
+          margin: "0 auto",
+          padding: "2rem 0"
+        }}>
+          {/* Progress indicator */}
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "2rem"
+          }}>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              background: "white",
+              padding: "0.75rem 1.5rem",
+              borderRadius: "50px",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+            }}>
+              <span style={{ color: "#667eea", fontWeight: "600" }}>Passo 4 di 4</span>
+              <span style={{ color: "#94a3b8" }}>•</span>
+              <span style={{ color: "#64748b" }}>Disponibilità</span>
+            </div>
+          </div>
+
+          {selectedCategory && goalData && experienceData && (
+            <AvailabilitySettings
+              selectedCategory={{
+                id: selectedCategory.id,
+                name_it: selectedCategory.name_it,
+                emoji: selectedCategory.emoji,
+                color: selectedCategory.color
+              }}
+              goalDescription={goalData.description}
+              experienceLevel={experienceData.level}
+              initialData={availabilityData || undefined}
+              onAvailabilityChange={setAvailabilityData}
+              onValidation={setIsAvailabilityValid}
+            />
+          )}
+
+          {/* Navigation buttons */}
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            maxWidth: "900px",
+            margin: "2rem auto 0",
+            padding: "0 2rem"
+          }}>
+            <button
+              onClick={prevStep}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #cbd5e1",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+            >
+              ← Indietro
+            </button>
+
+            <button
+              onClick={nextStep}
+              disabled={!isAvailabilityValid}
+              style={{
+                background: isAvailabilityValid 
+                  ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" 
+                  : "#e2e8f0",
+                color: isAvailabilityValid ? "white" : "#94a3b8",
+                border: "none",
+                padding: "12px 32px",
+                borderRadius: "8px",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                cursor: isAvailabilityValid ? "pointer" : "not-allowed",
+                transition: "all 0.2s ease"
+              }}
+            >
+              🚀 Completa Onboarding
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Placeholder per altri step
   return (
     <div
@@ -607,24 +713,39 @@ export const OnboardingPage: React.FC = () => {
       >
         <h2>🚧 Step {currentStep}</h2>
         <p>Stiamo costruendo questo step...</p>
-        <p>
-          Categoria selezionata: <strong>{selectedCategory?.name_it}</strong>
-        </p>
-        {goalData && (
+        <div style={{ textAlign: "left", maxWidth: "600px", margin: "0 auto" }}>
           <p>
-            Obiettivo: <strong>{goalData.description}</strong>
+            <strong>Categoria:</strong> {selectedCategory?.name_it}
           </p>
-        )}
-        {experienceData && (
-          <div>
+          {goalData && (
             <p>
-              Livello: <strong>{experienceData.level}</strong>
+              <strong>Obiettivo:</strong> {goalData.description}
             </p>
-            <p>
-              Motivazione: <strong>{experienceData.motivation}</strong>
-            </p>
-          </div>
-        )}
+          )}
+          {experienceData && (
+            <div>
+              <p>
+                <strong>Livello:</strong> {experienceData.level}
+              </p>
+              <p>
+                <strong>Motivazione:</strong> {experienceData.motivation}
+              </p>
+            </div>
+          )}
+          {availabilityData && (
+            <div>
+              <p>
+                <strong>Orario:</strong> {availabilityData.availabilityHours}
+              </p>
+              <p>
+                <strong>Giorni:</strong> {availabilityData.preferredDays.join(', ')}
+              </p>
+              <p>
+                <strong>Frequenza:</strong> {availabilityData.meetingFrequency}
+              </p>
+            </div>
+          )}
+        </div>
 
         <div
           style={{
