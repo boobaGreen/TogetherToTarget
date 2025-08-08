@@ -263,6 +263,17 @@
 @media (max-width: 768px) {
   .header-content {
     padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .logo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .logo-text {
+    font-size: 1.25rem;
   }
 
   .user-name {
@@ -271,18 +282,64 @@
 
   .user-menu {
     gap: 0.5rem;
-  }
-
-  .logo-text {
-    font-size: 1.25rem;
+    flex-shrink: 0;
   }
 
   .user-dropdown {
     min-width: 200px;
-    right: -1rem;
+    right: 0;
+    margin-top: 0.25rem;
   }
 
   .user-info {
     padding: 0.25rem;
+  }
+
+  .user-avatar,
+  .user-avatar-placeholder {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0.75rem;
+  }
+
+  .logo-text {
+    font-size: 1.125rem;
+  }
+
+  .user-avatar,
+  .user-avatar-placeholder {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.875rem;
+  }
+
+  .user-dropdown {
+    min-width: 180px;
+    right: -0.5rem;
+  }
+
+  .dropdown-item {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Fix per landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-header {
+    position: static;
+  }
+
+  .header-content {
+    padding: 0.5rem 1rem;
+  }
+
+  .main-content.with-header {
+    padding-top: 0;
   }
 }

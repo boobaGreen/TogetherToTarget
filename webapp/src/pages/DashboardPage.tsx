@@ -21,6 +21,7 @@ export const DashboardPage: React.FC = () => {
       }}
     >
       <div
+        className="dashboard-container"
         style={{ padding: "40px 20px", maxWidth: "1200px", margin: "0 auto" }}
       >
         {/* Demo Banner */}
@@ -121,6 +122,7 @@ export const DashboardPage: React.FC = () => {
 
         {/* Dashboard Content */}
         <div
+          className="dashboard-cards"
           style={{
             display: "grid",
             gap: "20px",
@@ -129,6 +131,7 @@ export const DashboardPage: React.FC = () => {
         >
           {/* Stats Cards */}
           <div
+            className="dashboard-card"
             style={{
               background: "white",
               padding: "25px",
@@ -139,6 +142,7 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <h3
+              className="dashboard-card-title"
               style={{
                 margin: "0 0 15px 0",
                 color: "#1a202c",
@@ -148,6 +152,7 @@ export const DashboardPage: React.FC = () => {
               🎯 Obiettivi Attivi
             </h3>
             <div
+              className="dashboard-card-icon"
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
@@ -161,6 +166,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div
+            className="dashboard-card"
             style={{
               background: "white",
               padding: "25px",
@@ -171,6 +177,7 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <h3
+              className="dashboard-card-title"
               style={{
                 margin: "0 0 15px 0",
                 color: "#1a202c",
@@ -180,6 +187,7 @@ export const DashboardPage: React.FC = () => {
               👥 Partner Collegati
             </h3>
             <div
+              className="dashboard-card-icon"
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
@@ -195,6 +203,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div
+            className="dashboard-card"
             style={{
               background: "white",
               padding: "25px",
@@ -205,6 +214,7 @@ export const DashboardPage: React.FC = () => {
             }}
           >
             <h3
+              className="dashboard-card-title"
               style={{
                 margin: "0 0 15px 0",
                 color: "#1a202c",
@@ -214,6 +224,7 @@ export const DashboardPage: React.FC = () => {
               📈 Progresso
             </h3>
             <div
+              className="dashboard-card-icon"
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",

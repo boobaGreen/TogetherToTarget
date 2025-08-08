@@ -41,6 +41,7 @@ export const ProfileEditPage: React.FC = () => {
       }}
     >
       <div
+        className="profile-edit-container"
         style={{ padding: "40px 20px", maxWidth: "800px", margin: "0 auto" }}
       >
         {/* Demo Banner */}

@@ -154,6 +154,7 @@ export const OnboardingPage: React.FC = () => {
         }}
       >
         <div
+          className="onboarding-container"
           style={{
             background: "white",
             padding: "40px",
@@ -166,6 +167,7 @@ export const OnboardingPage: React.FC = () => {
           }}
         >
           <h1
+            className="onboarding-title"
             style={{
               fontSize: "2.5rem",
               marginBottom: "1rem",
@@ -176,7 +178,9 @@ export const OnboardingPage: React.FC = () => {
               gap: "15px",
             }}
           >
-            <span style={{ fontSize: "3rem" }}>🎯</span>
+            <span className="onboarding-emoji" style={{ fontSize: "3rem" }}>
+              🎯
+            </span>
             <span
               style={{
                 background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",

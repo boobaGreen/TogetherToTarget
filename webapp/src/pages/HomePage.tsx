@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { SupabaseTest } from "../components/SupabaseTest";
 import { useAuth } from "../hooks/useAuth";
+import "../utils/debugUsers"; // Import per debug utilities
+import "../utils/bypassEmail"; // Import per bypass email (TESTING ONLY)
 
 export const HomePage: React.FC = () => {
   const { message, clearMessage } = useAuth();
@@ -15,10 +17,15 @@ export const HomePage: React.FC = () => {
       }}
     >
       <div
+        className="home-container"
         style={{ padding: "40px 20px", maxWidth: "800px", margin: "0 auto" }}
       >
-        <header style={{ textAlign: "center", marginBottom: "40px" }}>
+        <header
+          className="home-header"
+          style={{ textAlign: "center", marginBottom: "40px" }}
+        >
           <h1
+            className="home-title"
             style={{
               fontSize: "3rem",
               marginBottom: "1rem",
@@ -29,7 +36,9 @@ export const HomePage: React.FC = () => {
               gap: "15px",
             }}
           >
-            <span style={{ fontSize: "3.5rem" }}>🎯</span>
+            <span className="home-title-emoji" style={{ fontSize: "3.5rem" }}>
+              🎯
+            </span>
             <span
               style={{
                 background: "linear-gradient(135deg, #4299e1 0%, #667eea 100%)",
@@ -42,6 +51,7 @@ export const HomePage: React.FC = () => {
             </span>
           </h1>
           <p
+            className="home-subtitle"
             style={{
               fontSize: "1.2rem",
               color: "#4a5568",
@@ -94,6 +104,7 @@ export const HomePage: React.FC = () => {
 
           {/* Call to Action */}
           <div
+            className="home-cta-buttons"
             style={{
               display: "flex",
               gap: "1rem",
@@ -103,6 +114,7 @@ export const HomePage: React.FC = () => {
           >
             <Link
               to="/signup"
+              className="home-cta-button"
               style={{
                 background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                 color: "white",
@@ -125,6 +137,7 @@ export const HomePage: React.FC = () => {
 
             <Link
               to="/login"
+              className="home-cta-button"
               style={{
                 border: "2px solid #667eea",
                 color: "#667eea",

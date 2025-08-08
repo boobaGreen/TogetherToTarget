@@ -1,4 +1,6 @@
 /* TTT - TogetherToTarget Styles */
+@import "./styles/mobile-fixes.css";
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -25,6 +27,13 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
   color: #1a202c;
+
+  /* Fix per iOS/Safari viewport */
+  min-height: -webkit-fill-available;
+
+  /* Previeni zoom su input mobile */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #root {
