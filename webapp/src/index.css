@@ -1,0 +1,83 @@
+/* TTT - TogetherToTarget Styles */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Forziamo tema chiaro */
+  color-scheme: light;
+  color: #1a202c;
+  background-color: #f7fafc;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+  color: #1a202c;
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #1a202c !important;
+  margin: 0;
+}
+
+p,
+li,
+div,
+span {
+  color: #2d3748 !important;
+}
+
+/* Links */
+a {
+  font-weight: 500;
+  color: #3182ce;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #2c5aa0;
+  text-decoration: underline;
+}
+
+/* Buttons */
+button {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #1a202c;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
