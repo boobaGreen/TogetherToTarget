@@ -54,8 +54,13 @@ export class UserProfilesService {
       console.log("🚀 Inizio salvataggio profilo per utente:", userId);
       console.log("📋 Dati da salvare:", profileData);
 
-      const { categoryId, subcategoryId, goalData, experienceData, availabilityData } =
-        profileData;
+      const {
+        categoryId,
+        subcategoryId,
+        goalData,
+        experienceData,
+        availabilityData,
+      } = profileData;
 
       // Prepara i dati per il database
       const dbData = {

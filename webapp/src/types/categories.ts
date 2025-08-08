@@ -12,8 +12,8 @@ export interface Category {
 }
 
 export interface Subcategory {
-  id: string;
-  category_id: string;
+  id: string; // UUID
+  category_id: number; // INTEGER che fa riferimento a categories.id
   name_it: string;
   name_en: string;
   description_it: string;

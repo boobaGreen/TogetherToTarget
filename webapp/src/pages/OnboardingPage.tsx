@@ -24,9 +24,8 @@ export const OnboardingPage: React.FC = () => {
     null
   );
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState<Subcategory | null>(
-    null
-  );
+  const [selectedSubcategory, setSelectedSubcategory] =
+    useState<Subcategory | null>(null);
   const [subcategoriesLoading, setSubcategoriesLoading] = useState(false);
   const [goalData, setGoalData] = useState<GoalInputData | null>(null);
   const [isGoalValid, setIsGoalValid] = useState(false);
@@ -63,7 +62,8 @@ export const OnboardingPage: React.FC = () => {
     try {
       setSubcategoriesLoading(true);
       console.log(`🔍 Caricamento subcategorie per categoria ${categoryId}...`);
-      const subcategoriesData = await SubcategoriesService.getSubcategoriesByCategory(categoryId);
+      const subcategoriesData =
+        await SubcategoriesService.getSubcategoriesByCategory(categoryId);
       setSubcategories(subcategoriesData);
       console.log(`✅ Caricate ${subcategoriesData.length} subcategorie`);
     } catch (error) {
@@ -983,7 +983,8 @@ export const OnboardingPage: React.FC = () => {
           </p>
           {selectedSubcategory && (
             <p>
-              <strong>Subcategoria:</strong> {selectedSubcategory.name_it} {selectedSubcategory.emoji}
+              <strong>Subcategoria:</strong> {selectedSubcategory.name_it}{" "}
+              {selectedSubcategory.emoji}
             </p>
           )}
           {goalData && (
