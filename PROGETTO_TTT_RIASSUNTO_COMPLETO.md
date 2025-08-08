@@ -30,30 +30,41 @@
 
 ### Macro-Temi per Matching MVP (Strategia Ibrida)
 
-#### 6 Categorie Principali (Compromesso per MVP)
+#### 6 Categorie Principali (Compromesso per MVP) → AGGIORNATO A 7 CATEGORIE
 
 1. **Salute e Fitness**
 
-   - Focus: benessere fisico, sport, alimentazione, bodybuilding
+   - Focus: benessere fisico, sport, alimentazione, salute mentale
+   - Unisce: ex Salute e Benessere + Sport e Attività Fisica + Alimentazione + Benessere
 
 2. **Studio e Competenze**
 
    - Focus: lingue, certificazioni, corsi online, lettura, formazione
+   - Unisce: ex Studio e Apprendimento + Carriera e Sviluppo Professionale
 
 3. **Creatività e Hobby**
 
    - Focus: arte, musica, scrittura, fotografia, artigianato
+   - Mantiene categoria originale unificata
 
 4. **Produttività e Organizzazione**
 
    - Focus: gestione tempo, routine, tecniche lavoro, planning
+   - Mantiene categoria originale
 
 5. **Mindfulness e Crescita**
 
    - Focus: meditazione, sviluppo emotivo, abitudini positive, coaching
+   - Mantiene categoria originale
 
-6. **Lifestyle e Relazioni**
+6. **Carriera e Sviluppo**
+
+   - Focus: sviluppo professionale, networking, leadership, soft skills
+   - Categoria separata per alta richiesta attesa
+
+7. **Lifestyle e Relazioni**
    - Focus: finanze, sostenibilità, comunicazione, networking, famiglia
+   - Unisce: ex Relazioni e Comunicazione + Gestione Finanziaria + Sostenibilità
 
 #### Sistema Matching Progressivo a 4 Livelli
 
@@ -194,35 +205,40 @@ _Unisce: Relazioni e Comunicazione + Gestione Finanziaria + Sostenibilità_
 - **Sostenibilità e eco-lifestyle** (riduzione rifiuti, consumo responsabile)
 - **Relazioni familiari** (genitorialità, rapporti familiari, coppia)
 
-#### 🔄 Mappa di Trasformazione (11→6 Categorie)
+#### 🔄 Mappa di Trasformazione (13→7 Categorie)
 
 ```
-PRIMA (11 categorie originali) → DOPO (6 categorie MVP)
+PRIMA (13 categorie implementate) → DOPO (7 categorie MVP)
 
-Salute e Benessere        }
-Sport e Attività Fisica   } → 🏃 SALUTE E FITNESS
-Alimentazione e Nutrizione}
+Salute e Fitness        }
+Fitness e Sport         } → 🏃 SALUTE E FITNESS
+Benessere              }
 
-Studio e Apprendimento         }
-Carriera e Sviluppo Prof.      } → 📚 STUDIO E COMPETENZE
+Apprendimento          }
+Studio e Competenze    } → 📚 STUDIO E COMPETENZE
 
-Creatività e Hobby → 🎨 CREATIVITÀ E HOBBY (invariata)
+Creatività             }
+Creatività e Hobby     } → 🎨 CREATIVITÀ E HOBBY
 
-Produttività e Organizzazione → ⚡ PRODUTTIVITÀ (invariata)
+Produttività           }
+Produttività e Organizzazione → ⚡ PRODUTTIVITÀ E ORGANIZZAZIONE
 
 Mindfulness e Crescita → 🧘 MINDFULNESS E CRESCITA (invariata)
 
-Relazioni e Comunicazione }
-Gestione Finanziaria      } → 🌱 LIFESTYLE E RELAZIONI
-Sostenibilità e Vita Green}
+Carriera → 🚀 CARRIERA E SVILUPPO (espansa)
+
+Lifestyle e Relazioni  }
+Relazioni              } → 🌱 LIFESTYLE E RELAZIONI
+Finanze               }
 ```
 
-#### Vantaggi Nuova Organizzazione MVP
+#### Vantaggi Nuova Organizzazione MVP (7 Categorie)
 
-- **Masse critiche più alte** per categoria (matching più efficace)
+- **Masse critiche ottimali** per categoria (matching più efficace)
 - **Temi correlati unificati** (maggiore compatibilità interna)
-- **Scelta semplificata** per utente (6 vs 11 opzioni)
+- **Scelta semplificata** per utente (7 vs 13 opzioni originali)
 - **Gestione MVP** più snella e implementabile
+- **Carriera separata** per alta domanda attesa
 - **Roadmap chiara** per espansioni future
 
 #### Esempio Pratico Sistema a 3 Livelli (MVP)
@@ -346,9 +362,9 @@ _Da implementare nelle fasi successive quando la user base sarà più ampia_
 
 #### Strategia Espansione Categorie
 
-- **Fase 1 (MVP)**: 6 categorie principali
-- **Fase 2**: Aggiungere Sport + Alimentazione (8 categorie totali)
-- **Fase 3**: Aggiungere Carriera + Finanze + Sostenibilità (11 categorie complete)
+- **Fase 1 (MVP)**: 7 categorie consolidate
+- **Fase 2**: Suddividere categorie più popolari (es. Salute → Fitness + Nutrizione)
+- **Fase 3**: Aggiungere categorie specialistiche in base a richiesta utenti
 - **Monitoring**: Espandere solo quando ogni categoria ha 50+ utenti attivi
 
 ---
