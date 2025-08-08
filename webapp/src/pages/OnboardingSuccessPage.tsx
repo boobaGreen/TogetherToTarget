@@ -18,7 +18,7 @@ const OnboardingSuccessPage: React.FC = () => {
     // Verifica che l'utente abbia completato l'onboarding
     const checkProfile = async () => {
       console.log("🔍 OnboardingSuccessPage: Verifica profilo utente");
-      
+
       if (!user) {
         console.log("❌ Nessun utente autenticato, redirect a login");
         navigate("/login");
@@ -29,24 +29,26 @@ const OnboardingSuccessPage: React.FC = () => {
 
       try {
         console.log("🔎 Richiesta profilo dal database...");
-        
+
         // Prima prova con la versione semplice
-        const simpleProfile = await SimpleProfileService.getSimpleProfile(user.id);
+        const simpleProfile = await SimpleProfileService.getSimpleProfile(
+          user.id
+        );
         if (simpleProfile) {
           console.log("✅ [SIMPLE] Profilo trovato, uso versione semplice");
           setUserProfile(simpleProfile as UserProfile);
           return;
         }
-        
+
         // Se fallisce, prova con il servizio completo
         const profile = await UserProfilesService.getUserProfile(user.id);
-        
+
         if (!profile) {
           console.log("❌ Profilo non trovato, redirect a onboarding");
           navigate("/onboarding");
           return;
         }
-        
+
         console.log("✅ Profilo trovato, mostra Success Page:", profile);
         setUserProfile(profile);
       } catch (error) {

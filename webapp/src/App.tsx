@@ -79,7 +79,9 @@ export const App: React.FC = () => {
             path="/onboarding-success"
             element={
               <ProtectedRoute requireAuth={true} requireOnboarding={false}>
-                <OnboardingSuccessPage />
+                <MainLayout>
+                  <OnboardingSuccessPage />
+                </MainLayout>
               </ProtectedRoute>
             }
           />

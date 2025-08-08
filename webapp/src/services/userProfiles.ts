@@ -110,7 +110,7 @@ export class UserProfilesService {
   static async getUserProfile(userId: string): Promise<UserProfile | null> {
     try {
       console.log("🔍 Recupero profilo per utente:", userId);
-      
+
       // Prima proviamo senza JOIN per debug
       const { data: simpleData, error: simpleError } = await supabase
         .from("user_profiles")
@@ -120,14 +120,17 @@ export class UserProfilesService {
 
       if (simpleError) {
         if (simpleError.code === "PGRST116") {
-          console.log("📋 Profilo non trovato per utente (simple query):", userId);
+          console.log(
+            "📋 Profilo non trovato per utente (simple query):",
+            userId
+          );
           return null;
         }
         console.error("❌ Errore nella query semplice:", simpleError);
       } else {
         console.log("✅ Profilo trovato (simple query):", simpleData);
       }
-      
+
       // Ora proviamo con JOIN
       const { data, error } = await supabase
         .from("user_profiles")
@@ -147,12 +150,12 @@ export class UserProfilesService {
         }
         console.error("❌ Errore nel recupero del profilo con JOIN:", error);
         console.log("🔄 Fallback: uso dati semplici senza category info");
-        
+
         // Fallback: ritorna i dati semplici se il JOIN fallisce
         if (simpleData) {
           return simpleData as UserProfile;
         }
-        
+
         throw new Error(`Impossibile recuperare il profilo: ${error.message}`);
       }
 
