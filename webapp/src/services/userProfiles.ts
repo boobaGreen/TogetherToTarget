@@ -20,6 +20,7 @@ export interface CategoryInfo {
 export interface UserProfile {
   id: string; // UUID from auth.users
   category_id: number;
+  subcategory_id?: string; // Aggiungiamo la subcategoria
   goal_description: string;
   goal_deadline?: Date;
   experience_level: "beginner" | "intermediate" | "advanced";
@@ -35,6 +36,7 @@ export interface UserProfile {
 
 export interface CreateUserProfileData {
   categoryId: number;
+  subcategoryId?: string; // Aggiungiamo la subcategoria opzionale
   goalData: GoalInputData;
   experienceData: ExperienceLevelData;
   availabilityData: AvailabilityData;
@@ -52,13 +54,14 @@ export class UserProfilesService {
       console.log("🚀 Inizio salvataggio profilo per utente:", userId);
       console.log("📋 Dati da salvare:", profileData);
 
-      const { categoryId, goalData, experienceData, availabilityData } =
+      const { categoryId, subcategoryId, goalData, experienceData, availabilityData } =
         profileData;
 
       // Prepara i dati per il database
       const dbData = {
         id: userId,
         category_id: categoryId,
+        subcategory_id: subcategoryId || null, // Aggiungiamo la subcategoria
         goal_description: goalData.description,
         goal_deadline: goalData.deadline || null,
         experience_level: experienceData.level,

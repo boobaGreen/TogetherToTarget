@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import CategorySelector from "../components/onboarding/CategorySelector";
+import SubcategorySelector from "../components/onboarding/SubcategorySelector";
 import GoalInput from "../components/onboarding/GoalInput";
 import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
 import { CategoriesService } from "../services/categories";
+import { SubcategoriesService } from "../services/subcategories";
 import { UserProfilesService } from "../services/userProfiles";
 import { DatabaseTest } from "../services/databaseTest";
-import type { Category } from "../types/categories";
+import type { Category, Subcategory } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
 import type { ExperienceLevelData } from "../types/experience";
 import type { AvailabilityData } from "../types/availability";
@@ -21,6 +23,11 @@ export const OnboardingPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
+  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<Subcategory | null>(
+    null
+  );
+  const [subcategoriesLoading, setSubcategoriesLoading] = useState(false);
   const [goalData, setGoalData] = useState<GoalInputData | null>(null);
   const [isGoalValid, setIsGoalValid] = useState(false);
   const [experienceData, setExperienceData] =
@@ -52,15 +59,37 @@ export const OnboardingPage: React.FC = () => {
     }
   };
 
-  const handleCategorySelect = (category: Category) => {
+  const loadSubcategories = async (categoryId: number) => {
+    try {
+      setSubcategoriesLoading(true);
+      console.log(`🔍 Caricamento subcategorie per categoria ${categoryId}...`);
+      const subcategoriesData = await SubcategoriesService.getSubcategoriesByCategory(categoryId);
+      setSubcategories(subcategoriesData);
+      console.log(`✅ Caricate ${subcategoriesData.length} subcategorie`);
+    } catch (error) {
+      console.error("Errore nel caricamento delle subcategorie:", error);
+      setSubcategories([]);
+    } finally {
+      setSubcategoriesLoading(false);
+    }
+  };
+
+  const handleCategorySelect = async (category: Category) => {
     setSelectedCategory(category);
+    setSelectedSubcategory(null); // Reset subcategory selection
+    await loadSubcategories(category.id);
+  };
+
+  const handleSubcategorySelect = (subcategory: Subcategory) => {
+    setSelectedSubcategory(subcategory);
   };
 
   const nextStep = async () => {
-    // Se siamo al passo 4 (AvailabilitySettings, indice 4) e tutti i dati sono validi, completa l'onboarding
+    // Se siamo al passo 5 (AvailabilitySettings, indice 5) e tutti i dati sono validi, completa l'onboarding
     if (
-      currentStep === 4 &&
+      currentStep === 5 &&
       selectedCategory &&
+      selectedSubcategory &&
       goalData &&
       experienceData &&
       availabilityData &&
@@ -77,6 +106,7 @@ export const OnboardingPage: React.FC = () => {
     if (
       !user ||
       !selectedCategory ||
+      !selectedSubcategory ||
       !goalData ||
       !experienceData ||
       !availabilityData
@@ -85,6 +115,7 @@ export const OnboardingPage: React.FC = () => {
       console.log("Debug stato:", {
         user: !!user,
         selectedCategory: !!selectedCategory,
+        selectedSubcategory: !!selectedSubcategory,
         goalData: !!goalData,
         experienceData: !!experienceData,
         availabilityData: !!availabilityData,
@@ -101,6 +132,7 @@ export const OnboardingPage: React.FC = () => {
         user.id,
         {
           categoryId: selectedCategory.id,
+          subcategoryId: selectedSubcategory.id, // Aggiungiamo la subcategoria
           goalData,
           experienceData,
           availabilityData,
@@ -388,7 +420,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 1 di 4
+                Passo 1 di 5
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Categoria obiettivo</span>
@@ -452,8 +484,113 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 2: Inserimento obiettivo
+  // Step 2: Selezione subcategoria
   if (currentStep === 2) {
+    return (
+      <div
+        style={{
+          fontFamily: "Inter, sans-serif",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "2rem 0",
+          }}
+        >
+          {/* Progress indicator */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <span style={{ color: "#667eea", fontWeight: "600" }}>
+                Passo 2 di 5
+              </span>
+              <span style={{ color: "#94a3b8" }}>•</span>
+              <span style={{ color: "#64748b" }}>Obiettivo specifico</span>
+            </div>
+          </div>
+
+          {selectedCategory && (
+            <SubcategorySelector
+              selectedCategory={selectedCategory}
+              subcategories={subcategories}
+              selectedSubcategoryId={selectedSubcategory?.id}
+              onSubcategorySelect={handleSubcategorySelect}
+              loading={subcategoriesLoading}
+            />
+          )}
+
+          {/* Navigation buttons */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              maxWidth: "1000px",
+              margin: "2rem auto 0",
+              padding: "0 2rem",
+            }}
+          >
+            <button
+              onClick={prevStep}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #cbd5e1",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+            >
+              ← Indietro
+            </button>
+
+            <button
+              onClick={nextStep}
+              disabled={!selectedSubcategory}
+              style={{
+                background: selectedSubcategory
+                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                  : "#e2e8f0",
+                color: selectedSubcategory ? "white" : "#94a3b8",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: selectedSubcategory ? "pointer" : "not-allowed",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Continua →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 3: Inserimento obiettivo
+  if (currentStep === 3) {
     return (
       <div
         style={{
@@ -490,7 +627,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 2 di 4
+                Passo 3 di 5
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>
@@ -564,8 +701,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 3: Livello di esperienza
-  if (currentStep === 3) {
+  // Step 4: Livello di esperienza
+  if (currentStep === 4) {
     return (
       <div
         style={{
@@ -602,7 +739,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 3 di 4
+                Passo 4 di 5
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Livello di esperienza</span>
@@ -675,8 +812,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 4: Disponibilità e preferenze
-  if (currentStep === 4) {
+  // Step 5: Disponibilità e preferenze
+  if (currentStep === 5) {
     return (
       <div
         style={{
@@ -721,7 +858,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 4 di 4
+                Passo 5 di 5
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Disponibilità</span>
@@ -844,6 +981,11 @@ export const OnboardingPage: React.FC = () => {
           <p>
             <strong>Categoria:</strong> {selectedCategory?.name_it}
           </p>
+          {selectedSubcategory && (
+            <p>
+              <strong>Subcategoria:</strong> {selectedSubcategory.name_it} {selectedSubcategory.emoji}
+            </p>
+          )}
           {goalData && (
             <p>
               <strong>Obiettivo:</strong> {goalData.description}
