@@ -1322,3 +1322,47 @@ Development:
 ---
 
 **STATUS AGOSTO 2025**: Base tecnica solida completata. Sistema di autenticazione production-ready. Pronto per sviluppo features core dell'applicazione (onboarding, matching, chat).
+
+---
+
+## 🔬 RICERCA SUBCATEGORIE - BREAKTHROUGH SCIENTIFICO
+
+### ✅ Metodologia Tripla Completata (Agosto 2025)
+
+**PROMPT 1**: Analisi app esistenti → 10 subcategorie "Salute e Fitness" identificate  
+**PROMPT 2**: Google Trends → Conferma trend positivi e interesse crescente  
+**PROMPT 3**: Validazione psicologica → **CONFERMA SCIENTIFICA TOTALE** 🏆
+
+### 🎯 Risultati Straordinari
+
+La ricerca ha prodotto una **convergenza perfetta** tra:
+
+- **Popolarità** (cosa usano gli utenti)
+- **Trend** (cosa cercano gli utenti)
+- **Scienza** (cosa funziona davvero)
+
+### 📚 Evidenze Scientifiche Chiave
+
+- Obiettivi semplici e misurabili favoriscono habit formation in 30 giorni
+- Social accountability in gruppi di 3 persone è ottimale per coesione
+- Combinazione attività fisica + comportamenti salute molto efficace
+- Supporto sociale multiforme cruciale per cambiamento comportamentale
+
+### 🏆 Le 10 Subcategorie Validate
+
+1. **Perdita peso** - Misurabile, motivante, results-driven
+2. **Attività quotidiana/passi** - Semplice, habit-forming, social comparison
+3. **Corsa/distanza** - Progressi visibili, peer motivation
+4. **Tonificazione/forza** - Risultati tangibili, competizione amichevole
+5. **Cardio/HIIT** - Intenso ma breve, adatto a cicli 30gg
+6. **Alimentazione sana** - Complesso ma efficace se supportato
+7. **Sonno/recupero** - Fondamentale per wellness olistico
+8. **Yoga/stretching** - Rilassante, accessibile, social bonding
+9. **Sport specifici** - Skill building, competizione costruttiva
+10. **Benessere mentale tramite fitness** - Mood boost, stress relief
+
+### 🚀 Ready for Implementation
+
+**Decision**: Procedere immediatamente con implementazione delle 10 subcategorie validate per MVP testing con categoria "Salute e Fitness".
+
+**Next**: Database update, frontend integration, UX per social accountability, beta testing con gruppi di 3.
