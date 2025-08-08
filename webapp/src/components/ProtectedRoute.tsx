@@ -81,6 +81,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   }
 
   // Se l'utente ha completato l'onboarding ma sta cercando di accedere alla pagina onboarding
+  // NOTA: Permettiamo sempre l'accesso alla pagina di successo onboarding
   if (
     user &&
     user.onboarding_completed &&

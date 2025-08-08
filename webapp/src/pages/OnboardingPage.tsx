@@ -109,14 +109,16 @@ export const OnboardingPage: React.FC = () => {
 
       console.log("✅ Profilo salvato con successo:", savedProfile);
 
-      // Refresh dell'utente per aggiornare onboarding_completed
-      console.log("🔄 Refresh dati utente...");
-      await refreshUser();
-      console.log("✅ Dati utente aggiornati");
-
-      // Reindirizza alla pagina di successo
+      // Reindirizza alla pagina di successo PRIMA del refresh per evitare race conditions
       console.log("📄 Redirect a /onboarding-success");
       navigate("/onboarding-success");
+
+      // Refresh dell'utente per aggiornare onboarding_completed (in background)
+      console.log("🔄 Refresh dati utente in background...");
+      setTimeout(async () => {
+        await refreshUser();
+        console.log("✅ Dati utente aggiornati in background");
+      }, 100);
     } catch (error) {
       console.error("❌ Errore nel salvataggio del profilo:", error);
 
