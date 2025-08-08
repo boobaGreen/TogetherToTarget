@@ -12,6 +12,8 @@ import { HomePage } from "./pages/HomePage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { OnboardingPage } from "./pages/OnboardingPage";
 import OnboardingSuccessPage from "./pages/OnboardingSuccessPage";
+import { ProfileEditPage } from "./pages/ProfileEditPage";
+import { OAuthCallbackPage } from "./pages/OAuthCallbackPage";
 
 // Import degli stili
 import "./index.css";
@@ -62,6 +64,9 @@ export const App: React.FC = () => {
 
           <Route path="/reset-password" element={<ResetPasswordPage />} />
 
+          {/* OAuth callback - gestisce il redirect dopo Google OAuth */}
+          <Route path="/oauth-callback" element={<OAuthCallbackPage />} />
+
           {/* Onboarding - solo per utenti autenticati che non hanno completato l'onboarding */}
           <Route
             path="/onboarding"
@@ -93,6 +98,18 @@ export const App: React.FC = () => {
               <ProtectedRoute requireAuth={true} requireOnboarding={true}>
                 <MainLayout>
                   <DashboardPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Profile Edit - solo per utenti autenticati che hanno completato l'onboarding */}
+          <Route
+            path="/profile-edit"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={true}>
+                <MainLayout>
+                  <ProfileEditPage />
                 </MainLayout>
               </ProtectedRoute>
             }

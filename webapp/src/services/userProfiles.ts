@@ -97,6 +97,30 @@ export class UserProfilesService {
       }
 
       console.log("✅ Profilo salvato con successo:", data);
+
+      // IMPORTANTE: Aggiorna anche il campo onboarding_completed nella tabella users
+      console.log(
+        "📝 Aggiornamento campo onboarding_completed per utente:",
+        userId
+      );
+      const { error: userUpdateError } = await supabase
+        .from("users")
+        .update({ onboarding_completed: true })
+        .eq("id", userId);
+
+      if (userUpdateError) {
+        console.error(
+          "⚠️ Errore nell'aggiornamento users.onboarding_completed:",
+          userUpdateError
+        );
+        // Non lanciamo errore perché il profilo è stato salvato correttamente
+        // L'onboarding sarà considerato completato dalla presenza del profilo
+      } else {
+        console.log(
+          "✅ Campo onboarding_completed aggiornato nella tabella users"
+        );
+      }
+
       return data;
     } catch (error) {
       console.error("Errore nel servizio profilo:", error);

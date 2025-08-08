@@ -44,6 +44,7 @@ export interface AuthContextType {
   logout: () => Promise<{ error: string | null }>;
   resetPassword: (email: string) => Promise<{ error: string | null }>;
   updatePassword: (newPassword: string) => Promise<{ error: string | null }>;
+  refreshUser: () => Promise<void>; // Aggiunta funzione per refreshare l'utente
   clearError: () => void;
   clearMessage: () => void;
 }

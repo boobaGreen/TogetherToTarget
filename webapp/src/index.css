@@ -91,18 +91,18 @@ button:hover {
   background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
 }
 
-.loading-spinner {
+.global-loading-spinner {
   text-align: center;
 }
 
-.loading-spinner span {
+.global-loading-spinner span {
   font-size: 3rem;
   display: block;
   margin-bottom: 1rem;
   animation: pulse 2s infinite;
 }
 
-.loading-spinner p {
+.global-loading-spinner p {
   color: #718096 !important;
   font-size: 1.1rem;
   margin: 0;

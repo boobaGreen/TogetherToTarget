@@ -8,14 +8,13 @@ import AvailabilitySettings from "../components/onboarding/AvailabilitySettings"
 import { CategoriesService } from "../services/categories";
 import { UserProfilesService } from "../services/userProfiles";
 import { DatabaseTest } from "../services/databaseTest";
-import { setupDatabase } from "../utils/setupDatabase";
 import type { Category } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
 import type { ExperienceLevelData } from "../types/experience";
 import type { AvailabilityData } from "../types/availability";
 
 export const OnboardingPage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -109,6 +108,11 @@ export const OnboardingPage: React.FC = () => {
       );
 
       console.log("✅ Profilo salvato con successo:", savedProfile);
+
+      // Refresh dell'utente per aggiornare onboarding_completed
+      console.log("🔄 Refresh dati utente...");
+      await refreshUser();
+      console.log("✅ Dati utente aggiornati");
 
       // Reindirizza alla pagina di successo
       console.log("📄 Redirect a /onboarding-success");
@@ -298,26 +302,6 @@ export const OnboardingPage: React.FC = () => {
               chat di gruppo.
             </p>
           </div>
-
-          {/* Debug button solo in development */}
-          {process.env.NODE_ENV === "development" && (
-            <button
-              onClick={() => setupDatabase()}
-              style={{
-                background: "#f56565",
-                color: "white",
-                border: "none",
-                padding: "10px 20px",
-                borderRadius: "6px",
-                fontSize: "0.9rem",
-                cursor: "pointer",
-                marginBottom: "15px",
-                width: "100%",
-              }}
-            >
-              🔧 [DEBUG] Verifica Database
-            </button>
-          )}
 
           <button
             onClick={nextStep}

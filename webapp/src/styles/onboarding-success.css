@@ -287,7 +287,7 @@
 }
 
 /* Loading */
-.loading-spinner {
+.onboarding-success-page .loading-spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -295,16 +295,16 @@
   padding: 3rem;
 }
 
-.spinner {
+.onboarding-success-page .spinner {
   width: 3rem;
   height: 3rem;
   border: 3px solid #e2e8f0;
   border-top: 3px solid #667eea;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: onboarding-spin 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes onboarding-spin {
   0% {
     transform: rotate(0deg);
   }
@@ -313,9 +313,10 @@
   }
 }
 
-.loading-spinner p {
+.onboarding-success-page .loading-spinner p {
   color: #718096;
   font-weight: 500;
+  margin: 0;
 }
 
 /* Responsive */

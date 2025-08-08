@@ -64,7 +64,7 @@ export class AuthService {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: `${window.location.origin}/oauth-callback`,
         },
       });
 
@@ -198,20 +198,27 @@ export class AuthService {
     error: string | null;
   }> {
     try {
+      console.log("🔍 AuthService.getCurrentUser: Starting...");
+
       const {
         data: { user },
         error,
       } = await supabase.auth.getUser();
 
       if (error) {
+        console.log("❌ Error getting auth user:", error.message);
         return { user: null, error: error.message };
       }
 
       if (!user) {
+        console.log("📭 No auth user found");
         return { user: null, error: null };
       }
 
+      console.log("✅ Auth user found:", user.email, "ID:", user.id);
+
       // Ottieni i dati dell'utente dal database
+      console.log("🔍 Searching for user in database...");
       const { data: userData, error: userError } = await supabase
         .from("users")
         .select("*")
@@ -219,11 +226,73 @@ export class AuthService {
         .single();
 
       if (userError) {
+        // Se l'utente non esiste nella tabella users (es. primo login OAuth)
+        if (userError.code === "PGRST116") {
+          console.log(
+            "🆕 Creazione automatica record utente per OAuth:",
+            user.email
+          );
+
+          // Crea il record utente
+          const newUser: Partial<DBUser> = {
+            id: user.id,
+            email: user.email!,
+            name:
+              user.user_metadata?.name ||
+              user.user_metadata?.full_name ||
+              user.email!.split("@")[0],
+            language: "it", // Default italiano
+            avatar_url: user.user_metadata?.avatar_url || null,
+            onboarding_completed: false,
+          };
+
+          const { data: createdUser, error: createError } = await supabase
+            .from("users")
+            .insert(newUser)
+            .select()
+            .single();
+
+          if (createError) {
+            // Se l'errore è che l'utente esiste già, recuperalo
+            if (createError.code === "23505") {
+              console.log("🔄 Utente già esistente, recupero dal database...");
+              const { data: existingUser, error: fetchError } = await supabase
+                .from("users")
+                .select("*")
+                .eq("id", user.id)
+                .single();
+
+              if (fetchError) {
+                console.error(
+                  "❌ Errore nel recupero utente esistente:",
+                  fetchError
+                );
+                return { user: null, error: fetchError.message };
+              }
+
+              console.log(
+                "✅ Utente esistente recuperato:",
+                existingUser.email
+              );
+              return { user: existingUser as DBUser, error: null };
+            }
+
+            console.error("❌ Errore nella creazione utente:", createError);
+            return { user: null, error: createError.message };
+          }
+
+          console.log("✅ Utente creato automaticamente:", createdUser);
+          return { user: createdUser as DBUser, error: null };
+        }
+
+        console.log("❌ Errore nella creazione utente:", userError.message);
         return { user: null, error: userError.message };
       }
 
+      console.log("✅ Utente trovato nel database:", userData.email);
       return { user: userData as DBUser, error: null };
-    } catch {
+    } catch (catchError) {
+      console.log("❌ Catch error in getCurrentUser:", catchError);
       return { user: null, error: "Errore nel recupero utente" };
     }
   }

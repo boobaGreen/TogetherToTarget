@@ -68,7 +68,7 @@ const OnboardingSuccessPage: React.FC = () => {
   };
 
   const handleEditProfile = () => {
-    navigate("/onboarding");
+    navigate("/profile-edit");
   };
 
   if (isLoading) {

@@ -36,6 +36,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const clearError = () => setError(null);
   const clearMessage = () => setMessage(null);
 
+  // Funzione per refreshare i dati dell'utente
+  const refreshUser = async () => {
+    try {
+      await loadUserFromDB();
+    } catch (error) {
+      console.error("Errore nel refresh dell'utente:", error);
+    }
+  };
+
   // Carica i dati dell'utente dal database
   const loadUserFromDB = async () => {
     try {
@@ -267,6 +276,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     resetPassword,
     updatePassword,
+    refreshUser,
     clearError,
     clearMessage,
   };

@@ -19,7 +19,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const location = useLocation();
 
   // Debug logging
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     console.log("🛡️ ProtectedRoute check:", {
       path: location.pathname,
       requireAuth,
@@ -27,7 +27,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
       user: !!user,
       userEmail: user?.email,
       onboardingCompleted: user?.onboarding_completed,
-      loading
+      loading,
     });
   }
 
@@ -35,7 +35,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (loading) {
     return (
       <div className="loading-container">
-        <div className="loading-spinner">
+        <div className="global-loading-spinner">
           <span>🎯</span>
           <p>Caricamento...</p>
         </div>
@@ -84,7 +84,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (
     user &&
     user.onboarding_completed &&
-    (location.pathname === "/onboarding" || location.pathname === "/onboarding-success")
+    location.pathname === "/onboarding"
   ) {
     return <Navigate to="/dashboard" replace />;
   }
