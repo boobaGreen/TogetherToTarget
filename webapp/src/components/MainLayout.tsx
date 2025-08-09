@@ -24,13 +24,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       {/* Header con logo e menu utente */}
       <header className="main-header">
         <div className="header-content">
-          {/* Logo cliccabile */}
+          {/* Logo - Lato sinistro */}
           <Link to={logoDestination} className="logo">
             <span className="logo-icon">🎯</span>
             <span className="logo-text">TogetherToTarget</span>
           </Link>
 
-          {/* Menu di navigazione e user menu */}
+          {/* Spazio centrale elastico */}
+          <div className="header-center"></div>
+
+          {/* Menu di navigazione e user menu - Lato destro */}
           <div className="header-nav">
             <NavigationMenu />
             {user && <UserMenu />}

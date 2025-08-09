@@ -15,28 +15,35 @@
 }
 
 .header-content {
-  max-width: 1200px;
+  max-width: 1400px; /* Larghezza maggiore per sfruttare meglio lo spazio */
   margin: 0 auto;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem; /* Padding simmetrico */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 2rem; /* Gap per bilanciare meglio */
+}
+
+/* Spazio centrale elastico per bilanciare l'header */
+.header-center {
+  flex: 1;
 }
 
 /* Header Navigation Area */
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem; /* Gap maggiore tra menu e user menu */
+  flex-shrink: 0; /* Non si comprime */
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem; /* Gap leggermente maggiore tra icona e testo */
   text-decoration: none;
   color: inherit;
   transition: all 0.2s ease;
+  flex-shrink: 0; /* Evita che si comprima */
 }
 
 .logo:hover {

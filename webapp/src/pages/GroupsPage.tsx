@@ -126,9 +126,10 @@ export const GroupsPage: React.FC = () => {
   ];
 
   // Filtra i gruppi in base al tipo di abbonamento
-  const mockGroups = user?.subscription_type === "premium" 
-    ? allMockGroups 
-    : allMockGroups.slice(0, 1); // Solo primo gruppo per utenti free
+  const mockGroups =
+    user?.subscription_type === "premium"
+      ? allMockGroups
+      : allMockGroups.slice(0, 1); // Solo primo gruppo per utenti free
 
   const getStatusBadge = (status: string) => {
     const badges = {
@@ -242,7 +243,7 @@ export const GroupsPage: React.FC = () => {
                 <button className="btn-premium">Sblocca con Premium</button>
               </div>
             </div>
-            
+
             <div className="group-card group-card-upgrade">
               <div className="upgrade-content">
                 <div className="upgrade-icon">🔒</div>
@@ -258,18 +259,24 @@ export const GroupsPage: React.FC = () => {
         )}
 
         {/* Slot vuote per utenti premium */}
-        {user?.subscription_type === "premium" && mockGroups.length < 3 && (
+        {user?.subscription_type === "premium" &&
+          mockGroups.length < 3 &&
           Array.from({ length: 3 - mockGroups.length }, (_, index) => (
             <div key={`empty-${index}`} className="group-card group-card-empty">
               <div className="empty-group-content">
                 <div className="empty-icon">➕</div>
                 <h3>Aggiungi Nuovo Gruppo</h3>
-                <p>Hai ancora {3 - mockGroups.length === 1 ? 'uno slot disponibile' : `${3 - mockGroups.length} slot disponibili`} per nuovi gruppi</p>
+                <p>
+                  Hai ancora{" "}
+                  {3 - mockGroups.length === 1
+                    ? "uno slot disponibile"
+                    : `${3 - mockGroups.length} slot disponibili`}{" "}
+                  per nuovi gruppi
+                </p>
                 <button className="btn-primary">Trova Gruppo</button>
               </div>
             </div>
-          ))
-        )}
+          ))}
       </div>
 
       {mockGroups.length === 0 && (

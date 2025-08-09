@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 export const UserMenu: React.FC = () => {
   const { user, logout, loading } = useAuth();
+  const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -32,6 +34,11 @@ export const UserMenu: React.FC = () => {
 
   const handleLogoutCancel = () => {
     setShowConfirm(false);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/profile-edit");
+    setIsMenuOpen(false);
   };
 
   // Chiudi il menu quando si clicca fuori
@@ -85,6 +92,10 @@ export const UserMenu: React.FC = () => {
                 </div>
               </div>
               <div className="dropdown-divider"></div>
+              <button className="dropdown-item" onClick={handleProfileClick}>
+                <span>👤</span>
+                Modifica Profilo
+              </button>
               <button
                 className="dropdown-item logout-item"
                 onClick={handleLogoutClick}
