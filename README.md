@@ -4,6 +4,22 @@
 
 **TogetherToTarget** è una piattaforma motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
 
+### 🧩 **Regola Matching Gruppi da 2 → 3**
+
+
+Se non si trova subito un gruppo da 3, il matching parte con 2 persone. Si apre una **finestra massima di attesa di 3 giorni** (dal momento in cui il gruppo viene effettivamente creato in 2):
+
+- Se entro questo periodo arriva un terzo membro compatibile, viene aggregato automaticamente al gruppo, che diventa da 3 e parte il ciclo di 30 giorni per tutti.
+- Se la finestra scade senza nuovi arrivi, il gruppo resta da 2 e parte il ciclo normalmente.
+
+**Schema dinamica:**
+1. Matching standard: si cerca di formare gruppi da 3 (con attese progressive e scelta utente come da flow).
+2. Se dopo tutte le attese non si trova un terzo → si forma un gruppo da 2 e parte la finestra di 3 giorni (chat attiva, ciclo NON ancora partito).
+3. Durante la finestra:
+   - Se arriva un terzo compatibile → viene aggiunto, il gruppo diventa da 3, e parte il ciclo di 30 giorni per tutti.
+   - Se NON arriva nessuno entro 3 giorni → il gruppo da 2 viene "chiuso" e parte il ciclo di 30 giorni solo per loro.
+4. Le regole precedenti di attesa (matching progressivo, scelta utente, ecc.) restano valide PRIMA della formazione del gruppo da 2.
+
 ## ✅ **STATO DEL PROGETTO - COMPLETATO E FUNZIONANTE**
 
 ### 🚀 **WEB APP - 100% PRODUCTION READY**
@@ -310,7 +326,8 @@ npm run web     # Test su browser web
 
 - Algoritmo matching per categoria e livello esperienza
 - Creazione automatica gruppi di 3 persone
-- Sistema notifiche per nuovi match
+- **Gestione fallback gruppi da 2 con finestra di attesa per il terzo membro (3-5 giorni)**
+- Sistema notifiche per nuovi match e aggiornamenti stato gruppo
 - Dashboard gruppi attivi
 
 ### 💬 **Phase 3: Communication** (Sviluppo futuro)
