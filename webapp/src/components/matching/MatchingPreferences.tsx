@@ -143,8 +143,8 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
               </h4>
               <p>
                 {availableForDuos
-                  ? "Accetti sia gruppi da 2 che da 3+ persone"
-                  : "Preferisci solo gruppi da 3 o più persone"}
+                  ? "Accetti sia gruppi da 2 che da 3 persone"
+                  : "Preferisci solo gruppi da 3 persone"}
               </p>
             </div>
             <div className="toggle-switch">
