@@ -1,3 +1,7 @@
+/* --- FIX: testo bottone premium sempre scuro anche dentro carte premium --- */
+.group-card-upgrade .btn-premium {
+  color: #222 !important;
+}
 /* --- FIX: testo bottone premium sempre scuro su giallo --- */
 .btn-premium {
   color: #222 !important;
@@ -79,10 +83,6 @@
 /* --- FIX DEFINITIVO: premium card viola sopra ogni regola --- */
 .group-card.group-card-upgrade {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-}
-.group-card.group-card-upgrade,
-.group-card.group-card-upgrade * {
-  color: #fff !important;
 }
 /* --- FIX: premium card viola acceso e shimmer animato ben visibile --- */
 .group-card-upgrade {
