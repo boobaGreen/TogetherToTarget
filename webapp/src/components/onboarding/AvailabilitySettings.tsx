@@ -23,9 +23,7 @@ const AvailabilitySettings: React.FC<AvailabilitySettingsProps> = ({
   const [preferredDays, setPreferredDays] = useState<number[]>(
     initialData?.preferredDays || []
   );
-  const [meetingFrequency, setMeetingFrequency] = useState<MeetingFrequency>(
-    initialData?.meetingFrequency || "weekly"
-  );
+  const [meetingFrequency] = useState<MeetingFrequency>("weekly"); // Fisso a settimanale per tutti
   const [timezone] = useState(initialData?.timezone || "Europe/Rome");
   const [notes, setNotes] = useState(initialData?.notes || "");
 
@@ -145,7 +143,9 @@ const AvailabilitySettings: React.FC<AvailabilitySettingsProps> = ({
         <h2>📅 Quando sei disponibile?</h2>
         <p>
           Configuriamo i tuoi orari per trovare il gruppo perfetto e organizzare
-          gli incontri.
+          gli incontri.{" "}
+          <strong>Tutti i gruppi si incontrano 1 volta a settimana</strong> per
+          4 settimane.
         </p>
       </div>
 
@@ -214,50 +214,6 @@ const AvailabilitySettings: React.FC<AvailabilitySettingsProps> = ({
         </div>
       )}
 
-      {/* Frequenza incontri */}
-      <div className="settings-section">
-        <h3 className="section-title">🔄 Frequenza incontri</h3>
-        <div className="frequency-options">
-          <label className="frequency-option">
-            <input
-              type="radio"
-              name="frequency"
-              value="weekly"
-              checked={meetingFrequency === "weekly"}
-              onChange={(e) =>
-                setMeetingFrequency(e.target.value as MeetingFrequency)
-              }
-            />
-            <div className="option-content">
-              <div className="option-icon">📅</div>
-              <div className="option-text">
-                <strong>Settimanale</strong>
-                <span>Un incontro a settimana (consigliato)</span>
-              </div>
-            </div>
-          </label>
-
-          <label className="frequency-option">
-            <input
-              type="radio"
-              name="frequency"
-              value="biweekly"
-              checked={meetingFrequency === "biweekly"}
-              onChange={(e) =>
-                setMeetingFrequency(e.target.value as MeetingFrequency)
-              }
-            />
-            <div className="option-content">
-              <div className="option-icon">📋</div>
-              <div className="option-text">
-                <strong>Bisettimanale</strong>
-                <span>Un incontro ogni due settimane</span>
-              </div>
-            </div>
-          </label>
-        </div>
-      </div>
-
       {/* Note aggiuntive */}
       <div className="settings-section">
         <h3 className="section-title">💭 Note aggiuntive (opzionale)</h3>
@@ -286,15 +242,34 @@ const AvailabilitySettings: React.FC<AvailabilitySettingsProps> = ({
               ? "Flessibile"
               : getSelectedDaysText()}
           </div>
-          <div className="summary-item">
-            <strong>Frequenza:</strong>{" "}
-            {meetingFrequency === "weekly" ? "Settimanale" : "Bisettimanale"}
-          </div>
           {notes && (
             <div className="summary-item">
               <strong>Note:</strong> {notes}
             </div>
           )}
+        </div>
+
+        {/* Messaggio informativo semplificato */}
+        <div
+          style={{
+            background: "#f0f9ff",
+            border: "1px solid #bae6fd",
+            borderRadius: "8px",
+            padding: "12px",
+            marginTop: "16px",
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: "0.9rem",
+              color: "#0369a1",
+              lineHeight: "1.4",
+            }}
+          >
+            ⚡ <strong>Tutti i gruppi si incontrano 1 volta a settimana</strong>{" "}
+            per 4 settimane totali.
+          </p>
         </div>
       </div>
     </div>
