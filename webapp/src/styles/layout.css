@@ -23,12 +23,28 @@
   justify-content: space-between;
 }
 
+/* Header Navigation Area */
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .logo {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
   color: inherit;
+  transition: all 0.2s ease;
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo:hover .logo-icon {
+  transform: scale(1.1);
 }
 
 .logo-icon {
@@ -47,6 +63,8 @@
 .main-content {
   flex: 1;
   width: 100%;
+  padding-top: 0;
+  min-height: calc(100vh - 65px); /* Considera altezza header */
 }
 
 .main-content.with-header {
@@ -259,46 +277,36 @@
   cursor: not-allowed;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
   .header-content {
-    padding: 1rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+    padding: 0.75rem 1rem;
   }
 
-  .logo {
-    flex: 1;
-    min-width: 0;
+  .header-nav {
+    gap: 1rem;
   }
 
   .logo-text {
     font-size: 1.25rem;
   }
 
-  .user-name {
-    display: none;
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0.5rem 1rem;
   }
 
-  .user-menu {
-    gap: 0.5rem;
-    flex-shrink: 0;
+  .logo-text {
+    display: none; /* Nasconde il testo su schermi molto piccoli */
   }
 
-  .user-dropdown {
-    min-width: 200px;
-    right: 0;
-    margin-top: 0.25rem;
-  }
-
-  .user-info {
-    padding: 0.25rem;
-  }
-
-  .user-avatar,
-  .user-avatar-placeholder {
-    width: 2rem;
-    height: 2rem;
+  .logo-icon {
+    font-size: 1.75rem;
   }
 }
 

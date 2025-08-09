@@ -34,8 +34,8 @@
   }
 }
 
-/* Header Section */
-.dashboard-header {
+/* Welcome Section */
+.dashboard-welcome {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,40 +47,17 @@
   border: 1px solid #e2e8f0;
 }
 
-.user-welcome h1 {
+.welcome-content h1 {
   margin: 0 0 8px 0;
   font-size: 28px;
   font-weight: 700;
   color: #1a202c !important;
 }
 
-.user-welcome p {
+.welcome-content p {
   margin: 0;
   color: #2d3748 !important;
   font-size: 16px;
-}
-
-.user-status {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.logout-btn {
-  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
-}
-
-.logout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
 }
 
 /* Stats Grid */
@@ -390,7 +367,7 @@
     padding: 16px;
   }
 
-  .dashboard-header {
+  .dashboard-welcome {
     padding: 20px 24px;
   }
 
@@ -405,13 +382,13 @@
 }
 
 @media (max-width: 768px) {
-  .dashboard-header {
+  .dashboard-welcome {
     flex-direction: column;
     gap: 16px;
     text-align: center;
   }
 
-  .user-welcome h1 {
+  .welcome-content h1 {
     font-size: 24px;
   }
 
@@ -477,12 +454,7 @@
     padding: 20px;
   }
 
-  .user-welcome h1 {
+  .welcome-content h1 {
     font-size: 20px;
-  }
-
-  .logout-btn {
-    padding: 10px 20px;
-    font-size: 14px;
   }
 }

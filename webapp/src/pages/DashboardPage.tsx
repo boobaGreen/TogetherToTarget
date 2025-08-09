@@ -24,7 +24,7 @@ interface DashboardStats {
 }
 
 export const DashboardPage: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [userGoals, setUserGoals] = useState<UserGoal[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
@@ -118,13 +118,6 @@ export const DashboardPage: React.FC = () => {
     loadDashboardData();
   }, [loadDashboardData]);
 
-  const handleLogout = async () => {
-    const { error } = await logout();
-    if (error) {
-      console.error("Logout error:", error);
-    }
-  };
-
   const handleUpgrade = () => {
     // TODO: Implement upgrade flow
     alert("Funzionalità di upgrade in arrivo!");
@@ -147,23 +140,19 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="dashboard-container">
       {/* Header Section */}
-      <div className="dashboard-header">
-        <div className="user-welcome">
+      {/* Welcome Section */}
+      <div className="dashboard-welcome">
+        <div className="welcome-content">
           <h1>
             Ciao, {user?.name || user?.email?.split("@")[0] || "Utente"}! 👋
           </h1>
           <p>Ecco il tuo progresso verso i tuoi obiettivi</p>
         </div>
-        <div className="user-status">
-          <PremiumBadge
-            isPremium={premiumStatus.isPremium}
-            expiresInDays={premiumStatus.expiresInDays}
-            size="large"
-          />
-          <button className="logout-btn" onClick={handleLogout}>
-            Esci
-          </button>
-        </div>
+        <PremiumBadge
+          isPremium={premiumStatus.isPremium}
+          expiresInDays={premiumStatus.expiresInDays}
+          size="large"
+        />
       </div>
 
       {/* Stats Cards */}
