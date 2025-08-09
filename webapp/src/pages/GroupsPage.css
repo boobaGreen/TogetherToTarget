@@ -1,3 +1,240 @@
+/* --- Effetto shimmer anche sulla prima carta gruppo attivo --- */
+.group-card.shimmer-effect {
+  position: relative !important;
+  overflow: hidden !important;
+}
+.group-card.shimmer-effect::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.13) 50%,
+    transparent 60%
+  );
+  animation: shimmer 2s linear infinite;
+  animation-delay: 0s;
+  z-index: 2;
+  pointer-events: none;
+}
+/* --- FIX DEFINITIVO: premium card viola sopra ogni regola --- */
+.group-card.group-card-upgrade {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+.group-card.group-card-upgrade,
+.group-card.group-card-upgrade * {
+  color: #fff !important;
+}
+/* --- FIX: premium card viola acceso e shimmer animato ben visibile --- */
+.group-card-upgrade {
+  background: linear-gradient(120deg, #7f53ac 0%, #657ced 100%) !important;
+  color: #fff !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 24px 0 rgba(120, 80, 200, 0.18) !important;
+  border: none !important;
+  z-index: 1 !important;
+}
+.group-card-upgrade::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.32) 50%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  animation: shimmer 2.2s linear infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-30%) skewX(-12deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(30%) skewX(-12deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) skewX(-12deg);
+    opacity: 0.7;
+  }
+}
+/* --- FIX: premium card viola + bottoni azioni in colonna --- */
+.group-card-upgrade {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 300px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+.group-card-upgrade::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  ) !important;
+  animation: shimmer 2s linear infinite !important;
+}
+.group-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+  margin-top: 1.2rem !important;
+}
+.group-actions button {
+  width: 100% !important;
+  padding: 0.85rem 1.7rem !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 1.08rem !important;
+  transition: all 0.18s !important;
+  margin: 0 !important;
+}
+/* --- RESTYLING MODERNO CARTE E BOTTONI --- */
+.group-card {
+  background: #fff !important;
+  border-radius: 18px !important;
+  box-shadow: 0 6px 32px 0 rgba(120, 60, 180, 0.13),
+    0 1.5px 8px 0 rgba(80, 0, 120, 0.07) !important;
+  padding: 1.5rem !important;
+  transition: transform 0.18s, box-shadow 0.18s !important;
+  border: 2.5px solid #e0d7fa !important;
+  overflow: hidden !important;
+}
+.group-card:hover {
+  transform: translateY(-4px) scale(1.012) !important;
+  box-shadow: 0 16px 48px 0 rgba(120, 60, 180, 0.18),
+    0 2px 12px 0 rgba(80, 0, 120, 0.1) !important;
+  border-color: #a084e8 !important;
+}
+.group-header {
+  margin-bottom: 1.5rem !important;
+  background: linear-gradient(90deg, #a084e8 0%, #764ba2 100%) !important;
+  border-radius: 14px 14px 0 0 !important;
+  padding: 1rem 1.2rem 0.7rem 1.2rem !important;
+  margin-left: -1.5rem !important;
+  margin-right: -1.5rem !important;
+  margin-top: -1.5rem !important;
+  color: #fff !important;
+  box-shadow: 0 2px 12px 0 rgba(120, 60, 180, 0.1) !important;
+}
+.group-title h3 {
+  font-size: 1.25rem !important;
+  color: #fff !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.group-goal {
+  color: #e0d7fa !important;
+  margin: 0 !important;
+  font-style: italic !important;
+  font-size: 1.01rem !important;
+}
+.btn-primary {
+  background: linear-gradient(90deg, #a084e8 0%, #d1c4e9 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  font-size: 1.08rem !important;
+  padding: 0.85rem 1.7rem !important;
+  border-radius: 10px !important;
+  transition: background 0.18s, box-shadow 0.18s !important;
+  box-shadow: 0 2px 8px 0 rgba(120, 60, 180, 0.1) !important;
+  letter-spacing: 0.1px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+}
+.btn-primary:hover {
+  background: linear-gradient(90deg, #d1c4e9 0%, #a084e8 100%) !important;
+  box-shadow: 0 4px 16px 0 rgba(120, 60, 180, 0.16) !important;
+}
+.btn-secondary {
+  background: linear-gradient(90deg, #e0d7fa 0%, #f5f7fa 100%) !important;
+  color: #764ba2 !important;
+  border: 1.5px solid #a084e8 !important;
+  font-weight: 700 !important;
+  font-size: 1.08rem !important;
+  padding: 0.85rem 1.7rem !important;
+  border-radius: 10px !important;
+  transition: background 0.18s, border 0.18s, color 0.18s !important;
+  box-shadow: 0 1px 4px 0 rgba(120, 60, 180, 0.07) !important;
+  letter-spacing: 0.1px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+}
+.btn-secondary:hover {
+  background: linear-gradient(90deg, #d1c4e9 0%, #e0d7fa 100%) !important;
+  border-color: #764ba2 !important;
+  color: #4b2e83 !important;
+}
+.checkin-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 1.08rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1px !important;
+  padding-left: 0 !important;
+  white-space: nowrap !important;
+  min-width: 0 !important;
+}
+.checkin-btn-icon {
+  font-size: 1.25em !important;
+  margin-right: 2px !important;
+}
+.checkin-btn-label {
+  font-weight: 700 !important;
+  font-size: 1.08rem !important;
+  letter-spacing: 0.1px !important;
+  white-space: nowrap !important;
+}
+.checkin-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  padding-left: 16px;
+}
+.checkin-btn-icon {
+  font-size: 1.25em;
+  margin-right: 2px;
+}
+.checkin-btn-label {
+  font-weight: 600;
+}
 /* Modern chat button with badge */
 .chat-modern-btn {
   position: relative;
@@ -331,7 +568,8 @@
     rgba(255, 255, 255, 0.1) 50%,
     transparent 60%
   );
-  animation: shimmer 2s infinite;
+  animation: shimmer 20s linear infinite;
+  animation-delay: 0s;
 }
 
 @keyframes shimmer {
