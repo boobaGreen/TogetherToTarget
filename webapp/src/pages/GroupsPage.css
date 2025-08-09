@@ -1,3 +1,172 @@
+/* --- Group Detail Page Styles --- */
+.group-detail-page {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px 0 rgba(60, 60, 130, 0.1);
+  padding: 0 0 2.5rem 0;
+  min-height: 70vh;
+}
+
+.group-detail-header {
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 1.5px solid #f0f0f7;
+  background: linear-gradient(90deg, #f7f7fa 60%, #f0eaff 100%);
+  border-radius: 18px 18px 0 0;
+}
+.group-detail-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.group-detail-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #3a2e6c;
+}
+.premium-badge {
+  background: linear-gradient(90deg, #ffe066 60%, #ffd700 100%);
+  color: #6d4c00;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0.2em 0.8em;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  box-shadow: 0 2px 8px 0 rgba(255, 208, 0, 0.1);
+}
+.group-detail-status-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+.status-badge {
+  background: #e0e7ff;
+  color: #3a2e6c;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.2em 0.8em;
+  font-size: 1rem;
+}
+.status-active {
+  background: #e0ffe0;
+  color: #1a7f37;
+}
+.days-remaining {
+  color: #7c7c9a;
+  font-size: 1rem;
+}
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #f0f0f7;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed 60%, #a78bfa 100%);
+  border-radius: 8px;
+  transition: width 0.5s cubic-bezier(0.4, 2, 0.6, 1);
+}
+
+.group-detail-tabs {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #f7f7fa;
+  border-bottom: 1.5px solid #f0f0f7;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.5rem 0;
+}
+.group-detail-tab {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #7c7c9a;
+  padding: 0.7em 1.2em;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: background 0.2s, color 0.2s;
+}
+.group-detail-tab.active {
+  background: #fff;
+  color: #7c3aed;
+  box-shadow: 0 2px 8px 0 rgba(124, 58, 237, 0.06);
+}
+.tab-icon {
+  font-size: 1.3em;
+}
+.tab-label {
+  font-size: 1em;
+}
+
+.group-detail-content {
+  padding: 2rem 2rem 0 2rem;
+}
+.group-detail-content h3 {
+  color: #3a2e6c;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.chat-mockup,
+.stats-mockup,
+.badge-mockup,
+.members-mockup,
+.video-mockup {
+  min-height: 120px;
+  background: #f7f7fa;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c7c9a;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px 0 rgba(60, 60, 130, 0.04);
+}
+.btn-primary {
+  background: linear-gradient(90deg, #ffe066 60%, #ffd700 100%);
+  color: #6d4c00;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px 0 rgba(255, 208, 0, 0.1);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-primary:hover {
+  background: linear-gradient(90deg, #ffd700 60%, #ffe066 100%);
+  color: #4d3700;
+}
+@media (max-width: 600px) {
+  .group-detail-page {
+    padding: 0 0 1rem 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .group-detail-header,
+  .group-detail-content {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+  }
+  .group-detail-tabs {
+    padding: 0.2rem 0;
+  }
+}
 /* --- FIX: testo bottone premium sempre scuro anche dentro carte premium --- */
 .group-card-upgrade .btn-premium {
   color: #222 !important;
