@@ -278,6 +278,16 @@ export const DashboardPage: React.FC = () => {
             </button>
             <button
               className="action-card"
+              onClick={() => navigate("/test-matching")}
+            >
+              <div className="action-icon">🎯</div>
+              <div className="action-content">
+                <h3>Test Matching Preferences</h3>
+                <p>Configura le tue preferenze per il matching</p>
+              </div>
+            </button>
+            <button
+              className="action-card"
               onClick={() => alert("Trova Partner in arrivo!")}
             >
               <div className="action-icon">👥</div>

@@ -18,6 +18,7 @@ import { OAuthCallbackPage } from "./pages/OAuthCallbackPage";
 import { CheckinTestPage } from "./pages/CheckinTestPage";
 import GroupsPage from "./pages/GroupsPage";
 import GroupDetailPage from "./pages/GroupDetailPage";
+import { TestMatchingPage } from "./pages/TestMatchingPage";
 
 // Import degli stili
 import "./index.css";
@@ -162,6 +163,18 @@ export const App: React.FC = () => {
               <ProtectedRoute requireAuth={true} requireOnboarding={true}>
                 <MainLayout>
                   <CheckinTestPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Test Matching Preferences - solo per utenti autenticati (senza onboarding richiesto) */}
+          <Route
+            path="/test-matching"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={false}>
+                <MainLayout>
+                  <TestMatchingPage />
                 </MainLayout>
               </ProtectedRoute>
             }

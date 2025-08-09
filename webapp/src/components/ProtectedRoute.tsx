@@ -31,6 +31,41 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     });
   }
 
+  // BYPASS per pagina di test matching
+  if (location.pathname === "/test-matching") {
+    if (loading) {
+      return (
+        <div className="loading-container">
+          <div className="global-loading-spinner">
+            <span>🎯</span>
+            <p>Caricamento...</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Solo richiede autenticazione per test-matching
+    if (!user) {
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    // Altrimenti permetti accesso diretto
+    return <>{children}</>;
+  }
+
+  // Debug logging
+  if (process.env.NODE_ENV === "development") {
+    console.log("🛡️ ProtectedRoute check:", {
+      path: location.pathname,
+      requireAuth,
+      requireOnboarding,
+      user: !!user,
+      userEmail: user?.email,
+      onboardingCompleted: user?.onboarding_completed,
+      loading,
+    });
+  }
+
   // Mostra loading mentre stiamo verificando l'autenticazione
   if (loading) {
     return (
@@ -75,7 +110,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     user &&
     !user.onboarding_completed &&
     location.pathname !== "/onboarding" &&
-    location.pathname !== "/onboarding-success"
+    location.pathname !== "/onboarding-success" &&
+    location.pathname !== "/test-matching" // Permetti accesso alla pagina di test
   ) {
     return <Navigate to="/onboarding" replace />;
   }

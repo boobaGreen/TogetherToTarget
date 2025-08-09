@@ -21,3 +21,29 @@ export interface Category {
   sort_order: number;
   created_at: string;
 }
+
+// Matching Types
+export interface UserMatchingPreferences {
+  id: string;
+  user_id: string;
+  preferred_group_size: number;
+  flexible_on_size: boolean;
+  videocall_languages: string[];
+  flexible_on_language: boolean;
+  timezone: string;
+  timezone_flexibility: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MatchingPoolEntry {
+  id: string;
+  user_id: string;
+  objective: string;
+  category: string;
+  subcategory?: string;
+  timezone: string;
+  priority: number;
+  entered_at: string;
+  updated_at: string;
+}
