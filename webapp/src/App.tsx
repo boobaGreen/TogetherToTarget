@@ -14,6 +14,7 @@ import { OnboardingPage } from "./pages/OnboardingPage";
 import OnboardingSuccessPage from "./pages/OnboardingSuccessPage";
 import { ProfileEditPage } from "./pages/ProfileEditPage";
 import { OAuthCallbackPage } from "./pages/OAuthCallbackPage";
+import { CheckinTestPage } from "./pages/CheckinTestPage";
 
 // Import degli stili
 import "./index.css";
@@ -110,6 +111,18 @@ export const App: React.FC = () => {
               <ProtectedRoute requireAuth={true} requireOnboarding={true}>
                 <MainLayout>
                   <ProfileEditPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Test Daily Check-in - solo per utenti autenticati */}
+          <Route
+            path="/test-checkin"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={true}>
+                <MainLayout>
+                  <CheckinTestPage />
                 </MainLayout>
               </ProtectedRoute>
             }

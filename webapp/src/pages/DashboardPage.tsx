@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import PremiumBadge from "../components/premium/PremiumBadge";
 import PremiumUpgradeCard from "../components/premium/PremiumUpgradeCard";
@@ -24,6 +25,7 @@ interface DashboardStats {
 
 export const DashboardPage: React.FC = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [userGoals, setUserGoals] = useState<UserGoal[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     totalGoals: 0,
@@ -275,6 +277,16 @@ export const DashboardPage: React.FC = () => {
         <div className="quick-actions">
           <h2>Azioni Rapide</h2>
           <div className="actions-grid">
+            <button
+              className="action-card"
+              onClick={() => navigate("/test-checkin")}
+            >
+              <div className="action-icon">🧪</div>
+              <div className="action-content">
+                <h3>Test Daily Check-in</h3>
+                <p>Prova il nuovo sistema di check-in quotidiani</p>
+              </div>
+            </button>
             <button
               className="action-card"
               onClick={() => alert("Trova Partner in arrivo!")}
