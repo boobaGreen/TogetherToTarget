@@ -167,8 +167,11 @@ export const GroupsPage: React.FC = () => {
       </div>
 
       <div className="groups-grid">
-        {mockGroups.map((group) => (
-          <div key={group.id} className="group-card">
+        {mockGroups.map((group, idx) => (
+          <div
+            key={group.id}
+            className={"group-card" + (idx === 0 ? " shimmer-effect" : "")}
+          >
             <div className="group-header">
               <div className="group-title">
                 <h3>{group.name}</h3>
@@ -230,15 +233,8 @@ export const GroupsPage: React.FC = () => {
               <button
                 className="btn-secondary chat-modern-btn"
                 title="Apri chat di gruppo"
+                style={{ position: "relative" }}
               >
-                {group.unreadMessages && group.unreadMessages > 0 && (
-                  <span
-                    className="unread-badge chat-badge-modern"
-                    title={`Messaggi non letti: ${group.unreadMessages}`}
-                  >
-                    {group.unreadMessages}
-                  </span>
-                )}
                 <span
                   className="chat-modern-icon"
                   role="img"
@@ -247,8 +243,28 @@ export const GroupsPage: React.FC = () => {
                   💬
                 </span>
                 <span className="chat-modern-label">Chat</span>
+                {group.unreadMessages && group.unreadMessages > 0 && (
+                  <span
+                    className="unread-badge chat-badge-professional"
+                    title={`Messaggi non letti: ${group.unreadMessages}`}
+                  >
+                    {group.unreadMessages}
+                  </span>
+                )}
               </button>
-              <button className="btn-primary">Fai Check-in</button>
+              <button
+                className="btn-primary checkin-btn"
+                title="Daily Check-in"
+              >
+                <span
+                  className="checkin-btn-icon"
+                  role="img"
+                  aria-label="Daily Check-in"
+                >
+                  ✅
+                </span>
+                <span className="checkin-btn-label">Daily Check-in</span>
+              </button>
             </div>
           </div>
         ))}
