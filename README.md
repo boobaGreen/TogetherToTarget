@@ -25,19 +25,23 @@ Se non si trova subito un gruppo da 3, il matching parte con 2 persone. Si apre 
 ## 🔔 **Gestione Notifiche**
 
 **Notifiche di sistema (matching, gruppo, premium, reminder):**
+
 - Sezione/voce “Notifiche” nel menu principale o dashboard (icona campanella o voce dedicata).
 - Mostra tutti gli eventi importanti: avanzamento matching, formazione gruppo, arrivo terzo, partenza ciclo, rinnovo gruppo, reminder meeting, upgrade premium, regali ricevuti, ecc.
 - Badge numerico su icona, lista notifiche con stato letto/non letto, accessibile da ovunque.
 
 **Notifiche chat/messaggi di gruppo:**
+
 - Solo all’interno della pagina del gruppo (o badge su lista gruppi).
 - Mostra messaggi non letti, menzioni, reazioni, attività chat.
 - Badge su gruppo nella lista, highlight nella chat, nessun “rumore” nella sezione notifiche generali.
 
 **Notifiche email:**
+
 - Solo per eventi chiave (matching, formazione gruppo, reminder meeting, inviti premium, ecc.), non per ogni messaggio chat.
 
 **Vantaggi:**
+
 - L’utente non viene sommerso da notifiche chat nella sezione generale.
 - Tutto ciò che riguarda la “vita” del gruppo (messaggi, reazioni) resta contestualizzato nella pagina gruppo.
 - Le notifiche di sistema sono sempre accessibili e chiare, senza confusione.

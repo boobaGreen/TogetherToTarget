@@ -20,6 +20,7 @@ interface Group {
   progress: number;
   members: GroupMember[];
   status: "active" | "completed" | "paused";
+  unreadMessages?: number; // nuovo campo per badge
 }
 
 export const GroupsPage: React.FC = () => {
@@ -36,6 +37,7 @@ export const GroupsPage: React.FC = () => {
       daysRemaining: 5,
       progress: 85,
       status: "active",
+      unreadMessages: 3,
       members: [
         {
           id: "user1",
@@ -68,6 +70,7 @@ export const GroupsPage: React.FC = () => {
       daysRemaining: 22,
       progress: 35,
       status: "active",
+      unreadMessages: 0,
       members: [
         {
           id: "user1",
@@ -100,6 +103,7 @@ export const GroupsPage: React.FC = () => {
       daysRemaining: 26,
       progress: 20,
       status: "active",
+      unreadMessages: 7,
       members: [
         {
           id: "user1",
@@ -223,7 +227,27 @@ export const GroupsPage: React.FC = () => {
             </div>
 
             <div className="group-actions">
-              <button className="btn-secondary">Visualizza Chat</button>
+              <button
+                className="btn-secondary chat-modern-btn"
+                title="Apri chat di gruppo"
+              >
+                {group.unreadMessages && group.unreadMessages > 0 && (
+                  <span
+                    className="unread-badge chat-badge-modern"
+                    title={`Messaggi non letti: ${group.unreadMessages}`}
+                  >
+                    {group.unreadMessages}
+                  </span>
+                )}
+                <span
+                  className="chat-modern-icon"
+                  role="img"
+                  aria-label="Chat di gruppo"
+                >
+                  💬
+                </span>
+                <span className="chat-modern-label">Chat</span>
+              </button>
               <button className="btn-primary">Fai Check-in</button>
             </div>
           </div>

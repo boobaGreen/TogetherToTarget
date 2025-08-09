@@ -33,9 +33,22 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           {/* Spazio centrale elastico */}
           <div className="header-center"></div>
 
-          {/* Menu di navigazione e user menu - Lato destro */}
+          {/* Menu di navigazione, notifiche e user menu - Lato destro */}
           <div className="header-nav">
             <NavigationMenu />
+            <Link
+              to="/notifications"
+              className="notifications-link"
+              title="Notifiche"
+            >
+              <span
+                role="img"
+                aria-label="Notifiche"
+                style={{ fontSize: 22, marginLeft: 12 }}
+              >
+                🔔
+              </span>
+            </Link>
             {user && <UserMenu />}
           </div>
         </div>

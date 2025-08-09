@@ -705,6 +705,7 @@ _Da implementare nelle fasi successive quando la user base sarà più ampia_
    - Proponi gruppo da 2 con finestra di 3 giorni per il terzo membro (come già deciso).
 
 **Note:**
+
 - L’obiettivo personale (testo libero) può essere usato solo per affinare la compatibilità, non come vincolo.
 - Il livello di esperienza: puoi decidere se tenerlo “soft” (preferenza) o ignorarlo per l’MVP.
 
@@ -728,6 +729,7 @@ _Da implementare nelle fasi successive quando la user base sarà più ampia_
 - Rinnovo gruppo: i premium possono prolungare lo stesso gruppo per un nuovo ciclo, ma solo se tutti i membri sono premium (2/2 o 3/3).
 - Gift premium: un utente premium può regalare l’abbonamento agli altri membri del gruppo (per permettere il rinnovo di gruppo). Bottone dedicato nella UI, con notifica/email e meccanica da studiare per massimizzare conversione e community.
 - Possibilità di regalare abbonamenti anche a utenti esterni o casuali (da studiare UX e posizionamento bottone).
+
 #### Composizione Gruppi
 
 - **Dimensione ideale**: 3 persone per gruppo

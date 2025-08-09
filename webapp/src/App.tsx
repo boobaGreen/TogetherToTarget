@@ -1,3 +1,4 @@
+import NotificationsPage from "./pages/NotificationsPage";
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -124,6 +125,18 @@ export const App: React.FC = () => {
               <ProtectedRoute requireAuth={true} requireOnboarding={true}>
                 <MainLayout>
                   <GroupsPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Notifications - solo per utenti autenticati che hanno completato l'onboarding */}
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={true}>
+                <MainLayout>
+                  <NotificationsPage />
                 </MainLayout>
               </ProtectedRoute>
             }
