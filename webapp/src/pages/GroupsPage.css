@@ -550,7 +550,7 @@
 /* Grid dei gruppi */
 .groups-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* Sempre 3 colonne per premium */
   gap: 2rem;
   margin-bottom: 2rem;
 }
@@ -563,11 +563,112 @@
   padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 400px; /* Altezza standard per tutte le carte */
+  display: flex;
+  flex-direction: column;
 }
 
 .group-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Carte premium vuote con effetto riflesso */
+.group-card-premium-empty {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+  border: 2px solid #8b5cf6;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.group-card-premium-empty:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+}
+
+.premium-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.premium-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.premium-empty-icon span {
+  font-size: 2.5rem;
+}
+
+.premium-empty-title {
+  color: white;
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.premium-empty-description {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Effetto riflesso movimento */
+.premium-shine-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  transition: transform 0.6s ease;
+}
+
+.group-card-premium-empty:hover .premium-shine-effect {
+  transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* Carte completate */
+.group-card-completed {
+  opacity: 0.8;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.group-card-completed:hover {
+  opacity: 1;
+}
+
+/* Assicura che tutte le actions siano allineate in basso */
+.group-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto; /* Spinge i bottoni in basso */
+  padding-top: 1rem;
 }
 
 .group-header {
@@ -585,6 +686,142 @@
   font-size: 1.3rem;
   color: var(--text-primary);
   margin: 0;
+}
+
+.group-name {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.members-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.members-title {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.chat-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.chat-badge-professional {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.chat-icon {
+  font-size: 1rem;
+}
+
+.unread-count {
+  background: white;
+  color: #7c3aed;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 1.2rem;
+  text-align: center;
+}
+
+.members-more {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.group-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Carte CTA Premium */
+.premium-cta-card {
+  position: relative;
+  background: linear-gradient(135deg, #f8f4ff 0%, #e6d9ff 100%);
+  border: 2px solid #8b5cf6;
+  overflow: hidden;
+}
+
+.premium-cta-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+}
+
+.premium-cta-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.premium-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.premium-title {
+  font-size: 1.4rem;
+  color: #6d28d9;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.premium-description {
+  color: #7c3aed;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0 0 1.5rem 0;
+}
+
+.btn-premium-upgrade {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #1a1a1a;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.btn-premium-upgrade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
 }
 
 .status-badge {
@@ -870,13 +1107,19 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .groups-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 @media (max-width: 768px) {
   .groups-page {
     padding: 1rem;
   }
 
   .groups-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 1rem;
   }
 
