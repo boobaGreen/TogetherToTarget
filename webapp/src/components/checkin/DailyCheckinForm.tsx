@@ -1,5 +1,5 @@
 // Componente per form di daily check-in dinamico
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { dailyCheckinService } from "../../services/daily-checkins";
 import type {
   CheckinTemplate,

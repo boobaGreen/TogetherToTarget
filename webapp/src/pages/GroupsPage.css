@@ -1,0 +1,385 @@
+.groups-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.groups-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.groups-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.groups-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.premium-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #ffd700, #ffed4a);
+  border-radius: 20px;
+  color: #333;
+  font-weight: 600;
+  display: inline-flex;
+}
+
+.premium-badge {
+  font-size: 1.2rem;
+}
+
+/* Grid dei gruppi */
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Card del gruppo */
+.group-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.group-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.group-header {
+  margin-bottom: 1.5rem;
+}
+
+.group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.group-title h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background: #e8f5e8;
+  color: #2d7d32;
+}
+
+.status-completed {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-paused {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.group-goal {
+  color: var(--text-secondary);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Progresso */
+.group-progress {
+  margin-bottom: 1.5rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  height: 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  transition: width 0.3s ease;
+}
+
+/* Membri */
+.group-members h4 {
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.members-list {
+  margin-bottom: 1.5rem;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.member-card:last-child {
+  border-bottom: none;
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.member-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--accent-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.member-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.member-checkin {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.member-streak {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.streak-excellent {
+  background: #e8f5e8;
+  color: #2d7d32;
+}
+
+.streak-good {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.streak-fair {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.streak-low {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* Azioni */
+.group-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.group-actions button {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+/* Card vuota per nuovo gruppo */
+.group-card-empty {
+  border: 2px dashed #ddd;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.empty-group-content {
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.empty-group-content h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.empty-group-content p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Card upgrade premium */
+.group-card-upgrade {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.group-card-upgrade::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.upgrade-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.upgrade-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.upgrade-content h3 {
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.upgrade-content p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+}
+
+.btn-premium {
+  background: #ffd700;
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-premium:hover {
+  background: #ffed4a;
+  transform: translateY(-1px);
+}
+
+/* Stato nessun gruppo */
+.no-groups {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.no-groups-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.no-groups h2 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.no-groups p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .groups-page {
+    padding: 1rem;
+  }
+
+  .groups-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .group-actions {
+    flex-direction: column;
+  }
+
+  .premium-info {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .groups-header h1 {
+    font-size: 2rem;
+  }
+}

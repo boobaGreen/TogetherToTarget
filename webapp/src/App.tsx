@@ -15,6 +15,7 @@ import OnboardingSuccessPage from "./pages/OnboardingSuccessPage";
 import { ProfileEditPage } from "./pages/ProfileEditPage";
 import { OAuthCallbackPage } from "./pages/OAuthCallbackPage";
 import { CheckinTestPage } from "./pages/CheckinTestPage";
+import { GroupsPage } from "./pages/GroupsPage";
 
 // Import degli stili
 import "./index.css";
@@ -111,6 +112,18 @@ export const App: React.FC = () => {
               <ProtectedRoute requireAuth={true} requireOnboarding={true}>
                 <MainLayout>
                   <ProfileEditPage />
+                </MainLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Groups - solo per utenti autenticati che hanno completato l'onboarding */}
+          <Route
+            path="/groups"
+            element={
+              <ProtectedRoute requireAuth={true} requireOnboarding={true}>
+                <MainLayout>
+                  <GroupsPage />
                 </MainLayout>
               </ProtectedRoute>
             }

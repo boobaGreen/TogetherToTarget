@@ -27,6 +27,8 @@ export const NavigationMenu: React.FC = () => {
     // Menu per utenti completi
     return [
       { path: "/dashboard", label: "Dashboard", icon: "📊" },
+      { path: "/goals", label: "Obiettivi", icon: "🎯" },
+      { path: "/groups", label: "I Miei Gruppi", icon: "👥" },
       { path: "/test-checkin", label: "Daily Check-in", icon: "✅" },
       { path: "/profile-edit", label: "Profilo", icon: "👤" },
     ];

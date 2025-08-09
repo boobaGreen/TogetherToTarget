@@ -8,6 +8,7 @@ export interface User {
   language: string;
   avatar_url: string | null;
   onboarding_completed: boolean;
+  subscription_type: "free" | "premium";
   created_at: string;
   updated_at: string;
 }
