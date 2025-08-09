@@ -501,21 +501,105 @@
   margin: 0 auto;
 }
 
-.groups-header {
-  margin-bottom: 2rem;
+/* Welcome Section - Standard Dashboard con Filtri Integrati */
+.groups-welcome {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.groups-welcome .welcome-content {
+  margin-bottom: 20px;
+}
+
+.groups-welcome .welcome-content h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c !important;
+}
+
+.groups-welcome .welcome-content p {
+  margin: 0;
+  color: #2d3748 !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.welcome-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Filtri Moderni - Design Tab/Pill */
+.filter-tabs {
+  display: flex;
+  background: #f7fafc;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  transform: translateY(-1px);
+}
+
+.filter-tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.filter-tab.active:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.filter-icon {
+  font-size: 16px;
+}
+
+.filter-text {
+  font-weight: 600;
+}
+
+.filter-count {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 20px;
   text-align: center;
 }
 
-.groups-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary-color);
-}
-
-.groups-header p {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin-bottom: 1rem;
+.filter-tab:not(.active) .filter-count {
+  background: #e2e8f0;
+  color: #4a5568;
 }
 
 .premium-info {
@@ -531,8 +615,17 @@
   display: inline-flex;
 }
 
-.premium-badge {
-  font-size: 1.2rem;
+.groups-welcome .premium-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
 }
 
 /* Grid dei gruppi */
@@ -643,7 +736,12 @@
 
 /* Carte Aggiungi Obiettivo */
 .group-card-add-objective {
-  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #8b5cf6 0%,
+    #7c3aed 50%,
+    #6d28d9 100%
+  ) !important;
   border: 2px solid #8b5cf6 !important;
   position: relative;
   cursor: pointer;
@@ -653,7 +751,7 @@
 }
 
 .group-card-add-objective::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -672,7 +770,12 @@
 .group-card-add-objective:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow: 0 20px 50px rgba(139, 92, 246, 0.5) !important;
-  background: linear-gradient(135deg, #9333ea 0%, #8b5cf6 50%, #7c3aed 100%) !important;
+  background: linear-gradient(
+    135deg,
+    #9333ea 0%,
+    #8b5cf6 50%,
+    #7c3aed 100%
+  ) !important;
 }
 
 .add-objective-content {
@@ -981,19 +1084,6 @@
 .chat-badge-alert {
   background: linear-gradient(135deg, #f59e0b, #f97316) !important;
   box-shadow: 0 3px 12px rgba(245, 158, 11, 0.4) !important;
-  animation: gentle-pulse 3s infinite;
-}
-
-@keyframes gentle-pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 3px 12px rgba(245, 158, 11, 0.4);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.6);
-  }
-}
   animation: gentle-pulse 3s infinite;
 }
 
@@ -1607,8 +1697,6 @@
   animation-delay: 0s;
 }
 
-
-
 .upgrade-content {
   text-align: center;
   position: relative;
@@ -1721,6 +1809,35 @@
 @media (max-width: 768px) {
   .groups-page {
     padding: 1rem;
+  }
+
+  .groups-welcome {
+    padding: 20px;
+  }
+
+  .welcome-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .filter-tabs {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .filter-tab {
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .filter-text {
+    display: none;
+  }
+
+  .groups-welcome .welcome-content h1 {
+    font-size: 24px;
   }
 
   .groups-grid {

@@ -164,41 +164,41 @@ const GroupsPage: React.FC = () => {
 
   return (
     <div className="groups-page">
-      <div className="groups-header">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <h1>I tuoi Gruppi</h1>
-            <p>Raggiungi gli obiettivi insieme ai tuoi compagni</p>
-          </div>
-          {isPremium && <div className="premium-badge">✨ Premium Active</div>}
+      <div className="groups-welcome">
+        <div className="welcome-content">
+          <h1>I tuoi Gruppi 🎯</h1>
+          <p>Raggiungi gli obiettivi insieme ai tuoi compagni</p>
         </div>
-
-        {/* Filtri gruppi */}
-        <div className="groups-filters">
-          <button
-            className={`filter-btn ${filter === "all" ? "active" : ""}`}
-            onClick={() => setFilter("all")}
-          >
-            Tutti ({mockGroups.length})
-          </button>
-          <button
-            className={`filter-btn ${filter === "active" ? "active" : ""}`}
-            onClick={() => setFilter("active")}
-          >
-            Attivi ({activeGroups.length})
-          </button>
-          <button
-            className={`filter-btn ${filter === "completed" ? "active" : ""}`}
-            onClick={() => setFilter("completed")}
-          >
-            Conclusi ({completedGroups.length})
-          </button>
+        <div className="welcome-actions">
+          {isPremium && <div className="premium-badge">✨ Premium Active</div>}
+          
+          {/* Filtri moderni integrati */}
+          <div className="filter-tabs">
+            <button
+              className={`filter-tab ${filter === "all" ? "active" : ""}`}
+              onClick={() => setFilter("all")}
+            >
+              <span className="filter-icon">📋</span>
+              <span className="filter-text">Tutti</span>
+              <span className="filter-count">{mockGroups.length}</span>
+            </button>
+            <button
+              className={`filter-tab ${filter === "active" ? "active" : ""}`}
+              onClick={() => setFilter("active")}
+            >
+              <span className="filter-icon">🚀</span>
+              <span className="filter-text">Attivi</span>
+              <span className="filter-count">{activeGroups.length}</span>
+            </button>
+            <button
+              className={`filter-tab ${filter === "completed" ? "active" : ""}`}
+              onClick={() => setFilter("completed")}
+            >
+              <span className="filter-icon">✅</span>
+              <span className="filter-text">Conclusi</span>
+              <span className="filter-count">{completedGroups.length}</span>
+            </button>
+          </div>
         </div>
       </div>
 
