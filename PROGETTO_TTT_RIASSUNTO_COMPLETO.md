@@ -688,29 +688,69 @@ _Da implementare nelle fasi successive quando la user base sarà più ampia_
 
 ### Meccaniche Dettagliate dei Gruppi
 
+#### Flow Matching: Criteri e Rilassamento Progressivo
+
+1. **Matching “stretto” (prime 3 ore):**
+   - Categoria principale (obbligatorio)
+   - Sottocategoria (match)
+   - Lingua preferita (match)
+   - Disponibilità oraria (match)
+   - → Se si trova un gruppo, si forma subito.
+2. **Dopo 3 ore, rilassamento progressivo:**
+   - Step 1: Allarga disponibilità oraria (accetta sovrapposizione minore)
+   - Step 2: Allarga lingua (accetta anche gruppi misti it/en)
+   - Step 3: Allarga sottocategoria (accetta anche sottocategorie diverse nella stessa categoria)
+   - Step 4: (Da decidere) — es. accetta livelli esperienza diversi, o abbina anche con obiettivi meno affini
+3. **Se ancora nessun match dopo X ore/giorni:**
+   - Proponi gruppo da 2 con finestra di 3 giorni per il terzo membro (come già deciso).
+
+**Note:**
+- L’obiettivo personale (testo libero) può essere usato solo per affinare la compatibilità, non come vincolo.
+- Il livello di esperienza: puoi decidere se tenerlo “soft” (preferenza) o ignorarlo per l’MVP.
+
+#### Gestione abbandoni/inattività
+
+- Se qualcuno abbandona prima dell’inizio: tutti i membri tornano in coda come se avessero appena inserito la richiesta. Se era un gruppo da 2, il membro rimasto resta in attesa e ripartono i tempi (matching e finestra per il terzo).
+- Se qualcuno abbandona o è inattivo durante il ciclo: si applicano le regole già descritte in documentazione (regola jolly, notifiche, ecc.).
+
+#### Notifiche e feedback
+
+- Notifiche email inviate in tutti i passaggi principali del matching (formazione gruppo, arrivo terzo, partenza ciclo, ecc.) per massima trasparenza.
+- Notifiche in-app: sezione dedicata nella dashboard o pagina menu (da decidere), con storico e dettagli di tutte le notifiche di matching e gruppo.
+- Messaggi personalizzati per ogni step/finestra, sia via email che in-app.
+
+#### Regole Premium vs Free
+
+- Nessun utente (free o premium) può avere più gruppi attivi per lo stesso goal/obiettivo.
+- Gli utenti premium possono avere più gruppi attivi contemporaneamente, ma solo se sono per obiettivi diversi (max 3 gruppi in parallelo).
+- Gli utenti free: un solo gruppo attivo alla volta (per un solo goal).
+- Matching: stesse regole per tutti (no priorità premium).
+- Rinnovo gruppo: i premium possono prolungare lo stesso gruppo per un nuovo ciclo, ma solo se tutti i membri sono premium (2/2 o 3/3).
+- Gift premium: un utente premium può regalare l’abbonamento agli altri membri del gruppo (per permettere il rinnovo di gruppo). Bottone dedicato nella UI, con notifica/email e meccanica da studiare per massimizzare conversione e community.
+- Possibilità di regalare abbonamenti anche a utenti esterni o casuali (da studiare UX e posizionamento bottone).
 #### Composizione Gruppi
 
 - **Dimensione ideale**: 3 persone per gruppo
 - **Motivazione**: garantire interazioni strette e motivazione reciproca mantenendo pluralità per supporto condiviso
 - **Gestione eccezioni**: gruppi da 2 persone con regole specifiche:
 
-
-   - Impegno maggiore richiesto in chat e video meeting
-   - **Finestra massima di attesa per il terzo membro**: se il matching parte con 2 persone, si apre una finestra di 3 giorni (fissi, dal momento in cui il gruppo viene effettivamente creato in 2). Se entro questo periodo arriva un terzo membro compatibile, viene aggregato automaticamente al gruppo. Se la finestra scade senza nuovi arrivi, il gruppo resta da 2 e parte il ciclo normalmente.
-   - Stato gruppo: "in attesa del terzo" (pending, chat attiva ma ciclo non ancora partito) → "completo" (se arriva il terzo) → "chiuso e avvio ciclo" (se la finestra scade)
-   - Notifica agli utenti: aggiornamento stato gruppo e partenza ciclo
-   - Regola jolly più flessibile per evitare frustrazioni
+  - Impegno maggiore richiesto in chat e video meeting
+  - **Finestra massima di attesa per il terzo membro**: se il matching parte con 2 persone, si apre una finestra di 3 giorni (fissi, dal momento in cui il gruppo viene effettivamente creato in 2). Se entro questo periodo arriva un terzo membro compatibile, viene aggregato automaticamente al gruppo. Se la finestra scade senza nuovi arrivi, il gruppo resta da 2 e parte il ciclo normalmente.
+  - Stato gruppo: "in attesa del terzo" (pending, chat attiva ma ciclo non ancora partito) → "completo" (se arriva il terzo) → "chiuso e avvio ciclo" (se la finestra scade)
+  - Notifica agli utenti: aggiornamento stato gruppo e partenza ciclo
+  - Regola jolly più flessibile per evitare frustrazioni
 
 **Schema dinamica matching gruppi da 2 → 3:**
 
 1. Matching standard: si cerca di formare gruppi da 3 (con attese progressive e scelta utente come da flow).
 2. Se dopo tutte le attese non si trova un terzo → si forma un gruppo da 2 e parte la finestra di 3 giorni (chat attiva, ciclo NON ancora partito).
 3. Durante la finestra:
-    - Se arriva un terzo compatibile → viene aggiunto, il gruppo diventa da 3, e parte il ciclo di 30 giorni per tutti.
-    - Se NON arriva nessuno entro 3 giorni → il gruppo da 2 viene "chiuso" e parte il ciclo di 30 giorni solo per loro.
+   - Se arriva un terzo compatibile → viene aggiunto, il gruppo diventa da 3, e parte il ciclo di 30 giorni per tutti.
+   - Se NON arriva nessuno entro 3 giorni → il gruppo da 2 viene "chiuso" e parte il ciclo di 30 giorni solo per loro.
 4. Le regole precedenti di attesa (matching progressivo, scelta utente, ecc.) restano valide PRIMA della formazione del gruppo da 2.
 
 **Vantaggi:**
+
 - Massima possibilità di gruppo da 3, ma senza far aspettare troppo chi è già motivato.
 - L’utente non resta bloccato in attesa infinita.
 - La chat si può attivare subito, ma il ciclo parte solo a gruppo definitivo.
