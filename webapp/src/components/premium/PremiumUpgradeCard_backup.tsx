@@ -57,23 +57,27 @@ const PremiumUpgradeCard: React.FC<PremiumUpgradeCardProps> = ({
           <ul>
             <li>
               <span className="benefit-icon">🎯</span>
-              <span>Fino a 3 obiettivi contemporanei</span>
+              <span>Fino a 5 obiettivi simultanei</span>
             </li>
             <li>
-              <span className="benefit-icon">🔄</span>
-              <span>Mantieni i tuoi gruppi preferiti</span>
+              <span className="benefit-icon">�</span>
+              <span>Matching prioritario con partner migliori</span>
             </li>
             <li>
               <span className="benefit-icon">📊</span>
-              <span>Statistiche avanzate e insights</span>
+              <span>Statistiche dettagliate e analisi progresso</span>
+            </li>
+            <li>
+              <span className="benefit-icon">🏆</span>
+              <span>Accesso a gruppi esclusivi e coaching</span>
+            </li>
+            <li>
+              <span className="benefit-icon">📱</span>
+              <span>Notifiche push personalizzate</span>
             </li>
             <li>
               <span className="benefit-icon">💎</span>
-              <span>Badge esclusivi e riconoscimenti</span>
-            </li>
-            <li>
-              <span className="benefit-icon">🆘</span>
-              <span>Supporto umano prioritario (72h)</span>
+              <span>Badge Premium e riconoscimenti</span>
             </li>
           </ul>
         </div>
@@ -81,7 +85,7 @@ const PremiumUpgradeCard: React.FC<PremiumUpgradeCardProps> = ({
         <div className="pricing-info">
           <div className="price">
             <span className="currency">€</span>
-            <span className="amount">7.99</span>
+            <span className="amount">9.99</span>
             <span className="period">/mese</span>
           </div>
           <p className="price-note">Cancella in qualsiasi momento</p>

@@ -38,8 +38,8 @@ BEGIN
         SELECT COUNT(*) INTO active_profiles FROM user_profiles WHERE id = user_id;
     END;
     
-    -- Determina limiti: Premium = 5, Free = 1
-    max_profiles := CASE WHEN user_premium THEN 5 ELSE 1 END;
+    -- Determina limiti: Premium = 3, Free = 1
+    max_profiles := CASE WHEN user_premium THEN 3 ELSE 1 END;
     
     RETURN json_build_object(
         'is_premium', COALESCE(user_premium, false),

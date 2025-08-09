@@ -165,8 +165,8 @@ export class PremiumService {
       }
 
       const reason = limits.is_premium
-        ? "Hai raggiunto il limite di 2 obiettivi Premium"
-        : "Upgrade a Premium per gestire obiettivi multipli";
+        ? "Hai raggiunto il limite di 3 obiettivi Premium"
+        : "Upgrade a Premium per gestire fino a 3 obiettivi contemporanei";
 
       return { canAdd: false, reason };
     } catch (error) {
@@ -185,18 +185,19 @@ export class PremiumService {
         features: [
           "Un obiettivo alla volta",
           "Gruppo di supporto base",
-          "Check-in settimanali",
+          "Badge standard",
+          "Storico completo (incluso)",
         ],
       },
       premium: {
-        max_goals: 2,
+        max_goals: 3,
         features: [
-          "Due obiettivi contemporanei",
-          "Priorità nella formazione gruppi",
-          "Analytics avanzate sui progressi",
-          "Coach virtuale personalizzato",
-          "Accesso anticipato a nuove features",
-          "Supporto prioritario",
+          "Fino a 3 obiettivi contemporanei",
+          "Mantieni i tuoi gruppi preferiti",
+          "Statistiche avanzate e insights",
+          "Badge esclusivi e riconoscimenti",
+          "Supporto umano prioritario (72h)",
+          "Storico completo (incluso)",
         ],
       },
     };
