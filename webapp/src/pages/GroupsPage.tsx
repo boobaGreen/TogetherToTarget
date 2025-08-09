@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { PremiumService } from "../services/premium";
 import "./GroupsPage.css";
 
 interface Member {
@@ -14,6 +15,9 @@ interface Group {
   id: string;
   name: string;
   description: string;
+  category: string;
+  subcategory: string;
+  categoryIcon: string;
   members: Member[];
   progress: number;
   status: "active" | "completed" | "paused";
@@ -23,6 +27,31 @@ interface Group {
 const GroupsPage: React.FC = () => {
   const { user } = useAuth();
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
+  const [isPremium, setIsPremium] = useState(false);
+  const [premiumLoading, setPremiumLoading] = useState(true);
+
+  // Carica status premium
+  useEffect(() => {
+    const loadPremiumStatus = async () => {
+      if (!user?.id) {
+        setIsPremium(false);
+        setPremiumLoading(false);
+        return;
+      }
+
+      try {
+        const status = await PremiumService.getPremiumStatus(user.id);
+        setIsPremium(status.is_premium);
+      } catch (error) {
+        console.error("Errore nel caricamento status premium:", error);
+        setIsPremium(false);
+      } finally {
+        setPremiumLoading(false);
+      }
+    };
+
+    loadPremiumStatus();
+  }, [user?.id]);
 
   // Mock data con chat badge - Max 3 membri per gruppo
   const mockGroups: Group[] = [
@@ -30,6 +59,9 @@ const GroupsPage: React.FC = () => {
       id: "1",
       name: "Fitness Challenge 2024",
       description: "Obiettivo: 50kg di perdita peso collettiva",
+      category: "Salute&Benessere",
+      subcategory: "Fitness",
+      categoryIcon: "💪",
       members: [
         { id: "1", name: "Marco", lastCheckin: "2025-08-09", streak: 15 },
         { id: "2", name: "Sofia", lastCheckin: "2025-08-08", streak: 12 },
@@ -42,6 +74,9 @@ const GroupsPage: React.FC = () => {
       id: "2",
       name: "Lettura Mensile",
       description: "Obiettivo: 12 libri in un anno",
+      category: "Crescita",
+      subcategory: "Cultura",
+      categoryIcon: "📚",
       members: [
         { id: "4", name: "Emma", lastCheckin: "2025-08-09", streak: 22 },
         { id: "5", name: "Luca", lastCheckin: "2025-08-08", streak: 18 },
@@ -55,6 +90,9 @@ const GroupsPage: React.FC = () => {
       id: "3",
       name: "Startup Launch",
       description: "Obiettivo: Lancio MVP entro 3 mesi",
+      category: "Carriera",
+      subcategory: "Imprenditoria",
+      categoryIcon: "🚀",
       members: [
         { id: "7", name: "Anna", lastCheckin: "2025-08-09", streak: 30 },
         { id: "8", name: "Pietro", lastCheckin: "2025-08-09", streak: 25 },
@@ -88,9 +126,7 @@ const GroupsPage: React.FC = () => {
   const activeGroups = mockGroups.filter((g) => g.status === "active");
   const completedGroups = mockGroups.filter((g) => g.status === "completed");
 
-  // Logica Premium vs Non-Premium
-  const isPremium = user?.subscription_type === "premium";
-
+  // Logica Premium vs Non-Premium (usando PremiumService)
   let visibleActiveGroups: Group[] = [];
   let visibleCompletedGroups: Group[] = [];
   let numEmptySlots = 0;
@@ -184,7 +220,24 @@ const GroupsPage: React.FC = () => {
                   {getStatusBadge(group.status).text}
                 </span>
               </div>
+              <div className="category-info">
+                <span className="category-badge">
+                  <span className="category-icon">{group.categoryIcon}</span>
+                  <span className="category-text">
+                    {group.category}•{group.subcategory}
+                  </span>
+                </span>
+              </div>
               <p className="group-description">{group.description}</p>
+              {group.unreadMessages && group.unreadMessages > 0 && (
+                <div
+                  className="chat-badge"
+                  title={`${group.unreadMessages} messaggi non letti`}
+                >
+                  <span className="chat-icon">💬</span>
+                  <span className="unread-count">{group.unreadMessages}</span>
+                </div>
+              )}
             </div>
 
             <div className="progress-section">
@@ -205,18 +258,6 @@ const GroupsPage: React.FC = () => {
                 <h4 className="members-title">
                   Membri ({group.members.length})
                 </h4>
-                {typeof group.unreadMessages === "number" &&
-                  group.unreadMessages > 0 && (
-                    <div
-                      className="chat-badge chat-badge-professional"
-                      title={`${group.unreadMessages} messaggi non letti`}
-                    >
-                      <span className="chat-icon">💬</span>
-                      <span className="unread-count">
-                        {group.unreadMessages}
-                      </span>
-                    </div>
-                  )}
               </div>
 
               <div className="members-list">
@@ -239,6 +280,22 @@ const GroupsPage: React.FC = () => {
                     </div>
                   </div>
                 ))}
+                {/* Slot vuoti per raggiungere 3 membri */}
+                {Array.from(
+                  { length: Math.max(0, 3 - group.members.length) },
+                  (_, index) => (
+                    <div
+                      key={`empty-${index}`}
+                      className="member-item empty-slot"
+                    >
+                      <div className="member-info">
+                        <div className="member-name">&nbsp;</div>
+                        <div className="member-checkin">&nbsp;</div>
+                      </div>
+                      <div className="member-streak">&nbsp;</div>
+                    </div>
+                  )
+                )}
               </div>
 
               <div className="group-actions">
@@ -346,6 +403,14 @@ const GroupsPage: React.FC = () => {
                   {getStatusBadge(group.status).text}
                 </span>
               </div>
+              <div className="category-info">
+                <span className="category-badge">
+                  <span className="category-icon">{group.categoryIcon}</span>
+                  <span className="category-text">
+                    {group.category}•{group.subcategory}
+                  </span>
+                </span>
+              </div>
               <p className="group-description">{group.description}</p>
             </div>
 
@@ -389,6 +454,22 @@ const GroupsPage: React.FC = () => {
                     </div>
                   </div>
                 ))}
+                {/* Slot vuoti per raggiungere 3 membri */}
+                {Array.from(
+                  { length: Math.max(0, 3 - group.members.length) },
+                  (_, index) => (
+                    <div
+                      key={`empty-${index}`}
+                      className="member-item empty-slot"
+                    >
+                      <div className="member-info">
+                        <div className="member-name">&nbsp;</div>
+                        <div className="member-checkin">&nbsp;</div>
+                      </div>
+                      <div className="member-streak">&nbsp;</div>
+                    </div>
+                  )
+                )}
               </div>
 
               <div className="group-actions">
