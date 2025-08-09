@@ -700,6 +700,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  position: relative;
 }
 
 .members-title {
@@ -712,18 +713,23 @@
 .chat-badge {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
   color: white;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  font-weight: 700;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
 }
 
 .chat-badge-professional {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
   animation: pulse-badge 2s infinite;
 }
 
@@ -731,25 +737,28 @@
   0%,
   100% {
     transform: scale(1);
+    box-shadow: 0 3px 12px rgba(59, 130, 246, 0.4);
   }
   50% {
     transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.6);
   }
 }
 
 .chat-icon {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .unread-count {
   background: white;
-  color: #7c3aed;
-  padding: 0.2rem 0.5rem;
-  border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  min-width: 1.2rem;
+  color: #1e40af;
+  padding: 0.25rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  min-width: 1.4rem;
   text-align: center;
+  line-height: 1;
 }
 
 .members-more {
@@ -767,11 +776,36 @@
 }
 
 /* Carte CTA Premium */
-.premium-cta-card {
+.group-card.premium-cta-card {
   position: relative;
-  background: linear-gradient(135deg, #f8f4ff 0%, #e6d9ff 100%);
-  border: 2px solid #8b5cf6;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
+  border: 2px solid #a855f7;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.group-card.premium-cta-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+}
+
+.group-card.premium-cta-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #8b5cf6, #a855f7, #c084fc, #8b5cf6);
+  background-size: 400% 400%;
+  border-radius: 18px;
+  z-index: -1;
+  animation: gradient-border 3s ease infinite;
+}
+
+@keyframes gradient-border {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .premium-cta-overlay {
@@ -780,48 +814,107 @@
   justify-content: center;
   height: 100%;
   min-height: 300px;
+  position: relative;
+  z-index: 2;
+}
+
+.premium-cta-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine-sweep 2s infinite;
+}
+
+@keyframes shine-sweep {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .premium-cta-content {
   text-align: center;
   padding: 2rem;
+  z-index: 3;
+  position: relative;
 }
 
 .premium-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: float-icon 3s ease-in-out infinite;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 .premium-title {
-  font-size: 1.4rem;
-  color: #6d28d9;
+  font-size: 1.5rem;
+  color: white;
   margin: 0 0 1rem 0;
-  font-weight: 700;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .premium-description {
-  color: #7c3aed;
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin: 0 0 1.5rem 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 2rem 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-premium-upgrade {
   background: linear-gradient(135deg, #ffd700, #ffed4e);
   color: #1a1a1a;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
-  font-weight: 700;
-  font-size: 0.95rem;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-premium-upgrade::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-premium-upgrade:hover::before {
+  left: 100%;
 }
 
 .btn-premium-upgrade:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+  background: linear-gradient(135deg, #ffed4e, #ffd700);
 }
 
 .status-badge {
@@ -1074,10 +1167,49 @@
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.2s ease;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
 }
 
 .btn-premium:hover {
   background: #ffed4a;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #64748b, #475569);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #475569, #334155);
   transform: translateY(-1px);
 }
 
