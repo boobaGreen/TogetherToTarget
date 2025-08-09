@@ -347,44 +347,24 @@ const GroupsPage: React.FC = () => {
           isPremium &&
           numEmptySlots > 0 &&
           Array.from({ length: numEmptySlots }, (_, index) => {
-            const objectives = [
-              {
-                icon: "💪",
-                title: "Fitness & Salute",
-                description: "Raggiungi i tuoi obiettivi di benessere fisico",
-              },
-              {
-                icon: "📚",
-                title: "Crescita Personale",
-                description: "Sviluppa nuove competenze e conoscenze",
-              },
-              {
-                icon: "🚀",
-                title: "Carriera & Business",
-                description: "Accelera la tua crescita professionale",
-              },
-            ];
-
-            const objective = objectives[index % objectives.length];
-
             return (
               <div
                 key={`empty-${index}`}
-                className="group-card group-card-premium-empty"
-                onClick={() =>
-                  console.log(`Create new ${objective.title} group clicked`)
-                }
+                className="group-card group-card-add-objective"
+                onClick={() => console.log(`Create new group clicked`)}
               >
-                <div className="premium-empty-content">
-                  <div className="premium-empty-icon">
-                    <span>{objective.icon}</span>
+                <div className="add-objective-content">
+                  <div className="add-objective-icon">
+                    <span>+</span>
                   </div>
-                  <h3 className="premium-empty-title">{objective.title}</h3>
-                  <p className="premium-empty-description">
-                    {objective.description}
+                  <h3 className="add-objective-title">Aggiungi Obiettivo</h3>
+                  <p className="add-objective-description">
+                    Crea un nuovo gruppo e raggiungi i tuoi obiettivi insieme
                   </p>
+                  <button className="btn-add-objective">
+                    Crea Nuovo Gruppo
+                  </button>
                 </div>
-                <div className="premium-shine-effect"></div>
               </div>
             );
           })}
