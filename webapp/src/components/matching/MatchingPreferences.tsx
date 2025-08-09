@@ -3,6 +3,7 @@ import { MatchingService } from "../../services/matching";
 import { SUPPORTED_LANGUAGES } from "../../types/matching";
 import type { UserMatchingPreferences } from "../../types/matching";
 import { useAuth } from "../../hooks/useAuth";
+import { Spinner } from "../common/Spinner";
 import "./MatchingPreferences.css";
 
 interface MatchingPreferencesProps {
@@ -107,7 +108,7 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
   if (loading) {
     return (
       <div className="matching-preferences loading">
-        <div className="loading-spinner">Caricamento preferenze...</div>
+        <Spinner size="medium" message="Caricamento preferenze..." />
       </div>
     );
   }
@@ -223,7 +224,7 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
         >
           {saving ? (
             <>
-              <div className="saving-spinner"></div>
+              <Spinner size="small" color="white" />
               Salvando...
             </>
           ) : (

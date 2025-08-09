@@ -1159,12 +1159,37 @@
 /* Loading Spinner */
 .loading-spinner {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 200px;
+  gap: 12px;
+}
+
+.loading-spinner::before {
+  content: "";
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(102, 126, 234, 0.2);
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-spinner::after {
+  content: "Caricamento...";
   font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 600;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Carte "Aggiungi Obiettivo" per Premium */

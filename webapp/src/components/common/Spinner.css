@@ -1,0 +1,72 @@
+/* Spinner component - Componente spinner riutilizzabile */
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner-circle {
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Dimensioni */
+.spinner-small {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+
+.spinner-medium {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+.spinner-large {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+/* Colori */
+.spinner-primary {
+  border: var(--border-width, 3px) solid rgba(102, 126, 234, 0.2);
+  border-top: var(--border-width, 3px) solid #667eea;
+}
+
+.spinner-white {
+  border: var(--border-width, 3px) solid rgba(255, 255, 255, 0.3);
+  border-top: var(--border-width, 3px) solid white;
+}
+
+.spinner-gray {
+  border: var(--border-width, 3px) solid #e2e8f0;
+  border-top: var(--border-width, 3px) solid #718096;
+}
+
+.spinner-message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #667eea;
+}
+
+.spinner-white + .spinner-message {
+  color: white;
+}
+
+.spinner-gray + .spinner-message {
+  color: #718096;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

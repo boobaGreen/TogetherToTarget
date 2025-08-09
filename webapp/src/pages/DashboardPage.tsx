@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { PremiumService } from "../services/premium";
 import PremiumBadge from "../components/premium/PremiumBadge";
 import PremiumUpgradeCard from "../components/premium/PremiumUpgradeCard";
-import { PremiumService } from "../services/premium";
+import { Spinner } from "../components/common/Spinner";
 import "./DashboardPage.css";
 
 interface UserGoal {
@@ -131,8 +132,7 @@ export const DashboardPage: React.FC = () => {
   if (loading) {
     return (
       <div className="dashboard-loading">
-        <div className="loading-spinner"></div>
-        <p>Caricamento dashboard...</p>
+        <Spinner size="large" message="Caricamento dashboard..." />
       </div>
     );
   }
