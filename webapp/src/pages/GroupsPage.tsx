@@ -28,7 +28,8 @@ const GroupsPage: React.FC = () => {
   const { user } = useAuth();
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
   const [isPremium, setIsPremium] = useState(false);
-  const [premiumLoading, setPremiumLoading] = useState(true);
+
+  const [, setPremiumLoading] = useState(true);
 
   // Carica status premium
   useEffect(() => {
@@ -171,7 +172,7 @@ const GroupsPage: React.FC = () => {
         </div>
         <div className="welcome-actions">
           {isPremium && <div className="premium-badge">✨ Premium Active</div>}
-          
+
           {/* Filtri moderni integrati */}
           <div className="filter-tabs">
             <button
