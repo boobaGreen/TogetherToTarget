@@ -4,6 +4,8 @@ import { SUPPORTED_LANGUAGES } from "../../types/matching";
 import type { UserMatchingPreferences } from "../../types/matching";
 import { useAuth } from "../../hooks/useAuth";
 import { Spinner } from "../common/Spinner";
+import { ToastContainer } from "../common/Toast";
+import { useToast } from "../../hooks/useToast";
 import "./MatchingPreferences.css";
 
 interface MatchingPreferencesProps {
@@ -14,6 +16,7 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
   onPreferencesUpdate,
 }) => {
   const { user } = useAuth();
+  const { toasts, showSuccess, showError, removeToast } = useToast();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -83,10 +86,10 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
       }
 
       // Feedback visivo di successo
-      alert("Preferenze salvate con successo!");
+      showSuccess("Preferenze salvate con successo!");
     } catch (error) {
       console.error("Errore nel salvataggio preferenze:", error);
-      alert("Errore nel salvataggio delle preferenze");
+      showError("Errore nel salvataggio delle preferenze");
     } finally {
       setSaving(false);
     }
@@ -115,6 +118,9 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
 
   return (
     <div className="matching-preferences">
+      {/* Toast Container */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+
       {/* Header */}
       <div className="preferences-header">
         <h3>🎯 Preferenze Matching</h3>

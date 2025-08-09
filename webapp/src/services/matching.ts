@@ -42,21 +42,45 @@ export class MatchingService {
       >
     >
   ): Promise<UserMatchingPreferences | null> {
-    const { data, error } = await supabase
-      .from("user_matching_preferences")
-      .upsert({
-        user_id: userId,
-        ...preferences,
-      })
-      .select()
-      .single();
+    try {
+      // Prima tenta di aggiornare
+      const { data: updateData, error: updateError } = await supabase
+        .from("user_matching_preferences")
+        .update(preferences)
+        .eq("user_id", userId)
+        .select()
+        .single();
 
-    if (error) {
-      console.error("Errore nell'aggiornamento preferenze:", error);
+      if (updateError) {
+        // Se non esiste, crea nuovo record
+        if (updateError.code === "PGRST116") {
+          // No rows found, create new
+          const { data: insertData, error: insertError } = await supabase
+            .from("user_matching_preferences")
+            .insert({
+              user_id: userId,
+              ...preferences,
+            })
+            .select()
+            .single();
+
+          if (insertError) {
+            console.error("Errore nella creazione preferenze:", insertError);
+            return null;
+          }
+
+          return insertData;
+        } else {
+          console.error("Errore nell'aggiornamento preferenze:", updateError);
+          return null;
+        }
+      }
+
+      return updateData;
+    } catch (error) {
+      console.error("Errore nel servizio preferenze:", error);
       return null;
     }
-
-    return data;
   }
 
   // === GESTIONE MATCHING POOL ===

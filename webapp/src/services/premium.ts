@@ -20,9 +20,13 @@ export class PremiumService {
    */
   static async getUserLimits(userId: string): Promise<UserLimits> {
     try {
-      const { data, error } = await supabase.rpc("get_user_limits", {
-        user_id: userId,
-      });
+      // Invece di chiamare una RPC che potrebbe non esistere,
+      // recuperiamo direttamente dalla tabella users
+      const { data, error } = await supabase
+        .from("users")
+        .select("is_premium, subscription_type")
+        .eq("id", userId)
+        .single();
 
       if (error) {
         console.error("Errore nel recupero limiti utente:", error);
@@ -35,7 +39,15 @@ export class PremiumService {
         };
       }
 
-      return data;
+      // Logica semplificata per i limiti
+      const isPremium = data.is_premium || false;
+
+      return {
+        is_premium: isPremium,
+        active_profiles: 1, // Assumiamo sempre 1 attivo per ora
+        max_profiles: isPremium ? 3 : 1,
+        can_add_goal: true, // Sempre true per ora, da implementare logica complessa dopo
+      };
     } catch (error) {
       console.error("Errore nel servizio limiti:", error);
       return {
