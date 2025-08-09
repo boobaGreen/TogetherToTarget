@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import "./GroupsPage.css";
 
@@ -252,9 +253,11 @@ export const GroupsPage: React.FC = () => {
                   </span>
                 )}
               </button>
-              <button
+              <Link
+                to="/test-checkin"
                 className="btn-primary checkin-btn"
                 title="Daily Check-in"
+                style={{ textDecoration: "none" }}
               >
                 <span
                   className="checkin-btn-icon"
@@ -264,7 +267,7 @@ export const GroupsPage: React.FC = () => {
                   ✅
                 </span>
                 <span className="checkin-btn-label">Daily Check-in</span>
-              </button>
+              </Link>
             </div>
           </div>
         ))}
