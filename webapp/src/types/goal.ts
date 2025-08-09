@@ -13,7 +13,7 @@ export interface GoalInputProps {
   };
   initialData?: GoalInputData;
   onGoalChange: (data: GoalInputData) => void;
-  onValidation: (isValid: boolean) => void;
+  // onValidation rimossa - campo sempre opzionale/valido
 }
 
 export interface GoalSuggestion {

@@ -2,7 +2,7 @@ export type ExperienceLevel = "beginner" | "intermediate" | "advanced";
 
 export interface ExperienceLevelData {
   level: ExperienceLevel;
-  motivation: string;
+  motivation?: string; // Ora opzionale
 }
 
 export interface ExperienceLevelProps {

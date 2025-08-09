@@ -4,7 +4,6 @@ import type { ExperienceLevelData } from "../types/experience";
 import type { AvailabilityData } from "../types/availability";
 
 export interface MatchingPreferences {
-  motivation?: string;
   meeting_frequency: string;
   notes?: string;
 }
@@ -24,6 +23,7 @@ export interface UserProfile {
   goal_description: string;
   goal_deadline?: Date;
   experience_level: "beginner" | "intermediate" | "advanced";
+  motivation?: string; // Campo motivazione separato e opzionale
   preferred_meeting_times: string[];
   timezone: string;
   availability_hours: string;
@@ -70,13 +70,13 @@ export class UserProfilesService {
         goal_description: goalData.description,
         goal_deadline: goalData.deadline || null,
         experience_level: experienceData.level,
+        motivation: experienceData.motivation || null, // Campo motivazione separato e opzionale
         preferred_meeting_times: availabilityData.preferredDays.map((day) =>
           day.toString()
         ),
         timezone: availabilityData.timezone,
         availability_hours: availabilityData.availabilityHours,
         matching_preferences: {
-          motivation: experienceData.motivation,
           meeting_frequency: availabilityData.meetingFrequency,
           notes: availabilityData.notes || null,
         },

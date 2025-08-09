@@ -14,8 +14,22 @@ const ExperienceLevelSelector: React.FC<ExperienceLevelProps> = ({
   onExperienceChange,
   onValidation,
 }) => {
+  // Frasi motivazionali preconfezionate
+  const getPresetMotivations = (): string[] => {
+    return [
+      "Voglio migliorare me stesso e crescere insieme ad altri",
+      "Ho bisogno di motivazione e supporto per rimanere costante",
+      "Credo che insieme si raggiungano meglio gli obiettivi",
+      "Voglio condividere il mio percorso con persone simili",
+      "Mi piace l'idea di motivare ed essere motivato",
+      "Ho già provato da solo, ora voglio il supporto di un gruppo",
+      "Penso che la responsabilità verso altri mi aiuti a non mollare",
+      "Sono curioso di vedere come altri affrontano sfide simili",
+    ];
+  };
+
   const [selectedLevel, setSelectedLevel] = useState<ExperienceLevel | null>(
-    initialData?.level || null
+    initialData?.level || "beginner" // Default a Principiante per ridurre friction
   );
   const [motivation, setMotivation] = useState(initialData?.motivation || "");
 
@@ -179,15 +193,15 @@ const ExperienceLevelSelector: React.FC<ExperienceLevelProps> = ({
 
   const experienceOptions = getExperienceOptions();
 
-  // Validazione in tempo reale
+  // Validazione in tempo reale - SOLO livello richiesto, motivazione opzionale
   useEffect(() => {
-    const isValid = selectedLevel !== null && motivation.trim().length >= 20;
+    const isValid = selectedLevel !== null;
     onValidation(isValid);
 
     if (selectedLevel) {
       const experienceData: ExperienceLevelData = {
         level: selectedLevel,
-        motivation: motivation.trim(),
+        motivation: motivation.trim() || undefined, // Opzionale
       };
       onExperienceChange(experienceData);
     }
@@ -214,7 +228,8 @@ const ExperienceLevelSelector: React.FC<ExperienceLevelProps> = ({
         <h2>⚡ Qual è il tuo livello di esperienza?</h2>
         <p>
           Questo ci aiuterà a formare gruppi equilibrati e a personalizzare
-          l'esperienza.
+          l'esperienza. <strong>Principiante</strong> è già selezionato come
+          suggerimento.
         </p>
       </div>
 
@@ -255,59 +270,117 @@ const ExperienceLevelSelector: React.FC<ExperienceLevelProps> = ({
 
       {selectedLevel && (
         <div className="motivation-section">
-          <h3 className="motivation-title">💭 Raccontaci la tua motivazione</h3>
+          <h3 className="motivation-title">
+            💭 Perché vuoi raggiungere questo obiettivo? (Opzionale)
+          </h3>
           <p className="motivation-description">
-            Perché vuoi raggiungere questo obiettivo? Cosa ti spinge a iniziare
-            questo percorso?
+            Seleziona una motivazione o scrivine una personalizzata. Questo
+            aiuta il gruppo a conoscerti meglio!
           </p>
 
-          <textarea
-            className={`motivation-textarea ${
-              motivation.length < 20 ? "invalid" : "valid"
-            }`}
-            placeholder="Esempio: Voglio migliorare la mia forma fisica perché mi sento più energico quando sono attivo. Ho provato tante volte da solo ma mi manca la costanza..."
-            value={motivation}
-            onChange={(e) => setMotivation(e.target.value)}
-            rows={4}
-            maxLength={300}
-          />
-
-          <div className="motivation-counter">
-            <span
-              className={
-                motivation.length < 20
-                  ? "error"
-                  : motivation.length > 250
-                  ? "warning"
-                  : "success"
-              }
+          {/* Frasi preconfezionate */}
+          <div className="preset-motivations">
+            <h4
+              style={{
+                fontSize: "1rem",
+                marginBottom: "10px",
+                color: "#4a5568",
+              }}
             >
-              {motivation.length}/300 caratteri
-            </span>
-            {motivation.length < 20 && (
-              <span className="validation-hint">
-                Almeno 20 caratteri richiesti
-              </span>
-            )}
+              💫 Scegli una motivazione rapida:
+            </h4>
+            <div className="preset-grid">
+              {getPresetMotivations().map((preset, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`preset-motivation-btn ${
+                    motivation === preset ? "selected" : ""
+                  }`}
+                  onClick={() => setMotivation(preset)}
+                  style={{
+                    background:
+                      motivation === preset
+                        ? selectedCategory.color + "15"
+                        : "#f8fafc",
+                    border:
+                      motivation === preset
+                        ? `2px solid ${selectedCategory.color}`
+                        : "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    padding: "12px",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    fontSize: "0.9rem",
+                    lineHeight: "1.4",
+                    transition: "all 0.2s ease",
+                    marginBottom: "8px",
+                  }}
+                >
+                  {preset}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
 
-      {selectedLevel && motivation.length >= 20 && (
-        <div className="experience-summary">
-          <h4>📋 Riepilogo del tuo profilo:</h4>
-          <div className="summary-content">
-            <div className="summary-item">
-              <strong>Livello:</strong>{" "}
-              {
-                experienceOptions.find((opt) => opt.level === selectedLevel)
-                  ?.title
-              }
-            </div>
-            <div className="summary-item">
-              <strong>Motivazione:</strong> {motivation}
+          {/* Campo personalizzato */}
+          <div style={{ marginTop: "20px" }}>
+            <h4
+              style={{
+                fontSize: "1rem",
+                marginBottom: "10px",
+                color: "#4a5568",
+              }}
+            >
+              ✍️ Oppure scrivi la tua motivazione:
+            </h4>
+            <textarea
+              className="motivation-textarea"
+              placeholder="Scrivi qui la tua motivazione personale..."
+              value={motivation}
+              onChange={(e) => setMotivation(e.target.value)}
+              rows={3}
+              maxLength={300}
+              style={{
+                width: "100%",
+                border: "1px solid #e2e8f0",
+                borderRadius: "8px",
+                padding: "12px",
+                fontSize: "0.95rem",
+                lineHeight: "1.5",
+                resize: "vertical",
+              }}
+            />
+
+            <div
+              className="motivation-counter"
+              style={{ marginTop: "5px", textAlign: "right" }}
+            >
+              <span style={{ color: "#94a3b8", fontSize: "0.85rem" }}>
+                {motivation.length}/300 caratteri
+              </span>
             </div>
           </div>
+
+          {/* Opzione per saltare */}
+          {!motivation && (
+            <div style={{ marginTop: "15px", textAlign: "center" }}>
+              <button
+                type="button"
+                onClick={() => setMotivation("")}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#94a3b8",
+                  fontSize: "0.9rem",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+              >
+                🏃 Salta questo passo (puoi aggiungerlo dopo)
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -28,7 +28,6 @@ export const OnboardingPage: React.FC = () => {
     useState<Subcategory | null>(null);
   const [subcategoriesLoading, setSubcategoriesLoading] = useState(false);
   const [goalData, setGoalData] = useState<GoalInputData | null>(null);
-  const [isGoalValid, setIsGoalValid] = useState(false);
   const [experienceData, setExperienceData] =
     useState<ExperienceLevelData | null>(null);
   const [isExperienceValid, setIsExperienceValid] = useState(false);
@@ -400,11 +399,12 @@ export const OnboardingPage: React.FC = () => {
             padding: "2rem 0",
           }}
         >
-          {/* Progress indicator */}
+          {/* Progress indicator con tempo stimato */}
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "2rem",
             }}
           >
@@ -417,6 +417,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: "0.75rem 1.5rem",
                 borderRadius: "50px",
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
@@ -424,6 +425,38 @@ export const OnboardingPage: React.FC = () => {
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Categoria obiettivo</span>
+            </div>
+
+            {/* Barra di progresso visuale */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "20%", // 1/5 = 20%
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#94a3b8",
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              ⏱️ Tempo rimanente: ~2 minuti
             </div>
           </div>
 
@@ -474,11 +507,41 @@ export const OnboardingPage: React.FC = () => {
                 fontSize: "1rem",
                 cursor: selectedCategory ? "pointer" : "not-allowed",
                 transition: "all 0.2s ease",
+                position: "relative",
               }}
             >
-              Continua →
+              {selectedCategory ? "Continua →" : "Seleziona una categoria"}
             </button>
           </div>
+
+          {/* Messaggio motivazionale */}
+          {selectedCategory && (
+            <div
+              style={{
+                maxWidth: "600px",
+                margin: "1rem auto 0",
+                textAlign: "center",
+                background: "#f0f9ff",
+                padding: "1rem",
+                borderRadius: "12px",
+                border: "1px solid #bae6fd",
+              }}
+            >
+              <p
+                style={{
+                  margin: 0,
+                  color: "#0369a1",
+                  fontSize: "0.95rem",
+                  lineHeight: "1.5",
+                }}
+              >
+                💪 Ottima scelta! <strong>{selectedCategory.name_it}</strong> è
+                una categoria molto popolare. Insieme al tuo gruppo di supporto
+                avrai <strong>3x più probabilità</strong> di raggiungere il tuo
+                obiettivo!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -502,11 +565,12 @@ export const OnboardingPage: React.FC = () => {
             padding: "2rem 0",
           }}
         >
-          {/* Progress indicator */}
+          {/* Progress indicator con tempo stimato */}
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "2rem",
             }}
           >
@@ -519,6 +583,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: "0.75rem 1.5rem",
                 borderRadius: "50px",
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
@@ -526,6 +591,38 @@ export const OnboardingPage: React.FC = () => {
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Obiettivo specifico</span>
+            </div>
+
+            {/* Barra di progresso visuale */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "40%", // 2/5 = 40%
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#94a3b8",
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              ⏱️ Tempo rimanente: ~90 secondi
             </div>
           </div>
 
@@ -607,11 +704,12 @@ export const OnboardingPage: React.FC = () => {
             padding: "2rem 0",
           }}
         >
-          {/* Progress indicator */}
+          {/* Progress indicator con tempo stimato */}
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "2rem",
             }}
           >
@@ -624,6 +722,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: "0.75rem 1.5rem",
                 borderRadius: "50px",
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
@@ -633,6 +732,38 @@ export const OnboardingPage: React.FC = () => {
               <span style={{ color: "#64748b" }}>
                 Descrivi il tuo obiettivo
               </span>
+            </div>
+
+            {/* Barra di progresso visuale */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "60%", // 3/5 = 60%
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#94a3b8",
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              ⏱️ Tempo rimanente: ~60 secondi
             </div>
           </div>
 
@@ -647,7 +778,6 @@ export const OnboardingPage: React.FC = () => {
               }}
               initialData={goalData || undefined}
               onGoalChange={setGoalData}
-              onValidation={setIsGoalValid}
             />
           )}
 
@@ -679,17 +809,15 @@ export const OnboardingPage: React.FC = () => {
 
             <button
               onClick={nextStep}
-              disabled={!isGoalValid}
+              disabled={false} // GoalInput sempre valido ora (opzionale)
               style={{
-                background: isGoalValid
-                  ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-                  : "#e2e8f0",
-                color: isGoalValid ? "white" : "#94a3b8",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                color: "white",
                 border: "none",
                 padding: "12px 24px",
                 borderRadius: "8px",
                 fontSize: "1rem",
-                cursor: isGoalValid ? "pointer" : "not-allowed",
+                cursor: "pointer",
                 transition: "all 0.2s ease",
               }}
             >
@@ -719,11 +847,12 @@ export const OnboardingPage: React.FC = () => {
             padding: "2rem 0",
           }}
         >
-          {/* Progress indicator */}
+          {/* Progress indicator con tempo stimato */}
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "2rem",
             }}
           >
@@ -736,6 +865,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: "0.75rem 1.5rem",
                 borderRadius: "50px",
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
@@ -743,6 +873,38 @@ export const OnboardingPage: React.FC = () => {
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Livello di esperienza</span>
+            </div>
+
+            {/* Barra di progresso visuale */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "80%", // 4/5 = 80%
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#94a3b8",
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              ⏱️ Tempo rimanente: ~30 secondi
             </div>
           </div>
 
@@ -838,11 +1000,12 @@ export const OnboardingPage: React.FC = () => {
             padding: "2rem 0",
           }}
         >
-          {/* Progress indicator */}
+          {/* Progress indicator con tempo stimato */}
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               marginBottom: "2rem",
             }}
           >
@@ -855,6 +1018,7 @@ export const OnboardingPage: React.FC = () => {
                 padding: "0.75rem 1.5rem",
                 borderRadius: "50px",
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
@@ -862,6 +1026,39 @@ export const OnboardingPage: React.FC = () => {
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Disponibilità</span>
+            </div>
+
+            {/* Barra di progresso visuale */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%", // 5/5 = 100%
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#059669",
+                marginTop: "0.5rem",
+                textAlign: "center",
+                fontWeight: "600",
+              }}
+            >
+              🎉 Quasi fatto! Ultimo step
             </div>
           </div>
 
