@@ -129,7 +129,7 @@ export const ResetPasswordPage: React.FC = () => {
           <div className="auth-header">
             <h1>
               <span className="logo-emoji">🎯</span>
-              <span className="logo-text-auth">TogetherToTarget</span>
+              <span className="logo-text-auth">TogetherToGoal</span>
             </h1>
             <h2>Verifica Token</h2>
           </div>
@@ -149,7 +149,7 @@ export const ResetPasswordPage: React.FC = () => {
           <div className="auth-header">
             <h1>
               <span className="logo-emoji">🎯</span>
-              <span className="logo-text-auth">TogetherToTarget</span>
+              <span className="logo-text-auth">TogetherToGoal</span>
             </h1>
             <h2>Link Non Valido</h2>
           </div>
@@ -177,7 +177,7 @@ export const ResetPasswordPage: React.FC = () => {
         <div className="auth-header">
           <h1>
             <span className="logo-emoji">🎯</span>
-            <span className="logo-text-auth">TogetherToTarget</span>
+            <span className="logo-text-auth">TogetherToGoal</span>
           </h1>
           <h2>Nuova Password</h2>
           <p>Inserisci la tua nuova password. Assicurati che sia sicura!</p>

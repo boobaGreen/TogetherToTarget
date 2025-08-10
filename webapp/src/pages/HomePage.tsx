@@ -47,7 +47,7 @@ export const HomePage: React.FC = () => {
                 color: "#1a202c",
               }}
             >
-              TogetherToTarget
+              TogetherToGoal
             </span>
           </h1>
           <p

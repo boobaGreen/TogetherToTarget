@@ -82,7 +82,7 @@ export const LoginForm: React.FC = () => {
         <div className="auth-header">
           <h1>
             <span className="logo-emoji">🎯</span>
-            <span className="logo-text-auth">TogetherToTarget</span>
+            <span className="logo-text-auth">TogetherToGoal</span>
           </h1>
           <h2>Accedi al tuo account</h2>
           <p>Bentornato! Continua il tuo percorso verso i tuoi obiettivi.</p>

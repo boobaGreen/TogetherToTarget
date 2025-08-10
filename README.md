@@ -1,8 +1,8 @@
-# TogetherToTarget (TTT) - Motivational Group Platform
+# TogetherToGoal (TTG) - Motivational Group Platform
 
 ## 🎯 **Concept**
 
-**TogetherToTarget** è una piattaforma motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
+**TogetherToGoal** è una piattaforma motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
 
 ### 🧩 **Regola Matching Gruppi da 2 → 3**
 
@@ -378,7 +378,7 @@ npm run web     # Test su browser web
 
 ---
 
-**🎯 TogetherToTarget - MVP Completo e Production Ready**  
+**🎯 TogetherToGoal - MVP Completo e Production Ready**  
 **Sviluppato con ❤️ - Status: 100% funzionante, pronto per utenti reali**
 
 _Sistema completo di autenticazione e onboarding con database popolato.  
@@ -588,7 +588,7 @@ npm run web     # Per test su browser
 
 ---
 
-**🎯 TogetherToTarget - Authentication System Completo + Onboarding Foundation**  
+**🎯 TogetherToGoal - Authentication System Completo + Onboarding Foundation**  
 **Sviluppato con ❤️ - Status: 60% completato, Authentication 100% funzionante**
 
 _Sistema di autenticazione robusto e foundation per onboarding. Necessita completamento database integration per MVP completo._
@@ -746,7 +746,7 @@ npm run web     # Per test su browser
 
 ## 🎯 Concept
 
-**TogetherToTarget** è un'app motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
+**TogetherToGoal** è un'app motivazionale che abbina automaticamente persone con obiettivi simili in mini gruppi di 3 persone per cicli di supporto di 30 giorni.
 
 ### ✅ Features Implementate
 

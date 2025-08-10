@@ -1,4 +1,4 @@
-# TogetherToTarget Web App
+# TogetherToGoal Web App
 
 ## 🎯 Sistema di Autenticazione e Onboarding
 

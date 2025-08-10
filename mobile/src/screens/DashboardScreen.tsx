@@ -18,7 +18,7 @@ export default function DashboardScreen() {
       <Text style={styles.welcome}>Benvenuto, {user?.email}! 👋</Text>
 
       <View style={styles.content}>
-        <Text style={styles.subtitle}>🎯 TogetherToTarget</Text>
+        <Text style={styles.subtitle}>🎯 TogetherToGoal</Text>
         <Text style={styles.description}>
           La tua app motivazionale per raggiungere obiettivi insieme ad altri.
         </Text>

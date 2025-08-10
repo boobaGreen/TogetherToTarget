@@ -57,7 +57,7 @@ export const ForgotPasswordPage: React.FC = () => {
         <div className="auth-header">
           <h1>
             <span className="logo-emoji">🎯</span>
-            <span className="logo-text-auth">TogetherToTarget</span>
+            <span className="logo-text-auth">TogetherToGoal</span>
           </h1>
           <h2>Password Dimenticata</h2>
           <p>

@@ -27,7 +27,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           {/* Logo - Lato sinistro */}
           <Link to={logoDestination} className="logo">
             <span className="logo-icon">🎯</span>
-            <span className="logo-text">TogetherToTarget</span>
+            <span className="logo-text">TogetherToGoal</span>
           </Link>
 
           {/* Spazio centrale elastico */}

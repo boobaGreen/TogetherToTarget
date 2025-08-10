@@ -341,7 +341,7 @@ const GoalInput: React.FC<GoalInputProps> = ({
               marginTop: "8px",
             }}
           >
-            <strong>Durata:</strong> 30 giorni (standard TogetherToTarget)
+            <strong>Durata:</strong> 30 giorni (standard TogetherToGoal)
           </div>
           {!description.trim() && (
             <div

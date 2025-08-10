@@ -136,7 +136,7 @@ export const SignupForm: React.FC = () => {
         <div className="auth-header">
           <h1>
             <span className="logo-emoji">🎯</span>
-            <span className="logo-text-auth">TogetherToTarget</span>
+            <span className="logo-text-auth">TogetherToGoal</span>
           </h1>
           <h2>Crea il tuo account</h2>
           <p>

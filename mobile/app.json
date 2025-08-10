@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "TogetherToTarget",
+    "name": "TogetherToGoal",
     "slug": "together-to-target",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "scheme": "com.togethertoTarget",
+    "scheme": "com.togethertogoal",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.togethertoTarget.app"
+      "bundleIdentifier": "com.togethertogoal.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.togethertoTarget.app"
+      "package": "com.togethertogoal.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"

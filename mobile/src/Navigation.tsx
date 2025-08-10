@@ -34,7 +34,7 @@ function AppStack() {
       <Stack.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={{ title: "TogetherToTarget" }}
+        options={{ title: "TogetherToGoal" }}
       />
     </Stack.Navigator>
   );

@@ -237,7 +237,7 @@ export const OnboardingPage: React.FC = () => {
                 color: "#1a202c",
               }}
             >
-              TogetherToTarget
+              TogetherToGoal
             </span>
           </h1>
 
@@ -340,7 +340,7 @@ export const OnboardingPage: React.FC = () => {
                 fontWeight: "600",
               }}
             >
-              💡 Come funziona TogetherToTarget:
+              💡 Come funziona TogetherToGoal:
             </h4>
             <p
               style={{

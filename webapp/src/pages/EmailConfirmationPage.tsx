@@ -91,7 +91,7 @@ export const EmailConfirmationPage: React.FC = () => {
           <div className="auth-header">
             <h1>
               <span className="logo-emoji">🎯</span>
-              <span className="logo-text-auth">TogetherToTarget</span>
+              <span className="logo-text-auth">TogetherToGoal</span>
             </h1>
             <h2>Conferma Email</h2>
           </div>
@@ -110,7 +110,7 @@ export const EmailConfirmationPage: React.FC = () => {
           <div className="auth-header">
             <h1>
               <span className="logo-emoji">🎯</span>
-              <span className="logo-text-auth">TogetherToTarget</span>
+              <span className="logo-text-auth">TogetherToGoal</span>
             </h1>
             <h2>Email Confermata</h2>
           </div>
@@ -129,7 +129,7 @@ export const EmailConfirmationPage: React.FC = () => {
         <div className="auth-header">
           <h1>
             <span className="logo-emoji">🎯</span>
-            <span className="logo-text-auth">TogetherToTarget</span>
+            <span className="logo-text-auth">TogetherToGoal</span>
           </h1>
           <h2>Errore Conferma</h2>
         </div>

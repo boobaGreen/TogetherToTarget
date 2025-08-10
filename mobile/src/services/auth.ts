@@ -31,7 +31,7 @@ export const authService = {
         email,
         password,
         options: {
-          emailRedirectTo: "com.togethertoTarget://email-confirmation",
+          emailRedirectTo: "com.togethertogoal://email-confirmation",
         },
       });
 
@@ -144,7 +144,7 @@ export const authService = {
   async resetPassword(email: string) {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "com.togethertoTarget://reset-password",
+        redirectTo: "com.togethertogoal://reset-password",
       });
       if (error) throw error;
       return { error: null };

@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🎯 TogetherToTarget</Text>
+      <Text style={styles.title}>🎯 TogetherToGoal</Text>
       <Text style={styles.subtitle}>Accedi al tuo account</Text>
 
       <TextInput

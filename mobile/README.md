@@ -1,4 +1,4 @@
-# TogetherToTarget Mobile App 📱
+# TogetherToGoal Mobile App 📱
 
 ## 🎉 Sprint RN Express - COMPLETATO ✅
 
