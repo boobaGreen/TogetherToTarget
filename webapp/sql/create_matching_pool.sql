@@ -27,6 +27,14 @@ BEGIN
     NULL; -- Ignore if constraint already exists
   END;
 
+  -- Aggiungi constraint UNIQUE su user_id se non esiste
+  BEGIN
+    ALTER TABLE matching_pool DROP CONSTRAINT IF EXISTS matching_pool_user_id_key;
+    ALTER TABLE matching_pool ADD CONSTRAINT matching_pool_user_id_key UNIQUE (user_id);
+  EXCEPTION WHEN OTHERS THEN
+    NULL; -- Ignore if constraint already exists
+  END;
+
   -- Aggiungi preferred_group_size se non esiste
   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='matching_pool' AND column_name='preferred_group_size') THEN
     ALTER TABLE matching_pool ADD COLUMN preferred_group_size integer DEFAULT 0;
@@ -130,6 +138,7 @@ DECLARE
   v_pool_entry_id uuid;
   v_user_preferences record;
   v_timezone text;
+  v_existing_entry record;
 BEGIN
   -- Ottieni timezone utente (fallback a Europe/Rome)
   SELECT timezone INTO v_timezone 
@@ -154,45 +163,54 @@ BEGIN
     v_user_preferences := ROW(0, ARRAY['it'], true);
   END IF;
   
-  -- Inserisci nel pool (o aggiorna se esiste già)
-  INSERT INTO matching_pool (
-    user_id,
-    objective,
-    category,
-    subcategory,
-    timezone,
-    preferred_group_size,
-    languages,
-    flexible_on_language,
-    priority,
-    current_level,
-    escalation_count
-  ) VALUES (
-    p_user_id,
-    p_objective,
-    p_category,
-    p_subcategory,
-    v_timezone,
-    v_user_preferences.group_size,
-    v_user_preferences.languages,
-    v_user_preferences.flexible_lang,
-    0, -- priority normale
-    'perfect', -- inizia dal livello perfect
-    0 -- nessuna escalation ancora
-  )
-  ON CONFLICT (user_id) DO UPDATE SET
-    objective = EXCLUDED.objective,
-    category = EXCLUDED.category,
-    subcategory = EXCLUDED.subcategory,
-    timezone = EXCLUDED.timezone,
-    preferred_group_size = EXCLUDED.preferred_group_size,
-    languages = EXCLUDED.languages,
-    flexible_on_language = EXCLUDED.flexible_on_language,
-    entered_at = now(), -- Reset timer
-    current_level = 'perfect', -- Reset a livello perfect
-    escalation_count = 0, -- Reset escalation
-    updated_at = now()
-  RETURNING id INTO v_pool_entry_id;
+  -- Controlla se l'utente è già nel pool
+  SELECT id INTO v_existing_entry FROM matching_pool WHERE user_id = p_user_id;
+  
+  IF v_existing_entry IS NOT NULL THEN
+    -- Aggiorna entry esistente
+    UPDATE matching_pool SET
+      objective = p_objective,
+      category = p_category,
+      subcategory = p_subcategory,
+      timezone = v_timezone,
+      preferred_group_size = v_user_preferences.group_size,
+      languages = v_user_preferences.languages,
+      flexible_on_language = v_user_preferences.flexible_lang,
+      entered_at = now(), -- Reset timer
+      current_level = 'perfect', -- Reset a livello perfect
+      escalation_count = 0, -- Reset escalation
+      updated_at = now()
+    WHERE user_id = p_user_id
+    RETURNING id INTO v_pool_entry_id;
+  ELSE
+    -- Inserisci nuova entry
+    INSERT INTO matching_pool (
+      user_id,
+      objective,
+      category,
+      subcategory,
+      timezone,
+      preferred_group_size,
+      languages,
+      flexible_on_language,
+      priority,
+      current_level,
+      escalation_count
+    ) VALUES (
+      p_user_id,
+      p_objective,
+      p_category,
+      p_subcategory,
+      v_timezone,
+      v_user_preferences.group_size,
+      v_user_preferences.languages,
+      v_user_preferences.flexible_lang,
+      0, -- priority normale
+      'perfect', -- inizia dal livello perfect
+      0 -- nessuna escalation ancora
+    )
+    RETURNING id INTO v_pool_entry_id;
+  END IF;
   
   RETURN v_pool_entry_id;
 END;
