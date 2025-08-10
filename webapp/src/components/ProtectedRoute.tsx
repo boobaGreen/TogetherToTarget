@@ -18,18 +18,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // Debug logging
-  if (process.env.NODE_ENV === "development") {
-    console.log("🛡️ ProtectedRoute check:", {
-      path: location.pathname,
-      requireAuth,
-      requireOnboarding,
-      user: !!user,
-      userEmail: user?.email,
-      onboardingCompleted: user?.onboarding_completed,
-      loading,
-    });
-  }
+  // Debug logging temporaneamente disabilitato per evitare spam di log
 
   // BYPASS per pagina di test matching
   if (location.pathname === "/test-matching") {
@@ -53,18 +42,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <>{children}</>;
   }
 
-  // Debug logging
-  if (process.env.NODE_ENV === "development") {
-    console.log("🛡️ ProtectedRoute check:", {
-      path: location.pathname,
-      requireAuth,
-      requireOnboarding,
-      user: !!user,
-      userEmail: user?.email,
-      onboardingCompleted: user?.onboarding_completed,
-      loading,
-    });
-  }
+  // Debug logging temporaneamente disabilitato
 
   // Mostra loading mentre stiamo verificando l'autenticazione
   if (loading) {

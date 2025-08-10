@@ -25,7 +25,6 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
   const [videocallLanguages, setVideocallLanguages] = useState<string[]>([
     "it",
   ]);
-  const [flexibleOnLanguage, setFlexibleOnLanguage] = useState(true);
   const [timezone, setTimezone] = useState("Europe/Rome");
 
   // Carica preferenze esistenti
@@ -42,7 +41,6 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
               preferences.preferred_group_size === 0
           );
           setVideocallLanguages(preferences.videocall_languages);
-          setFlexibleOnLanguage(preferences.flexible_on_language);
           setTimezone(preferences.timezone);
         }
       } catch (error) {
@@ -74,7 +72,7 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
           preferred_group_size: groupSize,
           flexible_on_size: true, // Sempre flessibile
           videocall_languages: videocallLanguages,
-          flexible_on_language: flexibleOnLanguage,
+          flexible_on_language: true, // Hardcoded a true dato che rimuoviamo l'opzione
           timezone,
           timezone_flexibility: true, // Sempre true, l'escalation è automatica
         }
@@ -180,21 +178,6 @@ export const MatchingPreferences: React.FC<MatchingPreferencesProps> = ({
               <span className="language-name">{lang.name}</span>
             </div>
           ))}
-        </div>
-
-        <div className="flexibility-option">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              checked={flexibleOnLanguage}
-              onChange={(e) => setFlexibleOnLanguage(e.target.checked)}
-            />
-            <span className="checkmark"></span>
-            Accetto gruppi multilingua se non trovo match
-          </label>
-          <div className="help-text">
-            Chat tradotta automaticamente, videocall internazionali
-          </div>
         </div>
       </div>
 

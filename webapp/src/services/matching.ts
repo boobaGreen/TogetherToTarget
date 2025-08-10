@@ -1,7 +1,6 @@
 import { supabase } from "./supabase";
 import type {
   UserMatchingPreferences,
-  MatchingPoolEntry,
   WaitTimeEstimate,
   ObjectiveSuggestion,
   MatchingStatus,
@@ -86,88 +85,121 @@ export class MatchingService {
   // === GESTIONE MATCHING POOL ===
 
   /**
-   * Inserisce l'utente nel pool di matching
+   * Inserisce l'utente nel pool di matching usando la funzione PostgreSQL
    */
   static async enterMatchingPool(
     userId: string,
     objective: string,
     category: string,
     subcategory?: string
-  ): Promise<MatchingPoolEntry | null> {
-    // Prima rileva il timezone dell'utente
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  ): Promise<string | null> {
+    try {
+      const { data, error } = await supabase.rpc("enter_matching_pool", {
+        p_user_id: userId,
+        p_objective: objective,
+        p_category: category,
+        p_subcategory: subcategory || null,
+      });
 
-    const { data, error } = await supabase
-      .from("matching_pool")
-      .insert({
-        user_id: userId,
-        objective,
-        category,
-        subcategory,
-        timezone,
-      })
-      .select()
-      .single();
+      if (error) {
+        console.error("Errore nella chiamata enter_matching_pool:", error);
+        return null;
+      }
 
-    if (error) {
-      console.error("Errore nell'inserimento nel matching pool:", error);
+      return data || null;
+    } catch (error) {
+      console.error("Errore nella chiamata enter_matching_pool:", error);
       return null;
     }
-
-    return data;
   }
 
   /**
-   * Rimuove l'utente dal pool di matching
+   * Rimuove l'utente dal pool di matching usando la funzione PostgreSQL
    */
   static async exitMatchingPool(userId: string): Promise<boolean> {
-    const { error } = await supabase
-      .from("matching_pool")
-      .delete()
-      .eq("user_id", userId);
+    try {
+      const { data, error } = await supabase.rpc("exit_matching_pool", {
+        p_user_id: userId,
+      });
 
-    if (error) {
-      console.error("Errore nella rimozione dal matching pool:", error);
+      if (error) {
+        console.error("Errore nella chiamata exit_matching_pool:", error);
+        return false;
+      }
+
+      return data === true;
+    } catch (error) {
+      console.error("Errore nella chiamata exit_matching_pool:", error);
       return false;
     }
-
-    return true;
   }
 
   /**
-   * Controlla se l'utente è nel pool di matching
+   * Ottiene lo status completo di matching dell'utente usando la funzione PostgreSQL
    */
-  static async getUserMatchingStatus(
-    userId: string
-  ): Promise<MatchingPoolEntry | null> {
-    const { data, error } = await supabase
-      .from("matching_pool")
-      .select("*")
-      .eq("user_id", userId)
-      .single();
+  static async getUserMatchingStatus(userId: string): Promise<{
+    in_pool: boolean;
+    objective?: string;
+    category?: string;
+    subcategory?: string;
+    current_level?: string;
+    hours_in_pool?: number;
+    escalation_count?: number;
+    estimated_next_escalation_hours?: number;
+  } | null> {
+    try {
+      const { data, error } = await supabase.rpc("get_user_matching_status", {
+        p_user_id: userId,
+      });
 
-    if (error && error.code !== "PGRST116") {
-      // PGRST116 = no rows found
-      console.error("Errore nel controllo status matching:", error);
+      if (error) {
+        console.error("Errore nella chiamata get_user_matching_status:", error);
+        return null;
+      }
+
+      if (!data || data.length === 0) {
+        return {
+          in_pool: false,
+          objective: undefined,
+          category: undefined,
+          subcategory: undefined,
+          current_level: undefined,
+          hours_in_pool: 0,
+          escalation_count: 0,
+          estimated_next_escalation_hours: 0,
+        };
+      }
+
+      // La funzione RPC restituisce un array con un oggetto
+      const result = Array.isArray(data) ? data[0] : data;
+
+      return {
+        in_pool: result.in_pool,
+        objective: result.objective,
+        category: result.category,
+        subcategory: result.subcategory,
+        current_level: result.current_level,
+        hours_in_pool: result.hours_in_pool,
+        escalation_count: result.escalation_count,
+        estimated_next_escalation_hours: result.estimated_next_escalation_hours,
+      };
+    } catch (error) {
+      console.error("Errore nella chiamata get_user_matching_status:", error);
       return null;
     }
-
-    return data;
   }
 
   /**
-   * Calcola lo status di matching dell'utente
+   * Calcola lo status di matching dell'utente usando la funzione PostgreSQL
    */
   static async getMatchingStatus(userId: string): Promise<MatchingStatus> {
-    const poolEntry = await this.getUserMatchingStatus(userId);
+    const statusData = await this.getUserMatchingStatus(userId);
 
-    if (!poolEntry) {
+    if (!statusData || !statusData.in_pool) {
       return "not_searching";
     }
 
-    const hoursInPool =
-      (Date.now() - new Date(poolEntry.entered_at).getTime()) /
-      (1000 * 60 * 60);
+    const hoursInPool = statusData.hours_in_pool || 0;
 
     if (hoursInPool >= 72) {
       return "awaiting_choice";
@@ -241,26 +273,31 @@ export class MatchingService {
   }
 
   /**
-   * Ottiene le dimensioni delle code per categoria
+   * Ottiene le dimensioni delle code per categoria usando la view
    */
   static async getQueueSizes(): Promise<Record<string, number>> {
-    const { data, error } = await supabase
-      .from("matching_pool")
-      .select("category")
-      .order("category");
+    try {
+      const { data, error } = await supabase
+        .from("matching_pool_stats")
+        .select("category, users_count");
 
-    if (error) {
+      if (error) {
+        console.error("Errore nel recupero dimensioni code:", error);
+        return {};
+      }
+
+      // Aggrega per categoria
+      const queueSizes: Record<string, number> = {};
+      data.forEach((entry) => {
+        queueSizes[entry.category] =
+          (queueSizes[entry.category] || 0) + entry.users_count;
+      });
+
+      return queueSizes;
+    } catch (error) {
       console.error("Errore nel recupero dimensioni code:", error);
       return {};
     }
-
-    // Conta per categoria
-    const queueSizes: Record<string, number> = {};
-    data.forEach((entry) => {
-      queueSizes[entry.category] = (queueSizes[entry.category] || 0) + 1;
-    });
-
-    return queueSizes;
   }
 
   // === AZIONI POST-72H ===
