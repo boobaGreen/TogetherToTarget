@@ -6,9 +6,11 @@ import SubcategorySelector from "../components/onboarding/SubcategorySelector";
 import GoalInput from "../components/onboarding/GoalInput";
 import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
+import { MatchingPreferences } from "../components/matching/MatchingPreferences";
 import { CategoriesService } from "../services/categories";
 import { SubcategoriesService } from "../services/subcategories";
 import { UserProfilesService } from "../services/userProfiles";
+import { MatchingService } from "../services/matching";
 import { DatabaseTest } from "../services/databaseTest";
 import type { Category, Subcategory } from "../types/categories";
 import type { GoalInputData } from "../types/goal";
@@ -84,9 +86,9 @@ export const OnboardingPage: React.FC = () => {
   };
 
   const nextStep = async () => {
-    // Se siamo al passo 5 (AvailabilitySettings, indice 5) e tutti i dati sono validi, completa l'onboarding
+    // Se siamo al passo 6 (ultimo step) e tutti i dati sono validi, completa l'onboarding
     if (
-      currentStep === 5 &&
+      currentStep === 6 &&
       selectedCategory &&
       selectedSubcategory &&
       goalData &&
@@ -139,6 +141,21 @@ export const OnboardingPage: React.FC = () => {
       );
 
       console.log("✅ Profilo salvato con successo:", savedProfile);
+
+      // 🎯 NOVITÀ: Inserimento automatico nel primo matching pool
+      console.log("🎯 Inserimento automatico nel matching pool...");
+      try {
+        const poolEntryId = await MatchingService.enterMatchingPool(
+          user.id,
+          goalData.description || `Obiettivo: ${selectedSubcategory.name_it}`,
+          selectedCategory.name_en.toLowerCase(),
+          selectedSubcategory.name_en.toLowerCase()
+        );
+        console.log("✅ Utente inserito nel matching pool:", poolEntryId);
+      } catch (poolError) {
+        console.error("⚠️ Errore inserimento matching pool:", poolError);
+        // Non blocchiamo il flusso se fallisce l'inserimento nel pool
+      }
 
       // Reindirizza alla pagina di successo PRIMA del refresh per evitare race conditions
       console.log("📄 Redirect a /onboarding-success");
@@ -381,8 +398,155 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 1: Selezione categoria
+  // Step 1: Preferenze Matching
   if (currentStep === 1) {
+    return (
+      <div
+        style={{
+          fontFamily: "Inter, sans-serif",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "800px",
+            margin: "0 auto",
+            padding: "2rem 0",
+          }}
+        >
+          {/* Progress indicator */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "50px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <span style={{ color: "#667eea", fontWeight: "600" }}>
+                Passo 1 di 6
+              </span>
+              <span style={{ color: "#94a3b8" }}>•</span>
+              <span style={{ color: "#64748b" }}>Preferenze Matching</span>
+            </div>
+            {/* Barra di progresso */}
+            <div
+              style={{
+                width: "200px",
+                height: "4px",
+                background: "#e2e8f0",
+                borderRadius: "2px",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: "16.6%", // 1/6
+                  height: "100%",
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  transition: "width 0.3s ease",
+                }}
+              ></div>
+            </div>
+            <div
+              style={{
+                fontSize: "0.8rem",
+                color: "#94a3b8",
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              ⏱️ Tempo rimanente: ~3 minuti
+            </div>
+          </div>
+
+          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+            <h2
+              style={{
+                fontSize: "1.75rem",
+                marginBottom: "0.5rem",
+                color: "#1a202c",
+              }}
+            >
+              ⚙️ Configura le tue Preferenze
+            </h2>
+            <p style={{ color: "#64748b", fontSize: "1.1rem" }}>
+              Impostiamo come preferisci che funzioni il matching. Potrai
+              modificare queste impostazioni in qualsiasi momento dal tuo
+              profilo.
+            </p>
+          </div>
+
+          <div
+            style={{
+              background: "white",
+              borderRadius: "12px",
+              padding: "2rem",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <MatchingPreferences />
+          </div>
+
+          {/* Bottoni navigazione */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "2rem",
+            }}
+          >
+            <button
+              onClick={prevStep}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #cbd5e1",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+              }}
+            >
+              ← Indietro
+            </button>
+            <button
+              onClick={nextStep}
+              style={{
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                color: "white",
+                border: "none",
+                padding: "12px 24px",
+                borderRadius: "8px",
+                fontSize: "1rem",
+                cursor: "pointer",
+              }}
+            >
+              Continua →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Step 2: Selezione categoria
+  if (currentStep === 2) {
     return (
       <div
         style={{
@@ -421,7 +585,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 1 di 5
+                Passo 2 di 6
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Categoria obiettivo</span>
@@ -439,7 +603,7 @@ export const OnboardingPage: React.FC = () => {
             >
               <div
                 style={{
-                  width: "20%", // 1/5 = 20%
+                  width: "33.3%", // 2/6
                   height: "100%",
                   background:
                     "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -547,8 +711,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 2: Selezione subcategoria
-  if (currentStep === 2) {
+  // Step 3: Selezione subcategoria
+  if (currentStep === 3) {
     return (
       <div
         style={{
@@ -587,7 +751,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 2 di 5
+                Passo 3 di 6
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Obiettivo specifico</span>
@@ -605,7 +769,7 @@ export const OnboardingPage: React.FC = () => {
             >
               <div
                 style={{
-                  width: "40%", // 2/5 = 40%
+                  width: "50%", // 3/6
                   height: "100%",
                   background:
                     "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -626,7 +790,7 @@ export const OnboardingPage: React.FC = () => {
             </div>
           </div>
 
-          {selectedCategory && (
+          {selectedCategory ? (
             <SubcategorySelector
               selectedCategory={selectedCategory}
               subcategories={subcategories}
@@ -634,6 +798,59 @@ export const OnboardingPage: React.FC = () => {
               onSubcategorySelect={handleSubcategorySelect}
               loading={subcategoriesLoading}
             />
+          ) : (
+            <div
+              style={{
+                textAlign: "center",
+                padding: "3rem",
+                background: "white",
+                borderRadius: "16px",
+                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                margin: "2rem auto",
+                maxWidth: "600px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "3rem",
+                  marginBottom: "1rem",
+                }}
+              >
+                ⚠️
+              </div>
+              <h3
+                style={{
+                  color: "#1a202c",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Categoria non selezionata
+              </h3>
+              <p
+                style={{
+                  color: "#64748b",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                Per continuare, devi prima selezionare una categoria nel passo
+                precedente.
+              </p>
+              <button
+                onClick={prevStep}
+                style={{
+                  background:
+                    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "8px",
+                  fontSize: "1rem",
+                  cursor: "pointer",
+                }}
+              >
+                ← Torna al passo precedente
+              </button>
+            </div>
           )}
 
           {/* Navigation buttons */}
@@ -686,8 +903,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 3: Inserimento obiettivo
-  if (currentStep === 3) {
+  // Step 4: Inserimento obiettivo
+  if (currentStep === 4) {
     return (
       <div
         style={{
@@ -726,7 +943,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 3 di 5
+                Passo 4 di 6
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>
@@ -746,7 +963,7 @@ export const OnboardingPage: React.FC = () => {
             >
               <div
                 style={{
-                  width: "60%", // 3/5 = 60%
+                  width: "66.6%", // 4/6
                   height: "100%",
                   background:
                     "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -829,8 +1046,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 4: Livello di esperienza
-  if (currentStep === 4) {
+  // Step 5: Livello di esperienza
+  if (currentStep === 5) {
     return (
       <div
         style={{
@@ -869,7 +1086,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 4 di 5
+                Passo 5 di 6
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Livello di esperienza</span>
@@ -887,7 +1104,7 @@ export const OnboardingPage: React.FC = () => {
             >
               <div
                 style={{
-                  width: "80%", // 4/5 = 80%
+                  width: "83.3%", // 5/6
                   height: "100%",
                   background:
                     "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -974,8 +1191,8 @@ export const OnboardingPage: React.FC = () => {
     );
   }
 
-  // Step 5: Disponibilità e preferenze
-  if (currentStep === 5) {
+  // Step 6: Disponibilità e preferenze
+  if (currentStep === 6) {
     return (
       <div
         style={{
@@ -1022,7 +1239,7 @@ export const OnboardingPage: React.FC = () => {
               }}
             >
               <span style={{ color: "#667eea", fontWeight: "600" }}>
-                Passo 5 di 5
+                Passo 6 di 6
               </span>
               <span style={{ color: "#94a3b8" }}>•</span>
               <span style={{ color: "#64748b" }}>Disponibilità</span>
@@ -1040,7 +1257,7 @@ export const OnboardingPage: React.FC = () => {
             >
               <div
                 style={{
-                  width: "100%", // 5/5 = 100%
+                  width: "100%", // 6/6
                   height: "100%",
                   background:
                     "linear-gradient(135deg, #10b981 0%, #059669 100%)",
