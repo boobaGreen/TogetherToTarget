@@ -7,6 +7,7 @@ import GoalInput from "../components/onboarding/GoalInput";
 import ExperienceLevelSelector from "../components/onboarding/ExperienceLevel";
 import AvailabilitySettings from "../components/onboarding/AvailabilitySettings";
 import { MatchingPreferences } from "../components/matching/MatchingPreferences";
+import { Spinner } from "../components/common/Spinner";
 import { CategoriesService } from "../services/categories";
 import { SubcategoriesService } from "../services/subcategories";
 import { UserProfilesService } from "../services/userProfiles";
@@ -1202,14 +1203,6 @@ export const OnboardingPage: React.FC = () => {
           padding: "20px",
         }}
       >
-        <style>
-          {`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}
-        </style>
         <div
           style={{
             maxWidth: "1000px",
@@ -1345,16 +1338,7 @@ export const OnboardingPage: React.FC = () => {
             >
               {isSaving ? (
                 <>
-                  <div
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      border: "2px solid #94a3b8",
-                      borderTop: "2px solid #ffffff",
-                      borderRadius: "50%",
-                      animation: "spin 1s linear infinite",
-                    }}
-                  ></div>
+                  <Spinner size="small" color="white" />
                   Salvataggio...
                 </>
               ) : (
